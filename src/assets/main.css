@@ -21,7 +21,7 @@ a,
   }
 }
 
-@media (min-width: 1024px) {
+/*@media (min-width: 1024px) {*/
   body {
   display: grid;
   justify-content: center;
@@ -37,4 +37,4 @@ a,
     margin: 100px;
     border-radius: 20px;
   }
-}
+/*}*/

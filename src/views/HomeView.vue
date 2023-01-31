@@ -1,36 +1,40 @@
 <template>
-  <div class="home">
+  <div class="wrapper-grid">
+    <div class="home">
   
-    <div class="info">
-      <h1>Meet new people with the same interest</h1>
-      <h4>Join events or Create your own!</h4>
-    </div>
+      <div class="info">
+        <h1>Meet new people with the same interest</h1>
+        <h4>Join events or Create your own!</h4>
+      </div>
 
-    <div class="imgMain">
-      <img src="../assets/work.png" alt="Logo">
-    </div>
-    
-    <div class="button">
-      <Button class="joinButton">Join</Button>
-      <Button class="createButton">Create</Button>
-    </div>
+      <div class="imgMain">
+        <img src="../assets/work.png" alt="Logo">
+      </div>
+  
+      <div class="button">
+        <Button class="joinButton">Join</Button>
+        <Button class="createButton">Create</Button>
+      </div>
 
-    <div class="homeText">
-      shdbfjbfhweoubwebdkhsbdkb jbfhfbsk fwe bkhebk bwerbw ebkdb bewbb b eb b 
-      ebwhebf hj ebr wbfo befow o bwe qhqhv qf
-       qhv jwe qo ho qheoi hqou bqo ou qouhr ouqruoqr 
+      <div class="homeText">
+        shdbfjbfhweoubwebdkhsbdkb jbfhfbsk fwe bkhebk bwerbw ebkdb bewbb b eb b 
+        ebwhebf hj ebr wbfo befow o bwe qhqhv qf
+        qhv jwe qo ho qheoi hqou bqo ou qouhr ouqruoqr 
         qhbejwhbe hrv   qbe khqer hqb ob kiqv 
+      </div>  
     </div>
-    
-
-
-    
   </div>
 </template>
 
 <style>
-@media (min-width: 1024px) {
-  .home {
+/*@media (min-width: 1024px) { */
+  
+.wrapper-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 75rem);
+}
+
+.home {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr;
@@ -40,6 +44,7 @@
   margin: 7%;
 
 }
+
 
 .info {
   grid-column-start: 1;
@@ -86,6 +91,5 @@
   font-size: medium;
   color: black;
 }
- 
-}
+
 </style>
