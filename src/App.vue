@@ -12,6 +12,7 @@ import Signup from "./components/auth/Signup.vue"
 <template>
   <Navigation />
   <Signup />
+  <RouterView />
   
 </template>
 
