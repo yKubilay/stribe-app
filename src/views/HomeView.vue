@@ -17,10 +17,10 @@
     </nav>
 
 
-    <img src="src\assets\menuLogo.png" class="menuIcon">
   </div>
 
   <div class="row">
+   
     <div class="col-1">
         <h2>Welcome to Stribe</h2>  
         <h3>Meet and collaborate with <br>likeminded students!</h3>  
@@ -29,7 +29,11 @@
     </div>
   <div class="col-2">
     <img src="src\assets\wplaceNoBg.png" class="homeImage" >
+
+    
   </div>
+  
+  
 </div>
 
 
