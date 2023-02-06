@@ -39,6 +39,15 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/GroupsView.vue')
     },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: 'SignupView',
+
+
+      component: () => import('../views/SignupView.vue')
+    },
+
 
   ]
 })

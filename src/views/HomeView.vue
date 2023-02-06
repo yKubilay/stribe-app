@@ -7,11 +7,13 @@
 
     <nav>
       <ul>
-        <li><router-link class="nav-link" to="/">Home</router-link></li>
         <li><router-link class="nav-link" to="/groups">Groups</router-link></li>
         <li><router-link class="nav-link" to ="/floorplan">Floorplan</router-link></li>
         <li><router-link class="nav-link" to ="/about">About</router-link></li>
+        <li><router-link class="nav-link" to="/signup">Sign up</router-link></li>
+
       </ul>
+
     </nav>
 
 
@@ -22,13 +24,14 @@
     <div class="col-1">
         <h2>Welcome to Stribe</h2>  
         <h3>Meet and collaborate with <br>likeminded students!</h3>  
-        <button type="button">Sign up</button>
+        <button type="button">Get started</button>
         <button type="button">About us</button>
     </div>
   <div class="col-2">
     <img src="src\assets\wplaceNoBg.png" class="homeImage" >
   </div>
 </div>
+
 
 
 </section>

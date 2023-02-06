@@ -73,6 +73,11 @@ a, .green {
   margin: 5px;
 }
 
+.navButton {
+  width: 140px;
+  height: 40px;
+}
+
 .row {
   display:flex;
   margin: 300px 0;
@@ -130,13 +135,23 @@ a, .green {
   flex-basis: 60%;
   display: flex;
 
-
 }
 
 .col-2 .homeImage {
   width: 80%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
+.svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  
+}
 
 
 button {

@@ -10,10 +10,10 @@
 
   <nav>
     <ul>
-      <li><router-link class="nav-link" to="/">Home</router-link></li>
       <li><router-link class="nav-link" to="/groups">Groups</router-link></li>
       <li><router-link class="nav-link" to ="/floorplan">Floorplan</router-link></li>
-      <li><router-link class="nav-link" to ="/about">Groups</router-link></li>
+      <li><router-link class="nav-link" to ="/about">About</router-link></li>
+      <li><router-link class="nav-link" to="/signUp">Sign up</router-link></li>
     </ul>
   </nav>
 
@@ -24,11 +24,5 @@
 </template>
 
 <style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
+
 </style>
