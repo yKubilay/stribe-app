@@ -1,7 +1,8 @@
 <script></script>
 
 <template>
-    <nav class="navbar navbar-expand-lg bg-light navbar-fixed-top width">
+ 
+<nav class="navbar navbar-expand-lg bg-light navbar-fixed-top width">
   <div class="container-fluid">
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">

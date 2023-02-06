@@ -1,35 +1,185 @@
 @import './base.css';
 
+
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
+  background-color: #F5F0E7;
 }
 
-a,
-.green {
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding-left: 0%;
+  padding-right: 0%;
+  box-sizing: border-box;
+  overflow: hidden;
+
+}
+
+.navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 15px 10px -15px #111;    
+  position:fixed;
+  background-color: white;
+
+
+}
+
+.navbar h1 {
+  margin-left: 625px;
+  background-color: white;
+}
+
+
+.menuIcon {
+  width: 30px;
+  cursor: pointer;
+  display: none;
+  margin-right:625px;
+  margin-top:6px;
+}
+
+
+
+nav {
+  margin-top:20px;
+}
+
+nav ul {
+  text-align: center;
+  margin-right: 675px;
+
+}
+
+
+
+nav ul li {
+  list-style: none;
+  display: inline-block;
+  margin-right: 30px;
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+  color:rgb(0, 0, 0);
+  font-size: 18px;
+  font-weight: 500;
 }
+
+a, .green {
+  color: #42aaaa;
+  transition: 0.5s;
+  border-bottom: 4px solid transparent;
+  transition: border-bottom 0.3s ease-in-out;
+  margin: 5px;
+}
+
+.row {
+  display:flex;
+  margin: 300px 0;
+}
+
+.col-1 {
+  position: relative;
+  flex-basis: 40%;
+}
+
+.col-1 h2 {
+  font-size: 54px;
+
+}
+
+.col-1 h3 {
+  font-size: 30px;
+  color: #000000;
+  font-weight: 400;
+  margin: 20px 0 10px;
+}
+
+.col-1 p{
+  font-size: 54px;
+  color: #b7b7b7;
+  font-weight: 100;
+}
+
+.col-1 h4{
+  margin: 30px 0;
+  font-size: 20px;
+
+}
+
+.col-1 {
+  position: relative;
+  padding-left: 50px; /* This makes the pseudo-element positioned relative to the .col-1 element */
+}
+
+.col-1::after {
+  content: '';
+  display: block; /* This makes the pseudo-element a block-level element */
+  width: 10px;
+  height: 100%;
+  background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  position: absolute; /* This makes the pseudo-element positioned absolutely */
+  right: 520px; /* This moves the pseudo-element to the left of the .col-1 element */
+  top: 0;
+  bottom: 0;
+}
+
+
+.col-2 {
+  position: relative;
+  flex-basis: 60%;
+  display: flex;
+
+
+}
+
+.col-2 .homeImage {
+  width: 80%;
+}
+
+
+
+button {
+  width: 140px;
+  border: 0px;
+  padding: 12px 10px;
+  outline: none;
+  color: white;
+  background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  cursor: pointer;
+  border-radius: 7px;
+  margin-top: 20px;
+  margin-right: 20px;
+  transition: 0.5s;
+
+
+}
+
+button:hover {
+  box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
+
+}
+
+
 
 @media (hover: hover) {
   a:hover {
-    background-color: hsla(160, 100%, 37%, 1);
+    border-bottom: 4px solid #2b91b9;
+
   }
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+@media only screen and (max-width:700px) {
+ 
+    nav ul li {
+      display: none;
+    }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-}
+    
+} 
+
+
+
+
+
+
