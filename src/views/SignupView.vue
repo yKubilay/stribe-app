@@ -18,7 +18,6 @@
     </nav>
   
   
-    <img src="src\assets\menuLogo.png" class="menuIcon">
     </div>
       
     </section>
