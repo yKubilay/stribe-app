@@ -28,7 +28,7 @@
         <button type="button">About us</button>
     </div>
   <div class="col-2">
-    <img src="src\assets\wplaceNoBg.png" class="homeImage" >
+    <img src="/src/assets/wplaceNoBg.png" class="homeImage" >
 
     
   </div>
