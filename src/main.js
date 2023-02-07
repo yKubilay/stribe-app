@@ -4,8 +4,6 @@ import { createPinia } from 'pinia'
 import "bootstrap/dist/js/bootstrap.js";
 import './assets/main.css'
 import { initializeApp } from "firebase/app";
-
-
 import App from './App.vue'
 import router from './router'
 
@@ -28,3 +26,4 @@ app.use(router)
 app.mount('#app')
 
 initializeApp(firebaseConfig);
+
