@@ -32,6 +32,8 @@
   width: 50%;
   padding: 30px;
   border-radius: 25px;
+  box-shadow: 15px 15px 10px -15px #111;    
+
 }
 
 .altOptionAuth {
@@ -44,6 +46,12 @@
   color: teal;
   cursor: pointer;
   font-weight: 500;
+}
+
+.signoutButton {
+  margin-top: -20px;
+  height:20%;
+  padding: 5px;  
 }
 
 .navbar {

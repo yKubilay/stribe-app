@@ -15,6 +15,8 @@
         <li><router-link class="nav-link" to ="/about">About</router-link></li>
         <li><router-link class="nav-link" to="/signUp">Sign up</router-link></li>
         <li><router-link class="nav-link" to="/login">Login</router-link></li>
+        <li><button class="signoutButton" @click="handleSignOut" v-if="isLoggedIn">Sign out</button></li>
+
 
         
       </ul>
@@ -59,6 +61,7 @@
     import { ref } from 'vue';
     import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
     import { useRouter } from 'vue-router';
+
 
     const email = ref("");
     const password = ref("");
