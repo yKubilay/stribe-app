@@ -5,13 +5,13 @@ import Signup from "./components/auth/Signup.vue"
 import HomeView from './views/HomeView.vue';
 
 
-
 </script>
 
-
-
 <template>
-  
+
+
+
+
   
   <RouterView />
   

@@ -1,5 +1,5 @@
 <template>
-    <div class="floorplan">
+    <div class="login">
       
     </div>
   
@@ -18,7 +18,7 @@
     </nav>
     </div>
     <div class="signUpform">
-    <h2 class="mb-3">Create an account</h2>
+    <h2 class="mb-3">Login to Stribe</h2>
       <div class="input">
         <label for="email">Email</label>
           <input
@@ -39,23 +39,16 @@
         </div>
 
       <div class="alternative-option mt-4">
-        Already have an account? <span @click="moveToLogin">Login</span>
+        Already have an account? <span @click="moveToLogin">Signup</span>
       </div>
 
 
-    <button type="submit" class="mt-4 btn-pers" id="login_button" @click="Signup">Signup</button>
+    <button type="submit" class="mt-4 btn-pers" id="login_button" @click="login">Login</button>
   </div>
-
+  
     </section>
   </template>
     
-  <script>
-
-    moveto
-
-  </script></script>
-  
-  
   <style>
 
 
