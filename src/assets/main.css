@@ -62,6 +62,7 @@
   position: fixed;
   background-color: white;
   left: 0;
+  z-index: 2;
 
 }
 
@@ -91,8 +92,6 @@ nav ul {
 
 }
 
-
-
 nav ul li {
   list-style: none;
   display: inline-block;
@@ -101,6 +100,13 @@ nav ul li {
   color:rgb(0, 0, 0);
   font-size: 18px;
   font-weight: 500;
+}
+
+.menuLogo {
+  width: 30px;
+  cursor: pointer;
+  display: none;
+
 }
 
 a, .green {
@@ -219,6 +225,10 @@ button:hover {
   
 }
 
+.navLinks ul {
+  display: flex;
+}
+
 @media (hover: hover) {
   a:hover {
     border-bottom: 4px solid #2b91b9;
@@ -228,9 +238,76 @@ button:hover {
 
 @media only screen and (max-width:700px) {
  
-    nav ul li {
+   .nav {
+      flex-direction: column;
+      align-items: flex-start;
+  
+    }
+
+    .navbar h1 {
       display: none;
     }
+
+    .navbar:active {
+      display: block;
+      background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+    }
+
+    .navbar .menuLogo {
+      width: 30px;
+      cursor: pointer;
+      display: flex;
+      display: absolute;
+      left: 85%;
+    
+    }
+
+    .navLinks ul {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 50%;
+      
+
+    }
+
+    .navLinks ul li{
+      width: 130%;
+      padding: 2%;
+      color: white;
+      align-items: center;
+      font-size: 28px;
+
+    }
+
+    .row {
+      flex-direction: column;
+      margin-top: 200px;
+    }
+
+    .col-1 {
+      flex-basis: 100%;
+      padding-left: 20%;
+    }
+
+    .svg { 
+      display: none;
+    }
+    
+
+    .col-2 {
+      flex-basis: 100%;
+      justify-content: center;
+    }
+
+    
+ 
+   
 
     
 }
