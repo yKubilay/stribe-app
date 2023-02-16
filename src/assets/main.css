@@ -65,12 +65,7 @@
   position: fixed;
   background-color: white;
   left: 0;
-<<<<<<< HEAD
   z-index: 9999999999;
-=======
-  z-index: 2;
-
->>>>>>> ff9125404b1eb5cfdb0659afef4b491168478a17
 }
 
 .navbar h1 {
@@ -233,8 +228,7 @@ button:hover {
   
 }
 
-<<<<<<< HEAD
-=======
+
 .navLinks ul {
   display: flex;
 }
@@ -242,8 +236,7 @@ button:hover {
 @media (hover: hover) {
   a:hover {
     border-bottom: 4px solid #2b91b9;
->>>>>>> ff9125404b1eb5cfdb0659afef4b491168478a17
-
+  }
 
 @media only screen and (max-width:700px) {
  
@@ -312,11 +305,6 @@ button:hover {
     .col-2 {
       flex-basis: 100%;
       justify-content: center;
-    }
-
-    
- 
-   
-
-    
+    } 
+}
 }

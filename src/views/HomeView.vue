@@ -17,10 +17,10 @@
         <li><router-link class="nav-link" to ="/floorplan">Floorplan</router-link></li>
         <li><router-link class="nav-link" to ="/about">About</router-link></li>
         <li><router-link class="nav-link" to="/signup">Sign up</router-link></li>
-<<<<<<< HEAD
+
         <li><button class="signoutButton" @click="handleSignOut" v-if="isLoggedIn">Sign out</button></li>
-=======
->>>>>>> ff9125404b1eb5cfdb0659afef4b491168478a17
+
+
       </ul>
     </div>
     </nav>
@@ -51,12 +51,6 @@
   
 
 </template>'
-
-<script>
-
-
-
-</script>
 
 <script setup>
 
