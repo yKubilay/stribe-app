@@ -219,6 +219,16 @@ button:hover {
   
 }
 
+.firstFloorSVG {
+  align-items: center;
+  width: 70%;
+}
+
+/* .image17 {
+  
+  align-items: center;
+} */
+
 @media (hover: hover) {
   a:hover {
     border-bottom: 4px solid #2b91b9;
