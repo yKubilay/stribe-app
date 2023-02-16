@@ -244,7 +244,7 @@ button:hover {
 @media only screen and (max-width:700px) {
  
    .nav {
-      flex-direction: column;
+      flex-direction: row;
       align-items: flex-start;
   
     }
@@ -277,17 +277,16 @@ button:hover {
       flex-direction: column;
       align-items: flex-start;
       margin-top: 50%;
-      
 
     }
 
+  
     .navLinks ul li{
       width: 130%;
       padding: 2%;
       color: white;
       align-items: center;
       font-size: 28px;
-
     }
 
     .row {
