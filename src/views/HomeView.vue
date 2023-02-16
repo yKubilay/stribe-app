@@ -16,7 +16,7 @@
         <li><router-link class="nav-link" to="/groups">Groups</router-link></li>
         <li><router-link class="nav-link" to ="/floorplan">Floorplan</router-link></li>
         <li><router-link class="nav-link" to ="/about">About</router-link></li>
-        <li v-if="isLoggedIn"><router-link class="nav-link" to="/profile"></router-link></li>
+        <li v-if="isLoggedIn"><router-link class="nav-link" to="/profile">{{ currentUserEmail }}</router-link></li>
         <li v-else><router-link class="nav-link" to="/signup">Sign up</router-link></li>
         <li><button class="signoutButton" @click="handleSignOut" v-if="isLoggedIn">Sign out</button></li>
 
@@ -53,34 +53,39 @@
 </template>'
 
 <script setup>
+  import { useRouter } from 'vue-router';   
+  import { onMounted, ref, computed } from "vue";
+  import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
-    import { useRouter } from 'vue-router';   
-    import { onMounted, ref } from "vue";
-    import { getAuth, onAuthStateChanged, signOut} from "firebase/auth";
+  const isLoggedIn = ref(false); 
+  const router = useRouter()
 
-    const isLoggedIn = ref(false); 
-const router = useRouter()
+  let auth;
+  onMounted(() => {
+    auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        isLoggedIn.value = true;
+      } else {
+        isLoggedIn.value = false;
+      }
+    });
+  });
+  
+  const handleSignOut = () => {
+    signOut(auth).then(() => {
+      router.push("/");
+    });
+  };
 
-let auth;
-onMounted(() => {
-  auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      isLoggedIn.value = true;
-    } else {
-      isLoggedIn.value = false;
+  const currentUserEmail = computed(() => {
+    if (auth && auth.currentUser) {
+      return auth.currentUser.name;
     }
+    return "";
   });
-});
-const handleSignOut = () => {
-  signOut(auth).then(() => {
-    router.push("/");
-  });
-};
+
 </script>
 
-<style>
 
-
-  
-</style>
+     
