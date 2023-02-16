@@ -16,8 +16,8 @@
         <li><router-link class="nav-link" to="/groups">Groups</router-link></li>
         <li><router-link class="nav-link" to ="/floorplan">Floorplan</router-link></li>
         <li><router-link class="nav-link" to ="/about">About</router-link></li>
-        <li><router-link class="nav-link" to="/signup">Sign up</router-link></li>
-
+        <li v-if="isLoggedIn"><router-link class="nav-link" to="/profile"></router-link></li>
+        <li v-else><router-link class="nav-link" to="/signup">Sign up</router-link></li>
         <li><button class="signoutButton" @click="handleSignOut" v-if="isLoggedIn">Sign out</button></li>
 
 
