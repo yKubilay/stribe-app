@@ -62,7 +62,7 @@
   position: fixed;
   background-color: white;
   left: 0;
-
+  z-index: 9999999999;
 }
 
 .navbar h1 {
@@ -205,8 +205,7 @@ button {
   margin-top: 20px;
   margin-right: 20px;
   transition: 0.5s;
-
-
+  margin: 14px;
 }
 
 button:hover {
@@ -219,12 +218,7 @@ button:hover {
   
 }
 
-@media (hover: hover) {
-  a:hover {
-    border-bottom: 4px solid #2b91b9;
 
-  }
-}
 
 @media only screen and (max-width:700px) {
  

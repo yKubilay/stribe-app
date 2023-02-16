@@ -13,7 +13,7 @@
         <li><router-link class="nav-link" to ="/floorplan">Floorplan</router-link></li>
         <li><router-link class="nav-link" to ="/about">About</router-link></li>
         <li><router-link class="nav-link" to="/signup">Sign up</router-link></li>
-
+        <li><button class="signoutButton" @click="handleSignOut" v-if="isLoggedIn">Sign out</button></li>
       </ul>
 
     </nav>
@@ -29,8 +29,8 @@
     <div class="col-1">
         <h2>Welcome to Stribe</h2>  
         <h3>Meet and collaborate with <br>likeminded students!</h3>  
-        <button type="button">Get started</button>
-        <button type="button">About us</button>
+        <a href="/signup"><button type="button">Get started</button></a>
+        <a href="/about"><button type="button">About us</button></a>
     </div>
   <div class="col-2">
     <img src="/src/assets/wplaceNoBg.png" class="homeImage" >
@@ -48,7 +48,32 @@
 
 </template>
 
+<script setup>
 
+    import { useRouter } from 'vue-router';   
+    import { onMounted, ref } from "vue";
+    import { getAuth, onAuthStateChanged, signOut} from "firebase/auth";
+
+    const isLoggedIn = ref(false); 
+const router = useRouter()
+
+let auth;
+onMounted(() => {
+  auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      isLoggedIn.value = true;
+    } else {
+      isLoggedIn.value = false;
+    }
+  });
+});
+const handleSignOut = () => {
+  signOut(auth).then(() => {
+    router.push("/");
+  });
+};
+</script>
 
 <style>
 
