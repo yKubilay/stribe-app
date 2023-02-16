@@ -31,7 +31,7 @@
             <div class="image-content">
               <span class="overlay"></span>
               <div class="card-image">
-                <img src="src/assets/img_1.png" alt="" class="card-img"/>
+                <img src="/src/assets/img_1.png" alt="" class="card-img"/>
               </div>
             </div>
 
