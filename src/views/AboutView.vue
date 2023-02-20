@@ -10,115 +10,17 @@
     <svg class="svg" viewBox="-50 -80 175 300" xmlns="http://www.w3.org/2000/svg">
       <path fill="#2E728D" d="M35.9,-45.4C50.5,-46.5,68.9,-43.2,72.5,-33.6C76.1,-24,64.9,-8.1,62.5,9C60.1,26.2,66.5,44.7,61.8,57.7C57,70.6,41,78,25.9,77.6C10.8,77.1,-3.5,68.8,-14.6,60.5C-25.7,52.3,-33.6,44.1,-41.2,35.6C-48.8,27,-56.1,18.1,-59.2,7.5C-62.2,-3,-61,-15.1,-52.9,-20.5C-44.8,-25.9,-29.8,-24.5,-19.8,-25.4C-9.9,-26.4,-4.9,-29.8,2.9,-34.2C10.7,-38.7,21.4,-44.3,35.9,-45.4Z" transform="translate(100 100)" />
     </svg>
-<div class="navbar">
-  <h1><router-link to="/">Stribe</router-link></h1>
-
-  <nav>
-    <ul>
-      <li><router-link class="nav-link" to="/groups">Groups</router-link></li>
-      <li><router-link class="nav-link" to ="/floorplan">Floorplan</router-link></li>
-      <li><router-link class="nav-link" to ="/about">About</router-link></li>
-      <li><button class="signoutButton" @click="handleSignOut" v-if="isLoggedIn">Sign out</button></li>
-    </ul>
-  </nav>
-  </div>
-  </section>
-
-    <section class="slide_container">
-      <div class="slide_content">
-        <div class="card-wrapper">
-          <div class="card">
-            <div class="image-content">
-              <span class="overlay"></span>
-              <div class="card-image">
-                <img src="src/assets/img_1.png" alt="" class="card-img"/>
-              </div>
-            </div>
-
-            <div class="card-content">
-              <h2 class="name">Kasper Iversen</h2>
-                <p class="description">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit, sunt?
-                </p>
-                
-                <button class="about_btn">View More</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
     </section>
-      <!-- info section -->
-  <section class="info_section ">
 
-<div class="container">
-  <div class="info_top ">
-    <div class="row ">
-      <div class="col-sm-6 col-sm-5">
-        <div class="info_detail">
-          <a href="/">
-            <h3>
-              Stribe
-            </h3>
-          </a>
-          <p>
-            Soluta odit exercitationem rerum aperiam eos consectetur impedit delectus qui reiciendis, distinctio, asperiores fuga labore a? Magni natus.
-          </p>
-          <div class="social_box">
-            <a href="">
-              <Icon icon="ic:baseline-facebook" width="100"/>
-            </a>
-            <a href="">
-              <Icon icon="mdi:twitter" width="30"/>
-            </a>
-            <a href="">
-              <Icon icon="mdi:linkedin" width="30"/>
-            </a>
-            <a href="">
-              <Icon icon="mdi:instagram" width="30"/>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-md-4 col-lg-3 mx-auto">
-        <h3>
-          Contact us
-        </h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit
-        </p>
-        <div class="contact_nav">
-          <a href="">
-            <Icon icon="material-symbols:location-on-outline"/>
-            <span>
-              Location
-            </span>
-          </a>
-          <a href="">
-            <Icon icon="material-symbols:smartphone-outline"/>
-            <span>
-              Call : +47 1234567890
-            </span>
-          </a>
-          <a href="">
-            <Icon icon="ic:baseline-email"/>
-            <span>
-              Email : student@stribe.com
-            </span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</section>
-<!-- end info_section -->
+<Navigation/>
+  
+  
 
 </template>
 
 <script setup>
 
-
+    import Navigation from "@/components/Navigation.vue"
     import { Icon } from '@iconify/vue';
     import { useRouter } from 'vue-router';   
     import { onMounted, ref } from "vue";
