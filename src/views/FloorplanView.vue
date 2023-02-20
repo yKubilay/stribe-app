@@ -566,13 +566,16 @@ rect{
    fill:transparent;
 }
 path:hover{
-  fill:green;
+   fill: teal;
+  opacity: 0.3;
+
   cursor:pointer;
 }
 rect:hover {
-    fill: green;
+    fill: teal;
+    opacity: 0.3;
     cursor:pointer;
   }
-    
+
 </style>
   
