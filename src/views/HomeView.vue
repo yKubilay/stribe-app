@@ -13,9 +13,13 @@
     <div class="navLinks">
       <ul>
         <li><router-link class="nav-link" to="/groups">Groups</router-link></li>
-        <li><router-link class="nav-link" to="/floorplan">Floorplan</router-link></li>
-        <li><router-link class="nav-link" to="/about">About</router-link></li>
-        <li><router-link class="nav-link" to="/signup">Sign up</router-link></li>
+        <li><router-link class="nav-link" to ="/floorplan">Floorplan</router-link></li>
+        <li><router-link class="nav-link" to ="/about">About</router-link></li>
+        <li v-if="isLoggedIn"><router-link class="nav-link" to="/profile">{{ currentUserEmail }}</router-link></li>
+        <li v-else><router-link class="nav-link" to="/signup">Sign up</router-link></li>
+        <li><button class="signoutButton" @click="handleSignOut" v-if="isLoggedIn">Sign out</button></li>
+
+
       </ul>
     </div>
   </nav>
@@ -26,8 +30,8 @@
     <div class="col-1">
         <h2>Welcome to Stribe</h2>  
         <h3>Meet and collaborate with <br>likeminded students!</h3>  
-        <button type="button">Get started</button>
-        <button type="button">About us</button>
+        <a href="/signup"><button type="button">Get started</button></a>
+        <a href="/about"><button type="button">About us</button></a>
     </div>
   <div class="col-2">
     <img src="/src/assets/wplaceNoBg.png" class="homeImage" >
@@ -45,18 +49,41 @@
 
 </template>'
 
-<script>
+<script setup>
+  import { useRouter } from 'vue-router';   
+  import { onMounted, ref, computed } from "vue";
+  import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
-function toggleNav() {
-  var navLinks = document.querySelector(".navLinks");
-  navLinks.classList.toggle("show");
-}
+  const isLoggedIn = ref(false); 
+  const router = useRouter()
+
+  let auth;
+  onMounted(() => {
+    auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        isLoggedIn.value = true;
+      } else {
+        isLoggedIn.value = false;
+      }
+    });
+  });
+  
+  const handleSignOut = () => {
+    signOut(auth).then(() => {
+      router.push("/");
+    });
+  };
+
+  const currentUserEmail = computed(() => {
+    if (auth && auth.currentUser) {
+      return auth.currentUser.name;
+    }
+    return "";
+  });
 
 </script>
 
-
-
-<style>
 
 @media only screen and (max-width:700px){
 

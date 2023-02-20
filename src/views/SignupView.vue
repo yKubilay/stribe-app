@@ -19,7 +19,9 @@
         <li><router-link class="nav-link" to="/groups">Groups</router-link></li>
         <li><router-link class="nav-link" to ="/floorplan">Floorplan</router-link></li>
         <li><router-link class="nav-link" to ="/about">About</router-link></li>
-        <li><router-link class="nav-link" to="/signup">Sign up</router-link></li>
+        <li v-if="isLoggedIn"><router-link class="nav-link" to="/profile">{{ currentUserEmail }}</router-link></li>
+        <li v-else><router-link class="nav-link" to="/signup">Sign up</router-link></li>
+        <li><button class="signoutButton" @click="handleSignOut" v-if="isLoggedIn">Sign out</button></li>
       </ul>
     </div>
     </nav>
@@ -30,6 +32,14 @@
     <div class="authRow">
     <div class="signUpform">
     <h2 class="mb-3">Create an account</h2>
+    <div class="input">
+        <label for="name">Full name</label>
+          <input
+            class="form-control"
+            type="text"
+            v-model="name"
+            placeholder="Full name"
+          />
       <div class="input">
         <label for="email">Email</label>
           <input
@@ -52,7 +62,7 @@
       <div class="altOptionAuth">
         Already have an account? <span @click="moveToLogin"> Login</span>
       </div>
-
+    </div>
 
 
 <button type="submit" class="mt-4 btn-pers" id="login_button" @click="signup">Signup</button>
@@ -63,66 +73,52 @@
   
     
   <script setup>
-
-
-
-
-    import { useRouter } from 'vue-router';
-    import { onMounted, ref } from "vue";
-    import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword } from "firebase/auth";
-
-
-    const email = ref("");
-    const password = ref("");
-    const router = useRouter()
-
-    const signup = () => {
-        createUserWithEmailAndPassword(getAuth(), email.value, password.value)
-        .then((data) => {
-            console.log("Successfully registered");
-            router.push('/')
-        })
-        .catch((error) => {
-            console.log(error.code);
-            alert(error.code);
-        });
-    };
-
-    const moveToLogin = () => {
-        router.push('/login')
-    };
-
- 
-const isLoggedIn = ref(false);
-
-let auth;
-onMounted(() => {
-  auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      isLoggedIn.value = true;
-    } else {
-      isLoggedIn.value = false;
-    }
+  import { useRouter } from 'vue-router';
+  import { onMounted, ref } from "vue";
+  import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword } from "firebase/auth";
+  
+  const email = ref("");
+  const password = ref("");
+  const router = useRouter()
+  
+  const signup = () => {
+    createUserWithEmailAndPassword(getAuth(), email.value, password.value)
+      .then((data) => {
+        console.log("Successfully registered");
+        router.push('/')
+      })
+      .catch((error) => {
+        console.log(error.code);
+        alert(error.code);
+      });
+  };
+  
+  const moveToLogin = () => {
+    router.push('/login')
+  };
+  
+  const isLoggedIn = ref(false);
+  
+  let auth;
+  onMounted(() => {
+    auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        isLoggedIn.value = true;
+      } else {
+        isLoggedIn.value = false;
+      }
+    });
   });
-});
-const handleSignOut = () => {
-  signOut(auth).then(() => {
-    router.push("/");
-  });
-};
-
-   
-
-        
+  
+  const handleSignOut = () => {
+    signOut(auth).then(() => {
+      router.push("/");
+    });
+  };
+  
 
 
   </script>
   
   
-  <style>
-
-
-  
-  </style>
-    

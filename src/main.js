@@ -7,6 +7,7 @@ import { initializeApp } from "firebase/app";
 import App from './App.vue'
 import router from './router'
 
+
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyB_0D3f_dHAMZKHOFurQYZTXw_3HRSApvE",
@@ -23,7 +24,10 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 
+
 app.mount('#app')
 
 initializeApp(firebaseConfig);
+
+
 
