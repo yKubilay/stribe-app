@@ -47,7 +47,7 @@
 
   
 
-</template>'
+</template>
 
 <script setup>
   import { useRouter } from 'vue-router';   
@@ -84,6 +84,8 @@
 
 </script>
 
+
+<style>
 
 @media only screen and (max-width:700px){
 
