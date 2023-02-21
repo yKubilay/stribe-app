@@ -18,20 +18,24 @@
         <!-- Menu -->
         <nav class="nav">
             <ul class="menu">
-              <li><router-link  to="/groups">Groups</router-link></li>
-              <li><router-link  to="/floorplan">Floorplan</router-link></li>
-              <li><router-link  to="/profile">Profile</router-link></li>
-              <li><router-link  to="/about">About</router-link></li>
-              <li><router-link to="/signup">Sign up</router-link></li>
-              <li><router-link to="/login">Login</router-link></li>
+              <li><router-link to="/groups" :class="{ active: isCurrentPage('/groups') }">Groups</router-link></li>
+              <li><router-link to="/floorplan" :class="{ active: isCurrentPage('/floorplan') }">Floorplan</router-link></li>
+              <li><router-link to="/about" :class="{ active: isCurrentPage('/about') }">About</router-link></li>
+              <li><router-link to="/signUp" :class="{ active: isCurrentPage('/signUp') }">Sign up</router-link></li>
             </ul>
         </nav>
     </header>
     
 
 </template>
-<script setup>
-  
+<script>
+  export default {
+  methods: {
+    isCurrentPage(path) {
+      return this.$route.path === path;
+    },
+  },
+};
 </script>
 <style>
 
@@ -42,7 +46,7 @@ body{
 }
 a{
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 400;
     
 }
 ul{
@@ -71,7 +75,7 @@ ul{
     width: 100%;
     height: 100%;
     position: fixed;
-    background: #42aaaa;
+    background: #2F728D;
     overflow: hidden;
 
 }
@@ -84,7 +88,7 @@ ul{
     color: white;
     width: 100%;
     margin-top: 10px;
-    margin-right: 20px;
+    padding: 10px;
     font-size: 14pt;
   }
 
@@ -94,6 +98,28 @@ ul{
 .nav{
     max-height: 0;
     transition: max-height .5s ease-out;
+}
+
+
+.menu a:after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3.5px;
+  background-color: teal;
+  transition: width 0.3s ease-in-out;
+}
+  
+.menu a:hover:after {
+  width: 100%;
+  transition: width 0.25s ease-in-out;
+}
+
+nav a.active:after {
+  width: 100%;
 }
 
 .hamb{
