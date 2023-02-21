@@ -56,76 +56,16 @@
   padding: 5px;  
 }
 
-/* -- Nav Menu bar -- */
-.navbar {
-  width: 100%;
-  display: flex;
+
+.firstFloorSVG {
   align-items: center;
-  box-shadow: 0px 15px 10px -15px #111;    
-  position: fixed;
-  background-color: white;
-  left: 0;
-  z-index: 9999999999;
-}
-
-.navbar h1 {
-  margin-left: 100px;
-  background-color: white;
-}
-
-
-.menuIcon {
-  width: 30px;
-  cursor: pointer;
-  display: none;
-  margin-right:625px;
-  margin-top:6px;
-}
-
-
-
-nav {
-  margin-top:20px;
-}
-
-nav ul {
-  text-align: center;
-  margin-right: 100px;
+  width: 1000px;
+  height: 600px;
+  margin-top:8%;
+  margin-left: 12%;
+  margin-bottom: 10%;
 
 }
-
-nav ul li {
-  list-style: none;
-  display: inline-block;
-  margin-right: 30px;
-  text-decoration: none;
-  color:rgb(0, 0, 0);
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.menuLogo {
-  width: 30px;
-  cursor: pointer;
-  display: none;
-  
-}
-
-a, .green {
-  color: #42aaaa;
-  transition: 0.5s;
-  border-bottom: 4px solid transparent;
-  transition: border-bottom 0.3s ease-in-out;
-  margin: 5px;
-  text-decoration: none;
-}
-
-.navButton {
-  width: 140px;
-  height: 40px;
-}
-
-/* -- Home View -- */
 
 .row {
   display:flex;
@@ -237,66 +177,15 @@ button:hover {
 
 }
 
-.navLinks ul {
-  display: flex;
-}
+
 
 @media (hover: hover) {
-  li a:hover {
-    border-bottom: 4px solid #2b91b9;
-  }
+ 
   h1 a:hover {
     border-bottom: 4px solid #2b91b9;
   }
 
 @media only screen and (max-width:700px) {
- 
-   .nav {
-      flex-direction: column;
-      align-items: flex-start;
-  
-    }
-
-    .navbar h1 {
-      display: none;
-    }
-
-    .navbar:active {
-      display: block;
-      background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-
-    }
-
-    .navbar .menuLogo {
-      width: 30px;
-      cursor: pointer;
-      display: flex;
-      display: absolute;
-      left: 85%;
-    
-    }
-
-    .navLinks ul {
-      flex-direction: column;
-      align-items: flex-start;
-      margin-top: 50%;
-      
-
-    }
-
-    .navLinks ul li{
-      width: 130%;
-      padding: 2%;
-      color: white;
-      align-items: center;
-      font-size: 28px;
-
-    }
 
     .row {
       flex-direction: column;
