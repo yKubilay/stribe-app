@@ -56,11 +56,16 @@
   padding: 5px;  
 }
 
-/* -- Nav Menu bar -- */
 
+.firstFloorSVG {
+  align-items: center;
+  width: 1000px;
+  height: 600px;
+  margin-top:8%;
+  margin-left: 12%;
+  margin-bottom: 10%;
 
-
-/* -- Home View -- */
+}
 
 .row {
   display:flex;
@@ -175,9 +180,7 @@ button:hover {
 
 
 @media (hover: hover) {
-  li a:hover {
-    border-bottom: 4px solid #2b91b9;
-  }
+ 
   h1 a:hover {
     border-bottom: 4px solid #2b91b9;
   }
