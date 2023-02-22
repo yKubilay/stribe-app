@@ -24,6 +24,7 @@
               <li><router-link  to="/about">About</router-link></li>
               <li><router-link to="/signup">Sign up</router-link></li>
               <li><router-link to="/login">Login</router-link></li>
+              <li><button class="signoutButton" @click="handleSignOut" v-if="isLoggedIn">Sign out</button></li>
             </ul>
         </nav>
     </header>
@@ -31,7 +32,30 @@
 
 </template>
 <script setup>
-  
+    import { useRouter } from 'vue-router';   
+    import { onMounted, ref } from "vue";
+    import { getAuth, onAuthStateChanged, signOut} from "firebase/auth";
+
+    const isLoggedIn = ref(false); 
+    const router = useRouter()
+
+
+    let auth;
+    onMounted(() => {
+      auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          isLoggedIn.value = true;
+        } else {
+          isLoggedIn.value = false;
+        }
+      });
+    });
+    const handleSignOut = () => {
+      signOut(auth).then(() => {
+        router.push("/");
+      });
+    };
 </script>
 <style>
 
@@ -60,7 +84,7 @@ ul{
 /* Logo */
 .logo{
     display: inline-block;
-    color: #42aaaa;
+    color: #2b91b9;
     font-size: 50px;
     font-weight: 400;
     margin-left: 10%;
@@ -71,7 +95,7 @@ ul{
     width: 100%;
     height: 100%;
     position: fixed;
-    background: #42aaaa;
+    background: #2b91b9;;
     overflow: hidden;
 
 }

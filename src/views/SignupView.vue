@@ -9,7 +9,7 @@
     </svg>
 
   <Navigation/>
-    
+    <section class="container">
     <div class="authRow">
     <div class="signUpform">
     <h2 class="mb-3">Create an account</h2>
@@ -50,6 +50,7 @@
 <button type="submit" class="mt-4 btn-pers" id="login_button" @click="signup">Signup</button>
 </div>
   </div>
+</section>
   </template>
   
     
@@ -110,7 +111,7 @@ const handleSignOut = () => {
   
   <style>
 
-
+ 
   
   </style>
     

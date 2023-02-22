@@ -51,7 +51,7 @@
 }
 
 .signoutButton {
-  margin-top: -1px;
+  margin-top: 18px;
   height: 80%;
   padding: 5px;  
 }
@@ -178,9 +178,7 @@ button:hover {
   li a:hover {
     border-bottom: 4px solid #2b91b9;
   }
-  h1 a:hover {
-    border-bottom: 4px solid #2b91b9;
-  }
+  
 
 @media only screen and (max-width:700px) {
 

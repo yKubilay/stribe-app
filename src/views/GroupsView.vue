@@ -7,35 +7,15 @@
       </svg>
     <Navigation/>
     
- 
+      <section class="container">
+
+
+      </section>
     
   </template>
 <script setup>
     import Navigation from '../components/Navigation.vue';
-    import { useRouter } from 'vue-router';   
-    import { onMounted, ref } from "vue";
-    import { getAuth, onAuthStateChanged, signOut} from "firebase/auth";
-
-    const isLoggedIn = ref(false); 
-    const router = useRouter()
-
-
-    let auth;
-    onMounted(() => {
-      auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          isLoggedIn.value = true;
-        } else {
-          isLoggedIn.value = false;
-        }
-      });
-    });
-    const handleSignOut = () => {
-      signOut(auth).then(() => {
-        router.push("/");
-      });
-    };
+    
 
 </script>
 

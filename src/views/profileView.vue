@@ -1,5 +1,9 @@
 <template>
-    <div>
-        <h1>Hi ...</h1>
-    </div>
+    <Navigation/>
+    <section class="container">
+        
+    </section>
 </template>
+<script setup>
+    import Navigation from '../components/Navigation.vue';
+</script>
