@@ -23,7 +23,7 @@
         <a href="/about"><button type="button">About us</button></a>
     </div>
   <div class="col-2">
-    <img src="/src/assets/wplaceNoBg.png" class="homeImage" >
+    <img src="/src/assets/images/wplaceNoBg.png" class="homeImage" >
    
   </div>
 
