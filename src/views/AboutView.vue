@@ -119,7 +119,7 @@
 <script setup>
 
 
-    import { Icon } from '@iconify/vue';
+    
     import { useRouter } from 'vue-router';   
     import { onMounted, ref } from "vue";
     import { getAuth, onAuthStateChanged, signOut} from "firebase/auth";
