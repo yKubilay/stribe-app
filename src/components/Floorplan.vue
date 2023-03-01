@@ -489,7 +489,8 @@
         height="68.330025"
         x="336.55087"
         y="273.3201"
-        inkscape:label="auditorium" />
+        inkscape:label="auditorium"
+        @click="showPopup('auditorium')" />
      <rect
         id="F057"
         width="32.635235"
@@ -523,13 +524,35 @@
    </g>
  </svg>
  
- </div>
- 
+ <div v-if="popupId" class="popup">
+      <div class="popup-header">
+        <h2>Popup {{ popupId }}</h2>
+        <button @click="hidePopup">X</button>
+      </div>
+      <div class="popup-body">
+        <p>Content for popup {{ popupId }}</p>
+      </div>
+    </div>
+   </div>
+
  </template>
  
- <script setup>
- 
-    
+ <script>
+  export default {
+  data() {
+    return {
+      popupId: null
+    }
+  },
+  methods: {
+    showPopup(id) {
+      this.popupId = id
+    },
+    hidePopup() {
+      this.popupId = null
+    }
+  }
+}
  </script>
    
  <style scoped>
@@ -551,7 +574,32 @@
      cursor:pointer;
    }
     
- 
+   .popup {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  background-color: white;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.popup-header button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 0;
+}
+
+.popup-body {
+  margin-top: 10px;
+}
  </style>
    
 
