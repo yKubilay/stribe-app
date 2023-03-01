@@ -1,95 +1,108 @@
 <template>
-    <div class="floorplan">
-      
-    </div>
-  
+  <div class="floorplan">
     
-    <div class="authRow">
-    <div class="signUpform">
-    <h2 class="mb-3">Create an account</h2>
-    <div class="input">
-        <label for="name">Full name</label>
+  </div>
+
+  
+  <div class="authRow">
+  <div class="signUpform">
+  <h2 class="mb-3">Create an account</h2>
+  <div class="input">
+      <label for="name">Full name</label>
+        <input
+          class="form-control"
+          type="text"
+          v-model="username"
+          placeholder="Full name"
+        />  
+  <div class="input">
+      <label for="email">Email</label>
+        <input
+          class="form-control"
+          type="text"
+          v-model="email"
+          placeholder="email@adress.com"
+        />
+    </div>
+      <div class="input">
+        <label for="password">Password</label>
           <input
             class="form-control"
-            type="text"
-            v-model="name"
-            placeholder="Full name"
-          />  
-    <div class="input">
-        <label for="email">Email</label>
-          <input
-            class="form-control"
-            type="text"
-            v-model="email"
-            placeholder="email@adress.com"
+            type="password"
+            v-model="password"
+            placeholder="password123"
           />
       </div>
-        <div class="input">
-          <label for="password">Password</label>
-            <input
-              class="form-control"
-              type="password"
-              v-model="password"
-              placeholder="password123"
-            />
-        </div>
 
-      <div class="altOptionAuth">
-        Already have an account? <span @click="moveToLogin"> Login</span>
-      </div>
-      </div>
+    <div class="altOptionAuth">
+      Already have an account? <span @click="moveToLogin"> Login</span>
+    </div>
+    </div>
 
 
 
 <button type="submit" class="mt-4 btn-pers" id="login_button" @click="signup">Signup</button>
 </div>
-  </div>
-  </template>
+</div>
+
+<username usernames/>
+<isLoggedIn.value isLogged/>
+
+</template>
+
   
-    
-  <script setup>
-    import Navigation from "@/components/Navigation.vue"
-    import { useRouter } from 'vue-router';
-    import { onMounted, ref } from "vue";
-    import { getAuth, onAuthStateChanged,  createUserWithEmailAndPassword } from "firebase/auth";
+<script setup>
 
+  import Navigation from "@/components/Navigation.vue"
+  import { useRouter } from 'vue-router';
+  import { onMounted, ref } from "vue";
+  import { getAuth, onAuthStateChanged,  createUserWithEmailAndPassword } from "firebase/auth";
+  import { getFirestore, doc, setDoc } from "firebase/firestore";
+  import { useAuthStore } from '@/stores/auth.js';
+  import { useUserStore } from "../../stores/user";
 
-    const email = ref("");
-    const password = ref("");
-    const router = useRouter()
+  const db = getFirestore();
+  const email = ref("");
+  const password = ref("");
+  const username = ref("")
+  const router = useRouter()
+  const isLoggedIn = ref(false);
 
-    const signup = () => {
-        createUserWithEmailAndPassword(getAuth(), email.value, password.value)
-        .then((data) => {
-            console.log("Successfully registered");
-            router.push('/')
-        })
-        .catch((error) => {
-            console.log(error.code);
-            alert(error.code);
+  //Stores
+  const storeAuth = useAuthStore();
+  const storeUser = useUserStore();
+
+  const auth = getAuth();
+
+  const signup = () => {
+    createUserWithEmailAndPassword(auth, email.value, password.value)
+      .then(async (data) => {
+        console.log("Successfully registered");
+        // Add user to Firestore collection
+        const userDocRef = doc(db, "users", data.user.uid);
+        await setDoc(userDocRef, {
+          username: username.value,
+          email: email.value,
+          uid: data.user.uid,
         });
-    };
+        storeAuth.isLoggedIn = true;
+        storeUser.username = username.value;
+        router.push('/');
+      })
+      .catch((error) => {
+        console.log(error.code);
+        alert(error.code);
+      });
+  };
 
-    const moveToLogin = () => {
-        router.push('/login')
-    };
+  const moveToLogin = () => {
+      router.push('/login')
+  };
 
- 
-const isLoggedIn = ref(false);
-
-let auth;
-onMounted(() => {
-  auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      isLoggedIn.value = true;
-    } else {
-      isLoggedIn.value = false;
-    }
+  onMounted(() => {
+    onAuthStateChanged(auth, (user) => {
+      isLoggedIn.value = !!user;
+    });
   });
-});
-
-  
-
 
 </script>
