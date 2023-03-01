@@ -2,6 +2,7 @@
 
 <div class="firstFloor">
     <svg class="firstFloorSVG"
+    ref="svgElement"
     version="1.1"
     id="svg9"
     
@@ -490,7 +491,7 @@
         x="336.55087"
         y="273.3201"
         inkscape:label="auditorium"
-        @click="showPopup('auditorium')" />
+         />
      <rect
         id="F057"
         width="32.635235"
@@ -526,7 +527,7 @@
  
  <div v-if="popupId" class="popup">
       <div class="popup-header">
-        <h2>Popup {{ popupId }}</h2>
+        <h2>{{ popupId }}</h2>
         <button @click="hidePopup">X</button>
       </div>
       <div class="popup-body">
@@ -538,11 +539,21 @@
  </template>
  
  <script>
-  export default {
+
+export default {
   data() {
     return {
       popupId: null
     }
+  },
+  mounted() {
+    const svgElement = this.$refs.svgElement
+    const elements = svgElement.querySelectorAll('rect, path')
+    elements.forEach((element) => {
+      element.addEventListener('click', () => {
+        this.showPopup(element.id)
+      })
+    })
   },
   methods: {
     showPopup(id) {
@@ -553,6 +564,7 @@
     }
   }
 }
+
  </script>
    
  <style scoped>
