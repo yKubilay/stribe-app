@@ -3,41 +3,104 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- App title -->
-    <title>Responsive Pure CSS Menu</title>
+    
     
 </head>
 
-    <!-- Navigation bar -->
-    <header class="header">
-        <!-- Logo -->
-        <router-link to="/" class="logo">Stribe</router-link>
-        <!-- Hamburger icon -->
+
+<header class="header">
+
+      <router-link to="/" class="logo">Stribe</router-link>
+
         <input class="side-menu" type="checkbox" id="side-menu"/>
         <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
-        <!-- Menu -->
+
         <nav class="nav">
             <ul class="menu">
               <li><router-link to="/groups" :class="{ active: isCurrentPage('/groups') }">Groups</router-link></li>
               <li><router-link to="/floorplan" :class="{ active: isCurrentPage('/floorplan') }">Floorplan</router-link></li>
               <li><router-link to="/about" :class="{ active: isCurrentPage('/about') }">About</router-link></li>
-              <li><router-link to="/signUp" :class="{ active: isCurrentPage('/signUp') }">Sign up</router-link></li>
+              <li><router-link to="/profile" :class="{ active: isCurrentPage('/profile') }">{{ storeUser.username }}</router-link></li>
+
+
+              <li v-if="isLoggedIn"><button class="signoutButton" @click="handleSignOut">Sign out</button></li>
+              <li v-else><router-link to="/signUp" :class="{ active: isCurrentPage('/signUp') }">Sign up</router-link></li>
             </ul>
         </nav>
     </header>
+
+
+<!--     @click="handleSignOut"
+ --></template>
+
+<script setup>
+
+/* import { useStore } from 'vuex'
+ */
+ import { computed } from 'vue';
+ import { useAuthStore } from '@/stores/auth.js';
+ import { useUserStore } from '@/stores/user.js';
+ import { useRouter } from 'vue-router';
+/*  import { onAuthStateChanged, signOut} from "firebase/auth";
+ */
+
+
+
+const router = useRouter()
+
+
+const storeAuth = useAuthStore();
+const storeUser = useUserStore();
+ 
+ 
+
+const isCurrentPage = (path) => {
+  return window.location.pathname === path
+}
+
+
+const isLoggedIn = computed(() => {
+  return storeAuth.isLoggedIn
+})
+
+const username = computed(() => {
+  return storeUser.username
+})
+
+
+const handleSignOut = () => {
+  storeAuth.setLoggedIn(false)
+  storeUser.setUsername()
+  router.push('/')
+}
+
+
+/* const handleSignOut = () => {
+  signOut(auth).then(() => {
     
+    router.push("/");
+  });
+}; */
+/* const isLoggedIn = computed(() => {
+  return store.getters.isLoggedIn
+})
 
-</template>
+ */
 
-<script>
-  export default {
-  methods: {
-    isCurrentPage(path) {
-      return this.$route.path === path;
-    },
-  },
-};
+/* const store = useStore()
+ */
+
+
 </script>
+
+
+
+
+
+
+
+
+
 
 
 <style>

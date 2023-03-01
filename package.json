@@ -20,9 +20,10 @@
     "bootstrap": "^5.2.3",
     "firebase": "^9.16.0",
     "font-awesome": "^4.7.0",
-    "pinia": "^2.0.28",
+    "pinia": "^2.0.32",
     "vue": "^3.2.45",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.28.1",
