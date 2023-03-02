@@ -3,62 +3,89 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- App title -->
-    <title>Responsive Pure CSS Menu</title>
+    
     
 </head>
 
-    <!-- Navigation bar -->
-    <header class="header">
-        <!-- Logo -->
-        <router-link to="/" class="logo">Stribe</router-link>
-        <!-- Hamburger icon -->
+
+<header class="header">
+
+      <router-link to="/" class="logo">Stribe</router-link>
+
         <input class="side-menu" type="checkbox" id="side-menu"/>
         <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
-        <!-- Menu -->
+
         <nav class="nav">
             <ul class="menu">
-              <li><router-link  to="/groups">Groups</router-link></li>
-              <li><router-link  to="/floorplan">Floorplan</router-link></li>
-              <li><router-link  to="/profile">Profile</router-link></li>
-              <li><router-link  to="/about">About</router-link></li>
-              <li><router-link to="/signup">Sign up</router-link></li>
-              <li><router-link to="/login">Login</router-link></li>
-              <li><button class="signoutButton" @click="handleSignOut" v-if="isLoggedIn">Sign out</button></li>
+              <li><router-link to="/groups" :class="{ active: isCurrentPage('/groups') }">Groups</router-link></li>
+              <li><router-link to="/floorplan" :class="{ active: isCurrentPage('/floorplan') }">Floorplan</router-link></li>
+              <li><router-link to="/about" :class="{ active: isCurrentPage('/about') }">About</router-link></li>
+              <li><router-link to="/profile" :class="{ active: isCurrentPage('/profile') }">{{ storeUser.username }}</router-link></li>
+
+
+              <li v-if="isLoggedIn"><button class="signoutButton" @click="handleSignOut">Sign out</button></li>
+              <li v-else><router-link to="/signUp" :class="{ active: isCurrentPage('/signUp') }">Sign up</router-link></li>
             </ul>
         </nav>
     </header>
-    
 
-</template>
+
+<!--     @click="handleSignOut"
+ --></template>
+
 <script setup>
-    import { useRouter } from 'vue-router';   
-    import { onMounted, ref } from "vue";
-    import { getAuth, onAuthStateChanged, signOut} from "firebase/auth";
-
-    const isLoggedIn = ref(false); 
-    const router = useRouter()
-
-
-    let auth;
-    onMounted(() => {
-      auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          isLoggedIn.value = true;
-        } else {
-          isLoggedIn.value = false;
-        }
-      });
-    });
-    const handleSignOut = () => {
-      signOut(auth).then(() => {
-        router.push("/");
-      });
-    };
+/* import { useStore } from 'vuex'
+ */
+ import { computed } from 'vue';
+ import { useAuthStore } from '@/stores/auth.js';
+ import { useUserStore } from '@/stores/user.js';
+ import { useRouter } from 'vue-router';
+/*  import { onAuthStateChanged, signOut} from "firebase/auth";
+ */
+const router = useRouter()
+const storeAuth = useAuthStore();
+const storeUser = useUserStore();
+ 
+ 
+const isCurrentPage = (path) => {
+  return window.location.pathname === path
+}
+const isLoggedIn = computed(() => {
+  return storeAuth.isLoggedIn
+})
+const username = computed(() => {
+  return storeUser.username
+})
+const handleSignOut = () => {
+  storeAuth.setLoggedIn(false)
+  storeUser.setUsername()
+  router.push('/')
+}
+/* const handleSignOut = () => {
+  signOut(auth).then(() => {
+    
+    router.push("/");
+  });
+}; */
+/* const isLoggedIn = computed(() => {
+  return store.getters.isLoggedIn
+})
+ */
+/* const store = useStore()
+ */
 </script>
-<style>
 
+
+
+
+
+
+
+
+
+
+
+<style>
  
 body{
     background-color: #FFF;
@@ -66,13 +93,12 @@ body{
 }
 a{
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 400;
     
 }
 ul{
     list-style: none;
 }
-
 .header{
     background: whitesmoke;
     box-shadow: 0px 15px 10px -15px #111;
@@ -84,20 +110,18 @@ ul{
 /* Logo */
 .logo{
     display: inline-block;
-    color: #2b91b9;
+    color: #42aaaa;
     font-size: 50px;
     font-weight: 400;
     margin-left: 10%;
 }
-
 /* Nav menu */
 .nav{
     width: 100%;
     height: 100%;
     position: fixed;
-    background: #2b91b9;;
+    background: #2F728D;
     overflow: hidden;
-
 }
 .nav ul{
   margin-right: 150px;
@@ -108,35 +132,44 @@ ul{
     color: white;
     width: 100%;
     margin-top: 10px;
-    margin-right: 20px;
+    padding: 10px;
     font-size: 14pt;
   }
-
-
-
-
 .nav{
     max-height: 0;
     transition: max-height .5s ease-out;
 }
-
+.menu a:after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3.5px;
+  background-color: teal;
+  transition: width 0.3s ease-in-out;
+}
+  
+.menu a:hover:after {
+  width: 100%;
+  transition: width 0.25s ease-in-out;
+}
+nav a.active:after {
+  width: 100%;
+}
 .hamb{
     cursor: pointer;
     float: right;
     padding: 40px 20px;
-
 }/* Style label tag */
-
 .hamb-line {
     background: black;
     display: block;
     height: 3px;
     position: relative;
     width: 24px;
-
-
 } /* Style span tag */
-
 .hamb-line::before,
 .hamb-line::after{
     background: black;
@@ -154,11 +187,9 @@ ul{
 .hamb-line::after{
     top: -5px;
 }
-
 .side-menu {
     display: none;
 } /* Hide checkbox */
-
 .side-menu:checked ~ nav{
     max-height: 100%;
 }
@@ -173,7 +204,6 @@ ul{
     transform: rotate(45deg);
     top:0;
 }
-
 @media (min-width: 1100px) {
     .nav{
         max-height: none;
@@ -191,29 +221,22 @@ ul{
     }
     .menu a:hover{
         background-color: transparent;
-
     }
     
     .hamb{
         display: none;
     }
   }
-
-
-
   @media (max-width: 1100px) {
     .nav {
       flex-direction: column;
       align-items: flex-start;
-
     }
-
     .menu {
       width: 100%;
       display: block;
       text-align: center;
     }
-
     
     .menu a{
     margin-top: 30px;
