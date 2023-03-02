@@ -7,16 +7,89 @@
       </svg>
     <Navigation/>
     
-      <section class="container">
-
-
-      </section>
-    
-  </template>
-<script setup>
+      
+  <div class="container">
+    <h1>Create a Meetup</h1>
+    <form @submit.prevent="createMeetup">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input id="title" v-model="title" type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" v-model="description" class="form-control"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input id="location" v-model="location" type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="imageUrl">Image URL</label>
+        <input id="imageUrl" v-model="imageUrl" type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="date">Date</label>
+        <input id="date" v-model="date" type="date" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="time">Time</label>
+        <input id="time" v-model="time" type="time" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary">Create Meetup</button>
+    </form>
+  </div>
+</template>
+<script>
     import Navigation from '../components/Navigation.vue';
-    
-
+    import  db  from '../firebase.js'
+export default {
+  data() {
+    return {
+      title: '',
+      description: '',
+      location: '',
+      imageUrl: '',
+      date: '',
+      time: ''
+    }
+  },
+  components: {
+    Navigation
+  },
+  methods: {
+    async createMeetup() {
+      // Create a new meetup object with the form data
+      const meetup = {
+        title: this.title,
+        description: this.description,
+        location: this.location,
+        imageUrl: this.imageUrl,
+        date: this.date,
+      }
+      /
+      db.collection('meetups').add(meetup)
+      // Clear the form data
+      this.title = ''
+      this.description = ''
+      this.location = ''
+      this.imageUrl = ''
+      this.date = ''
+      this.time = ''
+    }
+  }
+}
 </script>
 
-  
+<style>
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 50px;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+label {
+  font-weight: bold;
+}
+</style>

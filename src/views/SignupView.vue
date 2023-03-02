@@ -58,7 +58,7 @@
     import Navigation from "@/components/Navigation.vue"
     import { useRouter } from 'vue-router';
     import { onMounted, ref } from "vue";
-    import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword } from "firebase/auth";
+    import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword } from "firebase/auth";
 
 
     const email = ref("");
@@ -95,11 +95,7 @@ onMounted(() => {
     }
   });
 });
-const handleSignOut = () => {
-  signOut(auth).then(() => {
-    router.push("/");
-  });
-};
+
 
    
 

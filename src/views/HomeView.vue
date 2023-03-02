@@ -39,12 +39,10 @@
 
 <script setup>
     import Navigation from "@/components/Navigation.vue"
-    import { useRouter } from 'vue-router';   
     import { onMounted, ref } from "vue";
-    import { getAuth, onAuthStateChanged, signOut} from "firebase/auth";
+    import { getAuth, onAuthStateChanged} from "firebase/auth";
 
-    const isLoggedIn = ref(false); 
-const router = useRouter()
+    const isLoggedIn = ref(false);
 
 let auth;
 onMounted(() => {
@@ -57,11 +55,7 @@ onMounted(() => {
     }
   });
 });
-const handleSignOut = () => {
-  signOut(auth).then(() => {
-    router.push("/");
-  });
-};
+
 </script>
 
 <style>
