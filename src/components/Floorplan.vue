@@ -1,5 +1,5 @@
 <template>
-
+    
     <div class="firstFloor">
         <svg class="firstFloorSVG"
         ref="svgElement"
