@@ -35,7 +35,9 @@
               <div class="card-content">
                   <h2 class="name">Kasper Iversen</h2>
                   <p class="description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ducimus!
+                    23 years old.
+                    <br/>
+                    Interests: Football, training and programming. 
                   </p>
                   <button class="about-button">Les mer</button>
               </div>
@@ -60,7 +62,9 @@
               <div class="card-content">
                   <h2 class="name">Håvard Solheim Jenssen</h2>
                   <p class="description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, soluta.
+                    23 years old.
+                    <br/>
+                    Interests: Handball, training, programming and freesbee-golf. 
                   </p>
                   <button class="about-button">Les mer</button>
               </div>
@@ -85,7 +89,9 @@
               <div class="card-content">
                   <h2 class="name">Zachary Laguda</h2>
                   <p class="description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, soluta.
+                    25 years old(?).
+                    <br/>
+                    Interests: Volleyball, training and programming. 
                   </p>
                   <button class="about-button">Les mer</button>
               </div>
@@ -110,7 +116,9 @@
               <div class="card-content">
                   <h2 class="name">Kubilay Kerim Özdemir</h2>
                   <p class="description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, soluta.
+                    24 years old.
+                    <br/>
+                    Interests: yo-yo and programming. 
                   </p>
                   <button class="about-button">Les mer</button>
               </div>
