@@ -3,9 +3,16 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import "bootstrap/dist/js/bootstrap.js";
 import './assets/main.css'
+import { initializeApp } from "firebase/app";
 import App from './App.vue'
 import router from './router'
-import {initializeApp} from 'firebase/app'
+import { getFirestore } from 'firebase/firestore';
+import { getAuth } from "firebase/auth";
+
+/* /* import store from "store/index.js"
+ */
+
+
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyB_0D3f_dHAMZKHOFurQYZTXw_3HRSApvE",
@@ -18,17 +25,17 @@ const firebaseConfig = {
     // ...
   };
 
-  initializeApp(firebaseConfig)
-const app = createApp(App)
+const app = createApp(App);
 
 app.use(createPinia())
 app.use(router)
-
+/* app.use(store)
+ */
 
 app.mount('#app')
 // Get a Firestore instance
 
-
+initializeApp(firebaseConfig);
 
 
 

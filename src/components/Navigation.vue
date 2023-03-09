@@ -34,6 +34,7 @@
  --></template>
 
 <script setup>
+
 /* import { useStore } from 'vuex'
  */
  import { computed } from 'vue';
@@ -42,25 +43,38 @@
  import { useRouter } from 'vue-router';
 /*  import { onAuthStateChanged, signOut} from "firebase/auth";
  */
+
+
+
 const router = useRouter()
+
+
 const storeAuth = useAuthStore();
 const storeUser = useUserStore();
  
  
+
 const isCurrentPage = (path) => {
   return window.location.pathname === path
 }
+
+
 const isLoggedIn = computed(() => {
   return storeAuth.isLoggedIn
 })
+
 const username = computed(() => {
   return storeUser.username
 })
+
+
 const handleSignOut = () => {
   storeAuth.setLoggedIn(false)
   storeUser.setUsername()
   router.push('/')
 }
+
+
 /* const handleSignOut = () => {
   signOut(auth).then(() => {
     
@@ -70,9 +84,13 @@ const handleSignOut = () => {
 /* const isLoggedIn = computed(() => {
   return store.getters.isLoggedIn
 })
+
  */
+
 /* const store = useStore()
  */
+
+
 </script>
 
 
@@ -139,6 +157,8 @@ ul{
     max-height: 0;
     transition: max-height .5s ease-out;
 }
+
+
 .menu a:after {
   content: '';
   position: absolute;
@@ -155,9 +175,11 @@ ul{
   width: 100%;
   transition: width 0.25s ease-in-out;
 }
+
 nav a.active:after {
   width: 100%;
 }
+
 .hamb{
     cursor: pointer;
     float: right;

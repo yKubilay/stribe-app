@@ -28,7 +28,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/img_1.png" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_1.png" alt="img 1" class="card-img">
                 </div>
               </div>
 
@@ -55,7 +55,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/img_2.jfif" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_2.jfif" alt="img 1" class="card-img">
                 </div>
               </div>
 
@@ -82,7 +82,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/img_3.jfif" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_3.jfif" alt="img 1" class="card-img">
                 </div>
               </div>
 
@@ -109,7 +109,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/img_4.jpg" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_4.jpg" alt="img 1" class="card-img">
                 </div>
               </div>
 
@@ -164,9 +164,6 @@ import "swiper/css/navigation";
     font-family: 'Poppins', sans-serif;
   }
 
-  .container {
-    min-height: 50vh;
-  }
   
   
   h3 {

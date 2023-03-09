@@ -26,7 +26,9 @@
     import Navigation from "@/components/Navigation.vue"   
     import { onMounted, ref } from "vue";
     import { getAuth, onAuthStateChanged} from "firebase/auth";
+
     const isLoggedIn = ref(false); 
+
 let auth;
 onMounted (() => {
   auth = getAuth();
