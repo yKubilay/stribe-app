@@ -8,6 +8,8 @@ import App from './App.vue'
 import router from './router'
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from "firebase/auth";
+import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
+
 
 /* /* import store from "store/index.js"
  */
@@ -29,6 +31,8 @@ const app = createApp(App);
 
 app.use(createPinia())
 app.use(router)
+app.use(autoAnimatePlugin)
+
 /* app.use(store)
  */
 

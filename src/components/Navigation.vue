@@ -30,6 +30,7 @@
     </header>
 
 
+    
 <!--     @click="handleSignOut"
  --></template>
 
@@ -130,10 +131,11 @@ ul{
 /* Logo */
 .logo{
     display: inline-block;
-    color: #42aaaa;
+    color: #008080;
     font-size: 50px;
     font-weight: 400;
-    margin-left: 10%;
+    margin-left: 6.5%;
+    
 }
 
 /* Nav menu */
@@ -146,7 +148,7 @@ ul{
 
 }
 .nav ul{
-  margin-right: 150px;
+  margin-right: 8rem;
 }
 .menu a{
     display: block;
