@@ -4,9 +4,9 @@
   <div class="container">
     <header class="groupsHeader" :class="{sticky: stickyHeader}">
 
-    <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ activeParticipants }} participants</h1>
+      <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ activeParticipants }} participants</h1>
       <input type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
-  </header>
+    </header>
 
     <section class="basic-grid">
       <div class="card create-group-card" :style="formStyle" @click="toggleForm">
@@ -14,35 +14,50 @@
         <h2 class="createGroup" v-if="!showForm">Create group</h2>
         <div class="plusSymbol" v-if="!showForm">+</div>
         <div class="formContainer" v-else>
-       
-        <div class="buttonGroup">
-          <button class="floorplanButton">Create</button>
-          <button class="floorplanButton" @click="toggleForm">Cancel</button>
-        </div>
+          <div class="buttonGroup">
+            <button class="floorplanButton">Create</button>
+            <button class="floorplanButton" >Cancel</button>
+          </div>
         </div>
       </div>
 
-    
       <div class="card" v-for="(card, index) of cards" :key="card" :style="getCardStyle(index)">
         <div class="cardContent">
-          
-        <div class="cardTitle">Group {{ card }}</div>
-        
-          <div class="cardDescription">
-        Short description of group
-        </div>
-       <div class="cardParticipants" v-if="isCardExpanded">
-        <h4>Participants</h4>
-        <ul class="participantsList">
-        <li v-for="(participants, index) in participants" :key="index">{{ participants }}</li>  
-        </ul>
-       </div>
-        </div>
-
-        <div class="buttonGroup">
-            <button class="floorplanButton" @click="toggleCard">Show more</button>
-            <button class="floorplanButton" @click="joinRoom">Join room</button>
+          <div class="cardTitle">Group {{ card.id }}</div>
+          <div class="cardDescription" @click="showModal(card)">Python is a high-level, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation. </div>
+          <div class="cardParticipants" v-if="cardExpanded">
+            <h4>Participants</h4>
+           
           </div>
+        </div>
+        <div class="buttonGroup">
+          <button class="floorplanButton" @click="showModal(card)">Show more</button>
+          <button class="floorplanButton" @click="joinRoom">Join room</button>
+        </div>
+      </div>
+
+      <div class="modal" v-if="modalVisible" @click.self="hideModal">
+        <div class="modal-content" @click.stop>
+          
+          <div class="modal-card">
+            <section class="modal-header">
+              <button class="closeButton" @click="hideModal">X</button>
+              <h2>{{ selectedCard.title }}</h2>
+            </section>
+            
+            <p class="modal-description">{{ selectedCard.description }}</p>
+            <h4>Area</h4>
+            <ul>
+              <li v-for="area in selectedCard.areas" :key="area">{{ area }}</li>
+            </ul>
+            <h4>Participants</h4>
+            <ul>
+              <li v-for="participant in selectedCard.participants" :key="participant">{{ participant }}</li>
+            </ul>
+            <button class="floorplanButton" @click="joinRoom">Join room</button>
+
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -71,33 +86,75 @@ isLoggedIn.value = false;
 });
 });
 
-const cards = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+const cards = ref([
+  {
+    id: 1,
+    areas: ["area1", "area2"],
+    participants: ["jack", "johnny", "joe"]
+  },
+  {
+    id: 2,
+    areas: ["area3", "area4"],
+    participants: ["jim", "jack", "johnny"]
+  },
+   {
+    id: 3,
+    areas: ["area5", "area6"],
+    participants: ["jim", "jack", "johnny"]
+   },
+   {
+    id: 3,
+    areas: ["area5", "area6"],
+    participants: ["jim", "jack", "johnny"]
+   }
+])
+
 
 const showForm = ref(false);
 const groupTitle = ref('');
-const groupDescription = ref('');
 const searchQuery = ref('');
 const participants = ref(["jack", "johnny", "joe", "jim", "jack", "johnny"])
-const isCardExpanded = ref(false);
+const cardExpanded = ref(false);
 
 
 
 
 function toggleForm() {
-  if (showForm.value === false) {
-    showForm.value = true;
+  showForm.value = !showForm.value;
+}
+
+
+
+
+function toggleCard() {
+  if (cardExpanded.value === false) {
+    cardExpanded.value = true;
+    showModal(card);
   } else {
-    showForm.value = true;
+    cardExpanded.value = false;
+    hideModal();
   }
 }
 
-function toggleCard() {
-  if (isCardExpanded.value === false) {
-    isCardExpanded.value = true;
-  } else {
-    isCardExpanded.value = false;
+  const modalVisible = ref(false);
+  const selectedCard = ref(null);
+
+  
+  function showModal(card) {
+    selectedCard.value = {
+      title: `Group ${card.id}`,
+      description: "certain conclusion in favor of their commercial interests. Reports written by big industry players can still be reliable secondary data, but should optimally be compared to similar reports to check for any bias or ulterior motives.",
+      participants: participants.value,
+      areas: card.areas
+
+    };
+    modalVisible.value = true;
   }
-}
+
+  function hideModal() {
+    modalVisible.value = false;
+    selectedCard.value = null;
+  }
 
 
 
@@ -149,6 +206,7 @@ const activeParticipants = computed(() => participants.value.length);
 })
 
 
+
 </script>
 <style>
   .activeGroupsButton {
@@ -157,13 +215,11 @@ const activeParticipants = computed(() => participants.value.length);
 
 
 
-  .createGroup {
-    font-size: 45px;  
-    color: #edf6f9;   
-  }
+  
 
   .groupsHeader {
     background-color: #F5F0E7;
+    margin-top: 2%;
   
   }
 
@@ -209,7 +265,6 @@ const activeParticipants = computed(() => participants.value.length);
   .buttonGroup {
     display: flex;
     justify-content: center;
-    margin-top: 5%;
   }
   
   .floorplanButton {
@@ -220,45 +275,68 @@ const activeParticipants = computed(() => participants.value.length);
  
   }
 
+  .closeButton {
+    font-size: 18px;
+    padding:5px;
+    position: absolute;
+    top: 1%;
+    right: 15px;
+    background: #008080;
+    cursor: pointer;
+    z-index: 1;
+
+  }
+
+
+  .createGroup {
+    font-size: 45px; 
+    margin-top: 16%; 
+    color: #edf6f9;   
+    cursor: pointer;
+
+  }
+
   .plusSymbol {
     font-size: 80px;
+    margin-bottom: 20%;
+    cursor: pointer;
      
   }
  
+  
 
 
 
-  .card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: #353e57;
-    font-size: 3rem;
-    color: white;
-    box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem,
-      rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
-    height: 300px;
-    width: 100%;
-    border-radius: 4px;
-    transition: all 500ms;
-    overflow: hidden;
-    position:relative;
+ 
+   .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 300px;
+  width: 100%;
+  background: #353e57;
+  color: white;
+  box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem,
+    rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
+  border-radius: 4px;
+  overflow: hidden;
+  position:relative;
 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0;
-    transform: translate(-10%, -10%);
-  }
-
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: translate(-10%, -10%);
+}
+ 
   .card:hover {
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
   transform: translateY(-10px);
 }
 
 .cardContent {
     text-align: left;
+    margin-left: 2rem;
 }
 
   .cardTitle {
@@ -270,13 +348,20 @@ const activeParticipants = computed(() => participants.value.length);
 
 
   .cardDescription {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     font-size: 1.3rem;
-    color: #edf6f9;    /*    margin-bottom: 1rem;
-    margin-bottom: 25%; */
+    color: #edf6f9;
     text-align: left;
-    margin-top: 20%;
-
+    text-overflow: ellipsis;
+    cursor: pointer;
   }
+
+  .cardDescription:hover {
+  text-decoration: underline;
+}
 
   .cardParticipants {
     list-style-type: none;
@@ -305,7 +390,6 @@ const activeParticipants = computed(() => participants.value.length);
 
   .card:hover {
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
-    cursor: pointer;
     
   }
 
@@ -321,6 +405,51 @@ const activeParticipants = computed(() => participants.value.length);
     background: linear-gradient(15deg, #13547a, #80d0c7); /* primary color */
 
   }
+
+  /*Modal that pops up when "Show more" is pressed*/
+  .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(8px);
+  will-change: transform, opacity;
+  font-size: 1.2rem;
+
+  
+}
+
+.modal-content {
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
+  background-color: #353E57;
+  color: white;
+  max-width: 50%;
+  max-height: 90%;
+  overflow: auto;
+}
+
+.modal-description {
+  margin-top: 2%;
+}
+
+
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+/*     font-weight: bold;
+ */    cursor: pointer;
+  }
+  
 
   /* animate cards */
   @keyframes cardAnimation {
@@ -347,4 +476,31 @@ const activeParticipants = computed(() => participants.value.length);
     animation-delay: 0ms;
     animation-fill-mode: forwards;
   }
+
+
+  @media(max-width: 768px) {
+    .modal-content {
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
+  background-color: #353E57;
+  color: white;
+  
+  max-width: 90%;
+  max-height: 100%;
+  overflow: auto;
+  }
+
+  .container {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .basic-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+  }
+
+}
+
 </style>
