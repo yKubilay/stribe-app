@@ -547,43 +547,79 @@
       </form>
          </div>
        </div>
-   
-       <p>show groups under here</p>
+
+       <div class="grid-container">
+          <div v-for="item in items" :key="item.id" class="card">
+               <div class="cardContent">
+          <div class="cardTitle">Group</div>
+          <div class="cardDescription" @click="showModal(card)">Python is a high-level, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation. </div>
+          <div class="cardParticipants" v-if="cardExpanded">
+            <h4>Participants</h4>
+           
+          </div>
+        </div>
+        <div class="buttonGroup">
+          <button class="floorplanButton" @click="showModal(card)">Show more</button>
+          <button class="floorplanButton" @click="joinRoom">Join room</button>
+        </div>
+         </div>
+      </div>
    
       </div>
    
     </template>
     
     <script>
+
    
    export default {
-     data() {
-       return {
-         popupId: null
-       }
-     },
-     mounted() {
-       const svgElement = this.$refs.svgElement
-       const elements = svgElement.querySelectorAll('rect, path')
-       elements.forEach((element) => {
-         element.addEventListener('click', () => {
-           this.showPopup(element.id)
-         })
-       })
-     },
-     methods: {
-       showPopup(id) {
-         this.popupId = id
-       },
-       hidePopup() {
-         this.popupId = null
-       }
-     }
-   }
+    data() {
+        return {
+            popupId: null,
+            items: [
+               { id: 1, title: "Card 1", content: "Card 1 content" },
+               { id: 2, title: "Card 2", content: "Card 2 content" },
+               { id: 3, title: "Card 3", content: "Card 3 content" },
+               // Add more cards as needed
+            ],
+        };
+    },
+    mounted() {
+        const svgElement = this.$refs.svgElement;
+        const elements = svgElement.querySelectorAll("rect, path");
+        elements.forEach((element) => {
+            element.addEventListener("click", () => {
+                this.showPopup(element.id);
+            });
+        });
+    },
+    methods: {
+        showPopup(id) {
+            this.popupId = id;
+        },
+        hidePopup() {
+            this.popupId = null;
+        }
+    },
+}
    
     </script>
       
     <style scoped>
+    .grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 300px;
+  gap: 1rem;
+  left: 0;
+}
+
+.card {
+  background-color: #353e57;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
     path{
        fill:transparent;
     }
