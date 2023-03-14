@@ -2,8 +2,8 @@
       <Navigation />
       <section class="container" id="profile_container">
         <div class="row justify-content-center">
-            <div class="card">
-              <div class="card-header">{{ storeUser.username }}</div>
+            <div class="profile_card">
+              <div class="card-header">{{ storeUser.username + '´s profile'}}</div>
           <div class="card-body">
             <div>
               <label for="email">Email</label>
@@ -124,11 +124,17 @@ export default {
     max-width: 800px;
     height: 100%;
 }
-.card {
+.profile_card {
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 20px;
   height: 100%;
+ 
+  height: 300px;
+  width: 100%;
+  background: #353e57;
+  color: white;
+
 }
 
 .card-header {

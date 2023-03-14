@@ -2,9 +2,10 @@
   <NavigationBar/>
   <div class="project_description_container">
       <h3>Stribe</h3>
-      <h4>Frequently asked questions</h4>
       <p>Why did we choose to make Stribe?</p>
       <p>Her skal vi skrive litt om prosjektet</p>
+      <FAQ />
+      <br/>
       <h1 style="text-align: center;">Stribes' developers</h1>
   </div>
   
@@ -23,7 +24,7 @@
       <div class="slide-container">
         <div class="slide-content">
           <div class="card-wrapper">
-            <div class="card">
+            <div class="about_card">
               <div class="image-content">
                 <span class="overlay"></span>
 
@@ -39,7 +40,7 @@
                     <br/>
                     Interests: Football, training and programming. 
                   </p>
-                  <button class="about-button">Les mer</button>
+                  <button class="about-button">Read more</button>
               </div>
             </div>
           </div>
@@ -50,7 +51,7 @@
       <div class="slide-container">
         <div class="slide-content">
           <div class="card-wrapper">
-            <div class="card">
+            <div class="about_card">
               <div class="image-content">
                 <span class="overlay"></span>
 
@@ -66,7 +67,7 @@
                     <br/>
                     Interests: Handball, training, programming and freesbee-golf. 
                   </p>
-                  <button class="about-button">Les mer</button>
+                  <button class="about-button">Read more</button>
               </div>
             </div>
           </div>
@@ -77,7 +78,7 @@
       <div class="slide-container">
         <div class="slide-content">
           <div class="card-wrapper">
-            <div class="card">
+            <div class="about_card">
               <div class="image-content">
                 <span class="overlay"></span>
 
@@ -93,7 +94,7 @@
                     <br/>
                     Interests: Volleyball, training and programming. 
                   </p>
-                  <button class="about-button">Les mer</button>
+                  <button class="about-button">Read more</button>
               </div>
             </div>
           </div>
@@ -104,7 +105,7 @@
       <div class="slide-container">
         <div class="slide-content">
           <div class="card-wrapper">
-            <div class="card">
+            <div class="about_card">
               <div class="image-content">
                 <span class="overlay"></span>
 
@@ -120,7 +121,7 @@
                     <br/>
                     Interests: yo-yo and programming. 
                   </p>
-                  <button class="about-button">Les mer</button>
+                  <button class="about-button">Read more</button>
               </div>
             </div>
           </div>
@@ -136,10 +137,9 @@ import NavigationBar from '../components/Navigation.vue';
   import { Swiper, SwiperSlide } from 'swiper/vue';
   // Import Swiper styles
   import 'swiper/css';
-
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
+import FAQ from "../components/FAQ.vue";
   // import required modules
   import { Keyboard, Pagination, Navigation } from 'swiper';
 
@@ -147,14 +147,18 @@ import "swiper/css/navigation";
     components: {
       Swiper,
       SwiperSlide,
-      NavigationBar 
+      NavigationBar,
+      FAQ
     },
     setup() {
       return {
         modules: [Keyboard, Pagination, Navigation],
       };
     },
+
+    
   };
+  
 </script>
 <style>
   * {
@@ -162,10 +166,53 @@ import "swiper/css/navigation";
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+
   }
 
+  /* FAQ - Frequently asked questions */
   
-  
+  .faqs {
+    opacity: 0.9;
+    margin: 10px;
+    padding: 10px;
+}
+
+.faqs_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    
+}
+
+.faq {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    height: fit-content;
+    background: teal;
+    cursor: pointer;
+    font-style: bold;
+} 
+
+.faq h4 {
+    font-size: 1rem;
+    line-height: 2.2;
+    font-weight: bold;
+}
+
+.faq_icon {
+    align-self: flex-start;
+    font-size: 1.2rem;
+}
+.faq p {
+    margin-top: 0.8rem;
+    display: none;
+}
+.faq.open p {
+    display: block;
+}
+
   h3 {
     color: #F5F0E7;
   }
@@ -183,7 +230,7 @@ import "swiper/css/navigation";
     max-width: 1120px;
     
   }
-  .card {
+  .about_card {
     border-radius: 35px;
     background-color: #fff;
     width: 500px;
