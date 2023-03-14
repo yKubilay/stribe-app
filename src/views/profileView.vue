@@ -1,8 +1,7 @@
 <template>
       <Navigation />
-      <section class="container">
+      <section class="container" id="profile_container">
         <div class="row justify-content-center">
-          <div>
             <div class="card">
               <div class="card-header">{{ storeUser.username }}</div>
           <div class="card-body">
@@ -31,16 +30,12 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
   <div class="modal" tabindex="-1" role="dialog" :class="{ 'd-block': showModal }">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Edit Profile</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="showModal = false">
-            <span aria-hidden="true">&times;</span>
-          </button>
         </div>
         <div class="modal-body">
           <form>
@@ -125,15 +120,72 @@ export default {
 </script>
 <style>
    
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+#profile_container {
+    max-width: 800px;
+    height: 100%;
+}
+.card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 20px;
+  height: 100%;
+}
 
+.card-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+
+
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.modal-dialog {
+  max-width: 500px;
+  margin: 100px auto;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 20px;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.modal-content {
+    max-width: 100%;
+}
+
+.close {
+  position: absolute;
+  top: -15px;
+  right: 2px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #fff;
+  opacity: 0.8;
+  cursor: pointer;
+  width: auto;
+}
+
+.close:hover {
+  opacity: 1;
+}
 
 </style>
