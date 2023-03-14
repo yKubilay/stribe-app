@@ -55,24 +55,26 @@
     import Navigation from "@/components/Navigation.vue"
     import { useRouter } from 'vue-router';
     import { onMounted, ref } from "vue";
-    import { getAuth, onAuthStateChanged,  createUserWithEmailAndPassword } from "firebase/auth";
+    import { getAuth, onAuthStateChanged,  createUserWithEmailAndPassword} from "firebase/auth";
     import { getFirestore, doc, setDoc } from "firebase/firestore";
     import { useAuthStore } from '@/stores/auth.js';
     import { useUserStore } from "../../stores/user";
     const db = getFirestore();
     const email = ref("");
     const password = ref("");
-    const username = ref("")
+    const username = ref("");
     const router = useRouter()
     const isLoggedIn = ref(false);
     //Stores
     const storeAuth = useAuthStore();
     const storeUser = useUserStore();
     const auth = getAuth();
+    
+    
     const signup = () => {
       createUserWithEmailAndPassword(auth, email.value, password.value)
         .then(async (data) => {
-          console.log("Successfully registered");
+          console.log("User is registered");
           // Add user to Firestore collection
           const userDocRef = doc(db, "users", data.user.uid);
           await setDoc(userDocRef, {
@@ -98,18 +100,3 @@
       });
     });
   </script>
-  Footer
-  © 2023 GitHub, Inc.
-  Footer navigation
-  Terms
-  Privacy
-  Security
-  Status
-  Docs
-  Contact GitHub
-  Pricing
-  API
-  Training
-  Blog
-  About
-  

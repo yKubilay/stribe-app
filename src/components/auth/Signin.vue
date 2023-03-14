@@ -37,13 +37,14 @@
     <button type="submit" class="mt-4 btn-pers" id="login_button" @click="login">Login</button>
   </div>
 </div>
-
+<username usernames/>
+  <isLoggedIn.value isLogged/>
   </template>
 
 <script setup>
   import Navigation from "@/components/Navigation.vue"
   import { ref } from 'vue';
-  import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+  import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence} from "firebase/auth";
   import { useRouter } from 'vue-router';
   import { onMounted } from "vue";
   import { onAuthStateChanged, signOut} from "firebase/auth";
@@ -59,6 +60,9 @@
   const storeUser = useUserStore();
   const login = () => {
     const auth = getAuth();
+    setPersistence(auth, browserSessionPersistence);
+
+
     signInWithEmailAndPassword(auth, email.value, password.value)
       .then((data) => {
         console.log("Successfully signed in");

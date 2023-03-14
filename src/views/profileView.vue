@@ -1,135 +1,139 @@
 <template>
-    <Navigation/>
-    <section class="container">
-        <div class="container mt-4 mb-4 p-3 d-flex justify-content-center"> 
-            <div class="profile_card p-4"> 
-                <div class=" image d-flex flex-column justify-content-center align-items-center"> 
-                    <button class="btn btn-secondary"> 
-                        <img src="../assets/images/img_1.png" height="100" width="100" /></button> 
-                        <span :class="username">{{storeUser.username}}</span> <span :class="email">{{storeUser.email}}</span> 
-                        <div class="d-flex flex-row justify-content-center align-items-center gap-2"> 
-                        </div> <div class="d-flex flex-row justify-content-center align-items-center mt-3"> 
-                            <span class="number">10 mill <span class="follow">Followers</span></span> </div> 
-                            <div class=" d-flex mt-2"> <button class="btn1 btn-dark">Edit Profile</button> </div> 
-                            <div class="text mt-3"> <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, expedita?<br><br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, autem?</span> </div> <div class="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"> <span><i class="fa fa-twitter"></i></span> <span><i class="fa fa-facebook-f"></i></span> <span><i class="fa fa-instagram"></i></span> <span><i class="fa fa-linkedin"></i></span> </div> <div class=" px-2 rounded mt-4 date "> 
-                                <span class="join">Joined in jan 2023</span> </div> </div> </div>
-</div>
-    </section>
+      <Navigation />
+      <section class="container">
+        <div class="row justify-content-center">
+          <div>
+            <div class="card">
+              <div class="card-header">{{ storeUser.username }}</div>
+          <div class="card-body">
+            <div>
+              <label for="email">Email</label>
+  
+              <div>
+                <input id="email" type="email" class="form-control" name="email" v-model="email" required autocomplete="email" autofocus>
+              </div>
+            </div>
+  
+            <div>
+              <label for="username">Username</label>
+  
+              <div>
+                <input id="username" type="text" name="username" v-model="username" required autocomplete="username">
+              </div>
+            </div>
+  
+            <div>
+              <div>
+                <button type="submit" class="btn btn-primary" @click="showModal = true">
+                  Edit profile
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="modal" tabindex="-1" role="dialog" :class="{ 'd-block': showModal }">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Profile</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="showModal = false">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" id="username" v-model="username">
+            </div>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" v-model="email">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="showModal = false">Close</button>
+          <button type="button" class="btn btn-primary" @click="saveChanges()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 </template>
-<script setup>
-    import Navigation from '../components/Navigation.vue';
-    
-    import { computed } from 'vue';
- import { useUserStore } from '@/stores/user.js';
-/*  import { onAuthStateChanged, signOut} from "firebase/auth";
- */
+<script>
+import Navigation from '@/components/Navigation.vue';
+import { ref, onMounted } from 'vue';
+import { auth, db } from '../main.js';
 
+export default {
+  components: {
+    Navigation,
+  },
+  setup() {
+    // Define reactive data properties
+    const showModal = ref(false);
+    const storeUser = ref({});
+    const username = ref('');
+    const email = ref('');
 
+    // Fetch user data on component mount
+    onMounted(async () => {
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          const userDoc = await db.collection('users').doc(user.uid).get();
+          if (userDoc.exists) {
+            storeUser.value = userDoc.data();
+            username.value = userDoc.data().username;
+            email.value = userDoc.data().email;
+          }
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    });
 
+    // Save changes to user data
+    const saveChanges = async () => {
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          await db.collection('users').doc(user.uid).update({
+            username: username.value,
+            email: email.value,
+          });
+          showModal.value = false;
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
 
-const storeUser = useUserStore();
-
-
-const username = computed(() => {
-  return storeUser.username
-})
-
-const email = computed(() => {
-  return storeUser.email
-})
-
-
+    // Return reactive properties and methods
+    return {
+      showModal,
+      storeUser,
+      username,
+      email,
+      saveChanges
+    };
+  }
+}
 </script>
 <style>
-* {
-    margin: 0;
-    padding: 0
-}
-
-body {
-    background-color: #000
-}
-
-.profile_card {
-    width: 350px;
-    background-color: #f5f5f5;
-    border: none;
-    cursor: pointer;
-    transition: all 0.5s;
-    
-}
-
-.image img {
-    transition: all 0.5s;
-    border-radius: 50%;
-}
-
-.card:hover .image img {
-    transform: scale(1.5)
-}
-
-.btn {
-    height: 140px;
-    width: 140px;
-    border-radius: 50%
-}
-
-.name {
-    font-size: 22px;
-    font-weight: bold
-}
-
-.idd {
-    font-size: 14px;
-    font-weight: 600
-}
-
-.idd1 {
-    font-size: 12px
-}
-
-.number {
-    font-size: 22px;
-    font-weight: bold
-}
-
-.follow {
-    font-size: 12px;
-    font-weight: 500;
-    color: #444444
-}
-
-.btn1 {
-    height: 40px;
-    width: 150px;
-    border: none;
-    background-color: #000;
-    color: #aeaeae;
-    font-size: 15px
-}
-
-.text span {
-    font-size: 13px;
-    color: #545454;
-    font-weight: 500
-}
-
-.icons i {
-    font-size: 19px
-}
-
-hr .new1 {
-    border: 1px solid
-}
-
-.join {
-    font-size: 14px;
-    color: #a0a0a0;
-    font-weight: bold
-}
-
-.date {
-    background-color: #ccc
-}
-</style>
    
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+
+</style>
