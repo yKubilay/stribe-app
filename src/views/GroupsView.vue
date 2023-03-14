@@ -1,43 +1,506 @@
 <template>
+  <Navigation />
   
+  <div class="container">
+    <header class="groupsHeader" :class="{sticky: stickyHeader}">
 
-  
-  <svg class="svg" viewBox="-50 -80 175 300" xmlns="http://www.w3.org/2000/svg">
-      <path fill="#2E728D" d="M35.9,-45.4C50.5,-46.5,68.9,-43.2,72.5,-33.6C76.1,-24,64.9,-8.1,62.5,9C60.1,26.2,66.5,44.7,61.8,57.7C57,70.6,41,78,25.9,77.6C10.8,77.1,-3.5,68.8,-14.6,60.5C-25.7,52.3,-33.6,44.1,-41.2,35.6C-48.8,27,-56.1,18.1,-59.2,7.5C-62.2,-3,-61,-15.1,-52.9,-20.5C-44.8,-25.9,-29.8,-24.5,-19.8,-25.4C-9.9,-26.4,-4.9,-29.8,2.9,-34.2C10.7,-38.7,21.4,-44.3,35.9,-45.4Z" transform="translate(100 100)" />
-    </svg>
+      <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ activeParticipants }} participants</h1>
+      <input type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
+    </header>
 
- 
+    <section class="basic-grid">
+      <div class="card create-group-card" :style="formStyle" @click="toggleForm">
+        <form :class="{form: showForm}"></form>
+        <h2 class="createGroup" v-if="!showForm">Create group</h2>
+        <div class="plusSymbol" v-if="!showForm">+</div>
+        <div class="formContainer" v-else>
+          <div class="buttonGroup">
+            <button class="floorplanButton">Create</button>
+            <button class="floorplanButton" >Cancel</button>
+          </div>
+        </div>
+      </div>
 
+      <div class="card" v-for="(card, index) of cards" :key="card" :style="getCardStyle(index)">
+        <div class="cardContent">
+          <div class="cardTitle">Group {{ card.id }}</div>
+          <div class="cardDescription" @click="showModal(card)">Python is a high-level, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation. </div>
+          <div class="cardParticipants" v-if="cardExpanded">
+            <h4>Participants</h4>
+           
+          </div>
+        </div>
+        <div class="buttonGroup">
+          <button class="floorplanButton" @click="showModal(card)">Show more</button>
+          <button class="floorplanButton" @click="joinRoom">Join room</button>
+        </div>
+      </div>
 
-    <Navigation/>
+      <div class="modal" v-if="modalVisible" @click.self="hideModal">
+        <div class="modal-content" @click.stop>
+          
+          <div class="modal-card">
+            <section class="modal-header">
+              <button class="closeButton" @click="hideModal">X</button>
+              <h2>{{ selectedCard.title }}</h2>
+            </section>
+            
+            <p class="modal-description">{{ selectedCard.description }}</p>
+            <h4>Area</h4>
+            <ul>
+              <li v-for="area in selectedCard.areas" :key="area">{{ area }}</li>
+            </ul>
+            <h4>Participants</h4>
+            <ul>
+              <li v-for="participant in selectedCard.participants" :key="participant">{{ participant }}</li>
+            </ul>
+            <button class="floorplanButton" @click="joinRoom">Join room</button>
 
-
-<section class="container">
-
-
-</section>
-
-
-  
-
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script setup>
-    import Navigation from "@/components/Navigation.vue"   
-    import { onMounted, ref } from "vue";
-    import { getAuth, onAuthStateChanged} from "firebase/auth";
+  import Navigation from "@/components/Navigation.vue";
+  import { onMounted, ref, computed } from "vue";
+  import { getAuth, onAuthStateChanged } from "firebase/auth";
+  import { useUserStore } from '@/stores/user.js';
 
-    const isLoggedIn = ref(false); 
+  const storeUser = useUserStore();
 
-let auth;
-onMounted (() => {
-  auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      isLoggedIn.value = true;
-    } else {
-      isLoggedIn.value = false;
-    }
-  });
+
+  const isLoggedIn = ref(false);
+  let auth;
+
+onMounted(() => {
+auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+if (user) {
+isLoggedIn.value = true;
+} else {
+isLoggedIn.value = false;
+}
 });
-</script>  
+});
+
+const cards = ref([
+  {
+    id: 1,
+    areas: ["area1", "area2"],
+    participants: ["jack", "johnny", "joe"]
+  },
+  {
+    id: 2,
+    areas: ["area3", "area4"],
+    participants: ["jim", "jack", "johnny"]
+  },
+   {
+    id: 3,
+    areas: ["area5", "area6"],
+    participants: ["jim", "jack", "johnny"]
+   },
+   {
+    id: 3,
+    areas: ["area5", "area6"],
+    participants: ["jim", "jack", "johnny"]
+   }
+])
+
+
+const showForm = ref(false);
+const groupTitle = ref('');
+const searchQuery = ref('');
+const participants = ref(["jack", "johnny", "joe", "jim", "jack", "johnny"])
+const cardExpanded = ref(false);
+
+
+
+
+function toggleForm() {
+  showForm.value = !showForm.value;
+}
+
+
+
+
+function toggleCard() {
+  if (cardExpanded.value === false) {
+    cardExpanded.value = true;
+    showModal(card);
+  } else {
+    cardExpanded.value = false;
+    hideModal();
+  }
+}
+
+  const modalVisible = ref(false);
+  const selectedCard = ref(null);
+
+  
+  function showModal(card) {
+    selectedCard.value = {
+      title: `Group ${card.id}`,
+      description: "certain conclusion in favor of their commercial interests. Reports written by big industry players can still be reliable secondary data, but should optimally be compared to similar reports to check for any bias or ulterior motives.",
+      participants: participants.value,
+      areas: card.areas
+
+    };
+    modalVisible.value = true;
+  }
+
+  function hideModal() {
+    modalVisible.value = false;
+    selectedCard.value = null;
+  }
+
+
+
+function viewOnFloorplan() {
+
+}
+
+function joinRoom() {
+  if (!participants.value.includes(username.value)) {
+    participants.value.push(username.value);
+  } else {
+    alert("You are already in a group!");
+  }
+}
+
+
+
+/* function removeItem(toRemove) {
+  cards.value = cards.value.filter((card) => card !== toRemove);
+
+} */
+
+const activeGroupsCount = computed(() => cards.value.length);
+const activeParticipants = computed(() => participants.value.length);
+
+
+
+
+  function getCardStyle(index) {
+    const delay = index * 100;
+    return {
+      animationDelay: `${delay}ms`,
+      transition: "transform 0.5s",
+    };
+  }
+
+    const stickyHeader = ref(false);
+
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset >= 100) { 
+        stickyHeader.value = true;
+      } else {
+        stickyHeader.value = false;
+      }
+    });
+
+ const username = computed(() => {
+  return storeUser.username
+})
+
+
+
+</script>
+<style>
+  .activeGroupsButton {
+    margin-bottom: 1%;
+  }
+
+
+
+  
+
+  .groupsHeader {
+    background-color: #F5F0E7;
+    margin-top: 2%;
+  
+  }
+
+  .create-group-card {
+  text-align: center;
+}
+
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+
+  
+
+
+ .card:hover {
+  transform: scale(1.05);
+}
+
+.expanded {
+  height: auto;
+}
+  input[type="text"], textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  .basic-grid {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 5%;
+    margin-top: 2%;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+
+  }
+
+  .buttonGroup {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .floorplanButton {
+    font-size: 18px;
+    padding:5px;
+/*     background: #2F728D;
+ */    background: #008080;
+ 
+  }
+
+  .closeButton {
+    font-size: 18px;
+    padding:5px;
+    position: absolute;
+    top: 1%;
+    right: 15px;
+    background: #008080;
+    cursor: pointer;
+    z-index: 1;
+
+  }
+
+
+  .createGroup {
+    font-size: 45px; 
+    margin-top: 16%; 
+    color: #edf6f9;   
+    cursor: pointer;
+
+  }
+
+  .plusSymbol {
+    font-size: 80px;
+    margin-bottom: 20%;
+    cursor: pointer;
+     
+  }
+ 
+  
+
+
+
+ 
+   .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 300px;
+  width: 100%;
+  background: #353e57;
+  color: white;
+  box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem,
+    rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
+  border-radius: 4px;
+  overflow: hidden;
+  position:relative;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: translate(-10%, -10%);
+}
+ 
+  .card:hover {
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-10px);
+}
+
+.cardContent {
+    text-align: left;
+    margin-left: 2rem;
+}
+
+  .cardTitle {
+   font-size: 2rem;
+   color: #edf6f9;   
+   text-align: left;
+
+}
+
+
+  .cardDescription {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.3rem;
+    color: #edf6f9;
+    text-align: left;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+
+  .cardDescription:hover {
+  text-decoration: underline;
+}
+
+  .cardParticipants {
+    list-style-type: none;
+    font-size: 1.3rem;
+
+  }
+
+  .participantsList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: left;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .participantsList li {
+    flex: 1 0 calc(50% - 16px);
+    max-width: calc(50% - 16px);
+    margin: 8px;
+    text-align: center;
+  }
+
+
+
+  .card:hover {
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+    
+  }
+
+  
+
+  .fixed-card {
+   /*    background: linear-gradient(
+      90deg,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(9, 9, 121, 1) 0%,
+      rgba(0, 212, 255, 1) 100%
+    );  */ 
+    background: linear-gradient(15deg, #13547a, #80d0c7); /* primary color */
+
+  }
+
+  /*Modal that pops up when "Show more" is pressed*/
+  .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(8px);
+  will-change: transform, opacity;
+  font-size: 1.2rem;
+
+  
+}
+
+.modal-content {
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
+  background-color: #353E57;
+  color: white;
+  max-width: 50%;
+  max-height: 90%;
+  overflow: auto;
+}
+
+.modal-description {
+  margin-top: 2%;
+}
+
+
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+/*     font-weight: bold;
+ */    cursor: pointer;
+  }
+  
+
+  /* animate cards */
+  @keyframes cardAnimation {
+    from {
+      opacity: 0;
+      transform: translate(-10%, -10%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+
+  .card:nth-child(odd) {
+    animation-name: cardAnimation;
+    animation-duration: 0.5s;
+    animation-delay: 0ms;
+    animation-fill-mode: forwards;
+  }
+
+  .card:nth-child(even) {
+    animation-name: cardAnimation;
+    animation-duration: 0.5s;
+    animation-delay: 0ms;
+    animation-fill-mode: forwards;
+  }
+
+
+  @media(max-width: 768px) {
+    .modal-content {
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
+  background-color: #353E57;
+  color: white;
+  
+  max-width: 90%;
+  max-height: 100%;
+  overflow: auto;
+  }
+
+  .container {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .basic-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+  }
+
+}
+
+</style>
