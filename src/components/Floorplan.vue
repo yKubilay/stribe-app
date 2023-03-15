@@ -340,7 +340,7 @@
            x="472.90689"
            y="656.78412" />
         <rect
-           id="Nga's desk"
+           id="Nga's office"
            width="17.337469"
            height="13.675194"
            x="454.61148"
@@ -531,7 +531,7 @@
            <button @click="hidePopup">X</button>
          </div>
          <div class="popup-body">
-           <h3>Create a group in {{ popupId }} ?</h3>
+           <h3>Create a meet in {{ popupId }} ?</h3>
            <form>
          <label for="meeting-title">Title:</label>
          <input type="text" id="meeting-title" name="meeting-title"><br><br>
@@ -542,46 +542,28 @@
          <label for="meeting-location">Location:</label>
          <input type="text" id="meeting-location" name="meeting-location"><br><br>
          <label for="meeting-description">Description:</label><br>
-         <textarea id="meeting-description" name="meeting-description" rows="5" cols="40"></textarea><br><br>
+         <textarea id="meeting-description" name="meeting-description" rows="4" cols="20"></textarea><br><br>
          <input type="submit" value="Create Meeting">
       </form>
          </div>
        </div>
 
-       <div class="grid-container">
-          <div v-for="item in items" :key="item.id" class="card">
-               <div class="cardContent">
-          <div class="cardTitle">Group</div>
-          <div class="cardDescription" @click="showModal(card)">Python is a high-level, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation. </div>
-          <div class="cardParticipants" v-if="cardExpanded">
-            <h4>Participants</h4>
-           
-          </div>
-        </div>
-        <div class="buttonGroup">
-          <button class="floorplanButton" @click="showModal(card)">Show more</button>
-          <button class="floorplanButton" @click="joinRoom">Join room</button>
-        </div>
-         </div>
-      </div>
-   
+       <GroupCard/>
+       
       </div>
    
     </template>
     
     <script>
-
+   import GroupCard from './GroupCard.vue';
    
    export default {
+      components: {
+         GroupCard
+      },
     data() {
         return {
             popupId: null,
-            items: [
-               { id: 1, title: "Card 1", content: "Card 1 content" },
-               { id: 2, title: "Card 2", content: "Card 2 content" },
-               { id: 3, title: "Card 3", content: "Card 3 content" },
-               // Add more cards as needed
-            ],
         };
     },
     mounted() {
@@ -599,27 +581,14 @@
         },
         hidePopup() {
             this.popupId = null;
-        }
+        },
     },
 }
    
     </script>
       
     <style scoped>
-    .grid-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  width: 300px;
-  gap: 1rem;
-  left: 0;
-}
-
-.card {
-  background-color: #353e57;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
+    
     path{
        fill:transparent;
     }
@@ -645,6 +614,7 @@
      background-color: white;
      border: 2px solid black;
      padding: 10px;
+     height: 700px;
    }
    
    .popup-header {
@@ -664,13 +634,9 @@
    
    
    
-   form {
-     max-width: 500px;
-     
-   }
+  
    
    label {
-     display: block;
      font-weight: bold;
      
    }
@@ -682,7 +648,7 @@
      width: 100%;
      border: 1px solid black;
      border-radius: 5px;
-     font-size: 16px;
+     font-size: 14px;
      padding: 5px;
    }
    
