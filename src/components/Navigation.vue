@@ -105,7 +105,6 @@ const handleSignOut = () => {
 
 
 <style>
-
  
 body{
     background-color: #FFF;
@@ -119,7 +118,6 @@ a{
 ul{
     list-style: none;
 }
-
 .header{
     background: whitesmoke;
     box-shadow: 0px 15px 10px -15px #111;
@@ -137,7 +135,6 @@ ul{
     margin-left: 6.5%;
     
 }
-
 /* Nav menu */
 .nav{
     width: 100%;
@@ -145,7 +142,6 @@ ul{
     position: fixed;
     background: #2F728D;
     overflow: hidden;
-
 }
 .nav ul{
   margin-right: 8rem;
@@ -159,10 +155,6 @@ ul{
     padding: 10px;
     font-size: 14pt;
   }
-
-
-
-
 .nav{
     max-height: 0;
     transition: max-height .5s ease-out;
@@ -194,19 +186,14 @@ nav a.active:after {
     cursor: pointer;
     float: right;
     padding: 40px 20px;
-
 }/* Style label tag */
-
 .hamb-line {
     background: black;
     display: block;
     height: 3px;
     position: relative;
     width: 24px;
-
-
 } /* Style span tag */
-
 .hamb-line::before,
 .hamb-line::after{
     background: black;
@@ -224,11 +211,9 @@ nav a.active:after {
 .hamb-line::after{
     top: -5px;
 }
-
 .side-menu {
     display: none;
 } /* Hide checkbox */
-
 .side-menu:checked ~ nav{
     max-height: 100%;
 }
@@ -243,7 +228,6 @@ nav a.active:after {
     transform: rotate(45deg);
     top:0;
 }
-
 @media (min-width: 1100px) {
     .nav{
         max-height: none;
@@ -261,29 +245,22 @@ nav a.active:after {
     }
     .menu a:hover{
         background-color: transparent;
-
     }
     
     .hamb{
         display: none;
     }
   }
-
-
-
   @media (max-width: 1100px) {
     .nav {
       flex-direction: column;
       align-items: flex-start;
-
     }
-
     .menu {
       width: 100%;
       display: block;
       text-align: center;
     }
-
     
     .menu a{
     margin-top: 30px;

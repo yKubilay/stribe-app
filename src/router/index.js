@@ -57,7 +57,7 @@ const router = createRouter({
     },
 
 
-  ],
+  ]
 });
 
 const getCurrentUser = () => {

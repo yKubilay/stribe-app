@@ -24,12 +24,13 @@
       <div class="card" v-for="(card, index) of cards" :key="card" :style="getCardStyle(index)">
         <div class="cardContent">
           <div class="cardTitle">Group {{ card.id }}</div>
-          <div class="cardDescription" @click="showModal(card)">Python is a high-level, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation. </div>
+          <div class="cardDescription" @click="showModal(card)"> readability with the use of significant indentation. </div>
           <div class="cardParticipants" v-if="cardExpanded">
             <h4>Participants</h4>
            
           </div>
         </div>
+        <span class="participantsBadge">{{activeParticipants}} People</span> 
         <div class="buttonGroup">
           <button class="floorplanButton" @click="showModal(card)">Show more</button>
           <button class="floorplanButton" @click="joinRoom">Join room</button>
@@ -46,14 +47,16 @@
             </section>
             
             <p class="modal-description">{{ selectedCard.description }}</p>
+            <section class="areaAndParticipantSection">
             <h4>Area</h4>
             <ul>
-              <li v-for="area in selectedCard.areas" :key="area">{{ area }}</li>
+              <li class="modalGroupArea" v-for="area in selectedCard.areas" :key="area">{{ area }}</li>
             </ul>
             <h4>Participants</h4>
             <ul>
-              <li v-for="participant in selectedCard.participants" :key="participant">{{ participant }}</li>
+              <li class="modalGroupParticipants" v-for="participant in selectedCard.participants" :key="participant">{{ participant }}</li>
             </ul>
+          </section>
             <button class="floorplanButton" @click="joinRoom">Join room</button>
 
           </div>
@@ -91,7 +94,7 @@ const cards = ref([
   {
     id: 1,
     areas: ["area1", "area2"],
-    participants: ["jack", "johnny", "joe"]
+    participants: ["jack", "johnny", "joe", "Zac", "Håvard"]
   },
   {
     id: 2,
@@ -275,6 +278,10 @@ watchEffect(() => {
 
   }
 
+  .areaAndParticipantSection {
+    margin-left: 1rem;
+  }
+
   .buttonGroup {
     display: flex;
     justify-content: center;
@@ -283,6 +290,7 @@ watchEffect(() => {
   .floorplanButton {
     font-size: 18px;
     padding:5px;
+    margin-top: -0%;
 /*     background: #2F728D;
  */    background: #008080;
  
@@ -315,8 +323,19 @@ watchEffect(() => {
     cursor: pointer;
      
   }
- 
 
+  .participantsBadge {
+      background-color: #F98620;
+      color: white;
+      font-size: 0.9rem;
+      padding:0;
+      width: 25%;
+      margin-left: 63%;
+      margin-top: 15%;
+      text-align: center;
+      border-radius: 4rem;
+  }
+ 
 
  
    .card {
@@ -371,12 +390,17 @@ watchEffect(() => {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: #edf6f9;
     text-align: left;
     text-overflow: ellipsis;
     cursor: pointer;
   }
+
+  .modalGroupArea {
+    font-size: 1.1rem;
+  }
+
 
   .cardDescription:hover {
   text-decoration: underline;
@@ -384,7 +408,7 @@ watchEffect(() => {
 
   .cardParticipants {
     list-style-type: none;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
 
   }
 
@@ -444,18 +468,26 @@ watchEffect(() => {
 }
 
 .modal-content {
-  padding: 20px;
-  border-radius: 5px;
+  padding: 2rem;
+  border-radius: 1.5rem;
   box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
   background-color: #353E57;
   color: white;
   max-width: 50%;
   max-height: 90%;
   overflow: auto;
+  
+
 }
 
 .modal-description {
   margin-top: 2%;
+  margin-left: 2rem;
+  font-size: 1.1rem;
+}
+
+.modalGroupParticipants {
+  font-size: 1.1rem;
 }
 
 

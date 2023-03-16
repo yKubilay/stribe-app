@@ -2,9 +2,10 @@
   <NavigationBar/>
   <div class="project_description_container">
       <h3>Stribe</h3>
-      <h4>Frequently asked questions</h4>
       <p>Why did we choose to make Stribe?</p>
       <p>Her skal vi skrive litt om prosjektet</p>
+      <FAQ />
+      <br/>
       <h1 style="text-align: center;">Stribes' developers</h1>
   </div>
   
@@ -23,7 +24,7 @@
       <div class="slide-container">
         <div class="slide-content">
           <div class="card-wrapper">
-            <div class="card">
+            <div class="about_card">
               <div class="image-content">
                 <span class="overlay"></span>
 
@@ -35,9 +36,11 @@
               <div class="card-content">
                   <h2 class="name">Kasper Iversen</h2>
                   <p class="description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, ducimus!
+                    23 years old.
+                    <br/>
+                    Interests: Football, training and programming. 
                   </p>
-                  <button class="about-button">Les mer</button>
+                  <button class="about-button">Read more</button>
               </div>
             </div>
           </div>
@@ -48,21 +51,23 @@
       <div class="slide-container">
         <div class="slide-content">
           <div class="card-wrapper">
-            <div class="card">
+            <div class="about_card">
               <div class="image-content">
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/img_2.jfif" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_2.jfif" alt="img 1" class="card-img">
                 </div>
               </div>
 
               <div class="card-content">
                   <h2 class="name">Håvard Solheim Jenssen</h2>
                   <p class="description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, soluta.
+                    23 years old.
+                    <br/>
+                    Interests: Handball, training, programming and freesbee-golf. 
                   </p>
-                  <button class="about-button">Les mer</button>
+                  <button class="about-button">Read more</button>
               </div>
             </div>
           </div>
@@ -73,21 +78,23 @@
       <div class="slide-container">
         <div class="slide-content">
           <div class="card-wrapper">
-            <div class="card">
+            <div class="about_card">
               <div class="image-content">
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/img_3.jfif" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_3.jfif" alt="img 1" class="card-img">
                 </div>
               </div>
 
               <div class="card-content">
                   <h2 class="name">Zachary Laguda</h2>
                   <p class="description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, soluta.
+                    25 years old(?).
+                    <br/>
+                    Interests: Volleyball, training and programming. 
                   </p>
-                  <button class="about-button">Les mer</button>
+                  <button class="about-button">Read more</button>
               </div>
             </div>
           </div>
@@ -98,21 +105,23 @@
       <div class="slide-container">
         <div class="slide-content">
           <div class="card-wrapper">
-            <div class="card">
+            <div class="about_card">
               <div class="image-content">
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/img_4.jpg" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_4.jpg" alt="img 1" class="card-img">
                 </div>
               </div>
 
               <div class="card-content">
                   <h2 class="name">Kubilay Kerim Özdemir</h2>
                   <p class="description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, soluta.
+                    24 years old.
+                    <br/>
+                    Interests: yo-yo and programming. 
                   </p>
-                  <button class="about-button">Les mer</button>
+                  <button class="about-button">Read more</button>
               </div>
             </div>
           </div>
@@ -128,10 +137,9 @@ import NavigationBar from '../components/Navigation.vue';
   import { Swiper, SwiperSlide } from 'swiper/vue';
   // Import Swiper styles
   import 'swiper/css';
-
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
+import FAQ from "../components/FAQ.vue";
   // import required modules
   import { Keyboard, Pagination, Navigation } from 'swiper';
 
@@ -139,14 +147,18 @@ import "swiper/css/navigation";
     components: {
       Swiper,
       SwiperSlide,
-      NavigationBar 
+      NavigationBar,
+      FAQ
     },
     setup() {
       return {
         modules: [Keyboard, Pagination, Navigation],
       };
     },
+
+    
   };
+  
 </script>
 <style>
   * {
@@ -154,13 +166,53 @@ import "swiper/css/navigation";
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+
   }
 
-  .container {
-    min-height: 50vh;
-  }
+  /* FAQ - Frequently asked questions */
   
-  
+  .faqs {
+    opacity: 0.9;
+    margin: 10px;
+    padding: 10px;
+}
+
+.faqs_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    
+}
+
+.faq {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    height: fit-content;
+    background: teal;
+    cursor: pointer;
+    font-style: bold;
+} 
+
+.faq h4 {
+    font-size: 1rem;
+    line-height: 2.2;
+    font-weight: bold;
+}
+
+.faq_icon {
+    align-self: flex-start;
+    font-size: 1.2rem;
+}
+.faq p {
+    margin-top: 0.8rem;
+    display: none;
+}
+.faq.open p {
+    display: block;
+}
+
   h3 {
     color: #F5F0E7;
   }
@@ -178,7 +230,7 @@ import "swiper/css/navigation";
     max-width: 1120px;
     
   }
-  .card {
+  .about_card {
     border-radius: 35px;
     background-color: #fff;
     width: 500px;
