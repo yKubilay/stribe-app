@@ -1,5 +1,5 @@
 <template>
-  <Navigation />
+<Navigation v-if="!hideNavigation" :class="{ 'hidden': hideNavigation, 'Navigation': true }" />
   
   <div class="container">
     <header class="groupsHeader" :class="{sticky: stickyHeader}">
@@ -71,6 +71,7 @@
   import { onMounted, ref, computed } from "vue";
   import { getAuth, onAuthStateChanged } from "firebase/auth";
   import { useUserStore } from '@/stores/user.js';
+  import { watchEffect } from "vue";
 
   const storeUser = useUserStore();
 
@@ -194,31 +195,43 @@ const activeParticipants = computed(() => participants.value.length);
     };
   }
 
-    const stickyHeader = ref(false);
+  const hideNavigation = ref(false);
 
-    window.addEventListener('scroll', () => {
-      if (window.pageYOffset >= 100) { 
-        stickyHeader.value = true;
-      } else {
-        stickyHeader.value = false;
-      }
-    });
+  onMounted(() => {
+  window.addEventListener("scroll", () => {
+    if (window.pageYOffset > 0) {
+      hideNavigation.value = true;
+      animateNavigation.value = true;
+    } else {
+      hideNavigation.value = false;
+      animateNavigation.value = false;
+    }
+  });
+});
+
 
  const username = computed(() => {
   return storeUser.username
 })
 
-
+watchEffect(() => {
+    const navigation = document.querySelector('.navigation');
+    if (navigation) {
+      if (hideNavigation.value) {
+        navigation.classList.add('hidden');
+      } else {
+        navigation.classList.remove('hidden');
+      }
+    }
+  });
 
 </script>
 <style>
+
+
   .activeGroupsButton {
     margin-bottom: 1%;
   }
-
-
-
-  
 
   .groupsHeader {
     background-color: #F5F0E7;
@@ -363,7 +376,15 @@ const activeParticipants = computed(() => participants.value.length);
 
 }
 
+.Navigation {
+  transform: translateY(0%);
+  transition: transform 0.5s ease-in-out;
+  transition-duration: 3s;
+}
 
+.Navigation.hidden {
+  transform: translateY(-100%);
+}
   .cardDescription {
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -523,7 +544,7 @@ const activeParticipants = computed(() => participants.value.length);
 
   .container {
     max-width: 100%;
-    padding: 1rem;
+    padding: 0.5rem;
   }
 
   .basic-grid {
