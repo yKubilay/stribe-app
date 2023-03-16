@@ -301,12 +301,14 @@ watchEffect(() => {
     padding:5px;
     position: absolute;
     top: 1%;
-    right: 15px;
+    right: -0.8rem;
     background: #008080;
     cursor: pointer;
     z-index: 1;
 
   }
+
+  
 
 
   .createGroup {
@@ -467,9 +469,15 @@ watchEffect(() => {
   
 }
 
+
 .modal-content {
   padding: 2rem;
+<<<<<<< HEAD
+/*   padding: 20px;
+ */  border-radius: 5px;
+=======
   border-radius: 1.5rem;
+>>>>>>> 72f15c2bbe94593246b8ed24550fbf42b0646c6a
   box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
   background-color: #353E57;
   color: white;
@@ -493,14 +501,20 @@ watchEffect(() => {
 
 
   .close {
-    position: absolute;
     top: 10px;
-    right: 10px;
     font-size: 30px;
 /*     font-weight: bold;
  */    cursor: pointer;
   }
   
+  .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  padding-left:0;
+  padding-right:0;
+}
 
   /* animate cards */
   @keyframes cardAnimation {
@@ -550,6 +564,11 @@ watchEffect(() => {
   .basic-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 
+  }
+
+  .closeButton {
+    font-size: 1rem;
+    padding: 3px 6px;
   }
 
 }
