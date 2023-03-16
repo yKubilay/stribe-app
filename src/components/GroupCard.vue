@@ -1,6 +1,12 @@
 <template>
     <div class="grid-container" style="overflow-y: scroll; max-height: 700px; width: 350px;">
+      <header class="groupsHeader" :class="{sticky: stickyHeader}">
+
+          <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ activeParticipants }} participants</h1>
+          <input type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
+          </header>
           <div class="card" v-for="(card, index) of cards" :key="card" :style="getCardStyle(index)">
+            
                <div class="cardContent">
           <div class="cardTitle">Group {{ card.id }}</div>
           <div class="cardDescription" @click="showModal(card)">Python is a high-level, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation. </div>
@@ -192,10 +198,22 @@ const activeParticipants = computed(() => participants.value.length);
     
   }
   
+  .grid-container::-webkit-scrollbar {
+/*   display: none; 
+ */ 
+  }
+
   .card {
     background-color: #353e57;
     padding: 1rem;
     border-radius: 0.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
+
+  .activeGroupsButton {
+    font-size: 1.8rem;
+
+  }
+
+ 
 </style>

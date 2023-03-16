@@ -18,9 +18,11 @@
        xmlns:svg="http://www.w3.org/2000/svg">
       
       <g
+
+      
          inkscape:groupmode="layer"
          inkscape:label="Image"
-         id="g15">
+         id="g15">   
          />
         <image
            
@@ -528,10 +530,10 @@
     <div v-if="popupId" class="popup">
          <div class="popup-header">
            <h2>{{ popupId }}</h2>
-           <button @click="hidePopup">X</button>
+           <button class="closeButton" @click="hidePopup">X</button>
          </div>
          <div class="popup-body">
-           <h3>Create a meet in {{ popupId }} ?</h3>
+           <h3 class="popupCreateText" >Create group in {{ popupId }}?</h3>
            <form>
          <label for="meeting-title">Title:</label>
          <input type="text" id="meeting-title" name="meeting-title"><br><br>
@@ -543,7 +545,7 @@
          <input type="text" id="meeting-location" name="meeting-location"><br><br>
          <label for="meeting-description">Description:</label><br>
          <textarea id="meeting-description" name="meeting-description" rows="4" cols="20"></textarea><br><br>
-         <input type="submit" value="Create Meeting">
+         <input type="submit" value="Create group">
       </form>
          </div>
        </div>
@@ -574,6 +576,8 @@
                 this.showPopup(element.id);
             });
         });
+
+
     },
     methods: {
         showPopup(id) {
@@ -583,6 +587,7 @@
             this.popupId = null;
         },
     },
+
 }
    
     </script>
@@ -596,32 +601,57 @@
        fill:transparent;
     }
     path:hover{
-       fill: teal;
-      opacity: 0.3;
+       fill: orange;
+      opacity: 0.6;
     
       cursor:pointer;
     }
     rect:hover {
-        fill: teal;
-        opacity: 0.3;
+        fill: orange;
+        opacity: 0.6;
         cursor:pointer;
       }
-       
-      .popup {
+
+
+    
+   .popup {
      position: absolute;
      top: 40px;
      left: 72%;
-     background-color: white;
+     background-color: #353E57;
      border: 2px solid black;
      padding: 10px;
      height: 700px;
+     color:  white;
    }
+
+   .popupCreateText {
+         color: white;
+         font-size: 1.5rem;
+         margin-bottom: 10%;
+         padding-bottom: 5%;
+         border-bottom: 1px solid #ffffff;
+      }
+
+   .closeButton {
+      font-size: 18px;
+      padding:0%;
+      position: absolute;
+      top: -20%;
+      right: -5%;
+      background: #008080;
+      width: 40%;
+      cursor: pointer;
+
+   }
+
    
    .popup-header {
      display: flex;
      justify-content: space-between;
+     
    }
-   
+/*    
    .popup-header button {
      border: none;
      background-color: transparent;
@@ -630,7 +660,7 @@
      font-size: 14px;
      padding: 0;
      width: 10%;
-   }
+   } */
    
    
    
@@ -658,15 +688,23 @@
      padding: 8px 5px;
      outline: none;
      color: white;
-     background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+     background: #008080;
      cursor: pointer;
      border-radius: 7px;
-     margin-top: 20px;
-     margin-right: 20px;
+     margin-left: 2%;
      transition: 0.5s;
-     margin: 14px;
+   
+     font-size: 18px;
+    padding:5px;
+/*     background: #2F728D;
+ */    background: #008080;
+     
      
    }
+
+
+
+
    
    input[type="submit"]:hover {
      background-color: #45a049;
