@@ -30,6 +30,8 @@
            
           </div>
         </div>
+       
+
         <span class="participantsBadge">{{activeParticipants}} People</span> 
         <div class="buttonGroup">
           <button class="floorplanButton" @click="showModal(card)">Show more</button>
@@ -122,7 +124,6 @@ const cardExpanded = ref(false);
 
 
 
-
 function toggleForm() {
   showForm.value = !showForm.value;
 }
@@ -195,35 +196,22 @@ const activeParticipants = computed(() => participants.value.length);
     };
   }
 
-  const hideNavigation = ref(false);
+  const stickyHeader = ref(false);
 
-  onMounted(() => {
-  window.addEventListener("scroll", () => {
-    if (window.pageYOffset > 0) {
-      hideNavigation.value = true;
-      animateNavigation.value = true;
-    } else {
-      hideNavigation.value = false;
-      animateNavigation.value = false;
-    }
-  });
-});
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset >= 100) { 
+        stickyHeader.value = true;
+      } else {
+        stickyHeader.value = false;
+      }
+    });
 
 
  const username = computed(() => {
   return storeUser.username
 })
 
-watchEffect(() => {
-    const navigation = document.querySelector('.navigation');
-    if (navigation) {
-      if (hideNavigation.value) {
-        navigation.classList.add('hidden');
-      } else {
-        navigation.classList.remove('hidden');
-      }
-    }
-  });
+
 
 </script>
 <style>
@@ -336,7 +324,7 @@ watchEffect(() => {
       border-radius: 4rem;
   }
  
-
+  
  
    .card {
   display: flex;
