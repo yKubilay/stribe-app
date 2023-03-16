@@ -1,245 +1,321 @@
-
 <template>
-  <link rel="stylesheet" href="assets/swiper-bundle.min.css"/>
-  
-  <div class="about">
-    
+  <NavigationBar/>
+  <div class="project_description_container">
+      <h3>Stribe</h3>
+      <p>Why did we choose to make Stribe?</p>
+      <p>Her skal vi skrive litt om prosjektet</p>
+      <FAQ />
+      <br/>
+      <h1 style="text-align: center;">Stribes' developers</h1>
   </div>
+  
+  <section class="container">
+  <swiper
+    :slidesPerView="1"
+    :navigation="true"
+    :pagination="{
+      clickable: true,
+    }"
+    :keyboard="true"
+    :modules="modules"
+    class="mySwiper"
+  >
+    <swiper-slide>
+      <div class="slide-container">
+        <div class="slide-content">
+          <div class="card-wrapper">
+            <div class="about_card">
+              <div class="image-content">
+                <span class="overlay"></span>
 
-  <Navigation/>
-
-
-    <section class="slide_container">
-      <div class="slide_content">
-        <div class="card-wrapper">
-          <div class="card">
-            <div class="image-content">
-              <span class="overlay"></span>
-              <div class="card-image">
-                <img src="/src/assets/images/img_1.png" alt="" class="card-img"/>
+                <div class="card-image">
+                  <img src="../assets/images/img_1.png" alt="img 1" class="card-img">
+                </div>
               </div>
-            </div>
 
-            <div class="card-content">
-              <h2 class="name">Kasper Iversen</h2>
-                <p class="description">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit, sunt?
-                </p>
-                
-                <button class="about_btn">View More</button>
+              <div class="card-content">
+                  <h2 class="name">Kasper Iversen</h2>
+                  <p class="description">
+                    23 years old.
+                    <br/>
+                    Interests: Football, training and programming. 
+                  </p>
+                  <button class="about-button">Read more</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      
+    </swiper-slide>
+    <swiper-slide>
+      <div class="slide-container">
+        <div class="slide-content">
+          <div class="card-wrapper">
+            <div class="about_card">
+              <div class="image-content">
+                <span class="overlay"></span>
 
-    </section>
+                <div class="card-image">
+                  <img src="../assets/images/img_2.jfif" alt="img 1" class="card-img">
+                </div>
+              </div>
 
-  
-  
+              <div class="card-content">
+                  <h2 class="name">Håvard Solheim Jenssen</h2>
+                  <p class="description">
+                    23 years old.
+                    <br/>
+                    Interests: Handball, training, programming and freesbee-golf. 
+                  </p>
+                  <button class="about-button">Read more</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class="slide-container">
+        <div class="slide-content">
+          <div class="card-wrapper">
+            <div class="about_card">
+              <div class="image-content">
+                <span class="overlay"></span>
 
+                <div class="card-image">
+                  <img src="../assets/images/img_3.jfif" alt="img 1" class="card-img">
+                </div>
+              </div>
+
+              <div class="card-content">
+                  <h2 class="name">Zachary Laguda</h2>
+                  <p class="description">
+                    25 years old(?).
+                    <br/>
+                    Interests: Volleyball, training and programming. 
+                  </p>
+                  <button class="about-button">Read more</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class="slide-container">
+        <div class="slide-content">
+          <div class="card-wrapper">
+            <div class="about_card">
+              <div class="image-content">
+                <span class="overlay"></span>
+
+                <div class="card-image">
+                  <img src="../assets/images/img_4.jpg" alt="img 1" class="card-img">
+                </div>
+              </div>
+
+              <div class="card-content">
+                  <h2 class="name">Kubilay Kerim Özdemir</h2>
+                  <p class="description">
+                    24 years old.
+                    <br/>
+                    Interests: yo-yo and programming. 
+                  </p>
+                  <button class="about-button">Read more</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </swiper-slide>
+  </swiper>
+</section>
 </template>
+<script>
+import NavigationBar from '../components/Navigation.vue';
+  // Import Swiper Vue.js components
+  import { Swiper, SwiperSlide } from 'swiper/vue';
+  // Import Swiper styles
+  import 'swiper/css';
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import FAQ from "../components/FAQ.vue";
+  // import required modules
+  import { Keyboard, Pagination, Navigation } from 'swiper';
 
-<script setup>
+  export default {
+    components: {
+      Swiper,
+      SwiperSlide,
+      NavigationBar,
+      FAQ
+    },
+    setup() {
+      return {
+        modules: [Keyboard, Pagination, Navigation],
+      };
+    },
 
-    import Navigation from "@/components/Navigation.vue"
-    import { useRouter } from 'vue-router';   
-    import { onMounted, ref } from "vue";
-    import { getAuth, onAuthStateChanged, signOut} from "firebase/auth";
-
-  
-   
     
-
-    const isLoggedIn = ref(false); 
-    const router = useRouter()
-
-let auth;
-onMounted(() => {
-  auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      isLoggedIn.value = true;
-    } else {
-      isLoggedIn.value = false;
-    }
-  });
-});
-const handleSignOut = () => {
-  signOut(auth).then(() => {
-    router.push("/");
-  });
-};
-</script>
-
-
-<style>
- 
-
-.info_section {
-  background-color: #091f27;
-  color: #ffffff;
-}
-
-
-
-.info_section .contact_nav a {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  margin: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  color: #ffffff;
-  margin-bottom: 10px;
-}
-
-.info_section .contact_nav a i {
-  font-size: 22px;
-  margin-right: 10px;
-}
-
-.info_section .contact_nav a:hover {
-  color: teal;
-}
-
-.info_section .info_top {
-  padding: 45px 0;
-}
-
-.info_section h4 {
-  text-transform: uppercase;
-  position: relative;
-  margin-bottom: 20px;
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.info_section .social_box {
-  width: 80%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 25px;
-}
-
-.info_section .social_box a {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  border-radius: 100%;
-  width: 40px;
-  height: 40px;
-  border: 1px solid #ffffff;
-  color: #ffffff;
-  font-size: 18px;
-  margin-right: 10px;
-}
-
-.info_section .social_box a:hover {
-  color: teal;
-  border-color: blue;
-}
-
-
-.slide_container {
-  max-width: 1120px;
-  width: 100%;
-  background-color: grey;
-  padding: 40px 0; 
-}
-
-.slide_content {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.card {
-  width: 320px;
-  border-radius: 25px;
-  background-color: #FFF;
+  };
   
+</script>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+
+  }
+
+  /* FAQ - Frequently asked questions */
+  
+  .faqs {
+    opacity: 0.9;
+    margin: 10px;
+    padding: 10px;
 }
 
-.image-content, 
-.card-content  {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px 14px;
+.faqs_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    
 }
 
-.image-content {
-  position: relative;
-  row-gap: 5px;
-  padding: 25px 0;
+.faq {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    height: fit-content;
+    background: teal;
+    cursor: pointer;
+    font-style: bold;
+} 
+
+.faq h4 {
+    font-size: 1rem;
+    line-height: 2.2;
+    font-weight: bold;
 }
 
-.overlay {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background-color: #4070F4;
-  border-radius: 25px 25px 0 25px;
+.faq_icon {
+    align-self: flex-start;
+    font-size: 1.2rem;
+}
+.faq p {
+    margin-top: 0.8rem;
+    display: none;
+}
+.faq.open p {
+    display: block;
 }
 
-.overlay::before,
-.overlay::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: -40px;
-  height: 40px;
-  width: 40px;
-  background-color: #4070F4;
-}
+  h3 {
+    color: #F5F0E7;
+  }
+  .project_description_container{
+    text-align: center;
+  }
+  .swiper-slide {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F5F0E7;
+  }
+  .slide-container {
+    max-width: 1120px;
+    
+  }
+  .about_card {
+    border-radius: 35px;
+    background-color: #fff;
+    width: 500px;
+  }
 
-.overlay::after {
-  border-radius: 0 25px 0 0;
-  background-color: #FFF;
-}
-.card-image {
-  position: relative;
-  height: 150px;
-  width: 150px;
-  border-radius: 50%;
-  background: #FFF;
-  padding: 3px; 
-}
+  .image-content {
+    position: relative;
+    row-gap: 5px;
+  }
 
-.card-image .card-img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 4px solid #4070F4;
-}
+  .image-content,
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 14px;
+  }
 
-.name {
-  font-size: 18px;
-  font-weight: 500;
-  color: #333;
-}
+  .overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: teal;
+    border-radius: 25px 25px 0 25px;
+  }
 
-.description {
-  font-size: 14px;
-  color: #707070;
-  text-align: center;
-}
+  .overlay::before,
+  .overlay::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -40px;
+    height: 40px;
+    width: 40px;
+    background-color: teal;
+  }
 
+  .overlay::after {
+    border-radius: 0 25px 0 0;
+    background-color: #fff;
+  }
+  .card-image {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    background: #fff;
+    padding: 3px;
+    margin: 25px;
+  }
+
+  .card-image .card-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: solid 4px teal;
+  }
+
+  .name {
+    font-size: 23px;
+    font-weight: 600;
+    color: #333;
+  }
+  .description {
+    font-size: 18px;
+    color: #242222;
+    text-align: center;
+    font-weight: 500;
+  }
+  .about-button {
+     border: none;
+     font-size: 18px;
+     color: #fff;
+     padding: 8px 16px;
+     background: rgb(45, 185, 231);
+     border-radius: 6px;
+     margin: 14px;
+     cursor: pointer;
+     transition: all 0.3 ease;
+  }
+
+  .about-button:hover {
+    background: #4cd1ca;
+  }
 </style>
