@@ -23,14 +23,18 @@
 
       <div class="card" v-for="(card, index) of cards" :key="card" :style="getCardStyle(index)">
         <div class="cardContent">
-          <div class="cardTitle">Group {{ card.id }}</div>
+          <div class="cardTitle">Group {{ card.id }}
+          </div>
+          <span class="themeBadge">{{groupTheme}} </span> 
+          <span class="participantsBadge">{{activeParticipants}} People</span> 
+          
           <div class="cardDescription" @click="showModal(card)"> readability with the use of significant indentation. </div>
           <div class="cardParticipants" v-if="cardExpanded">
             <h4>Participants</h4>
            
           </div>
         </div>
-        <span class="participantsBadge">{{activeParticipants}} People</span> 
+        
         <div class="buttonGroup">
           <button class="floorplanButton" @click="showModal(card)">Show more</button>
           <button class="floorplanButton" @click="joinRoom">Join room</button>
@@ -74,6 +78,7 @@
   import { watchEffect } from "vue";
 
   const storeUser = useUserStore();
+  const groupTheme = ref('Coding');
 
 
   const isLoggedIn = ref(false);
@@ -117,7 +122,7 @@ const cards = ref([
 const showForm = ref(false);
 const groupTitle = ref('');
 const searchQuery = ref('');
-const participants = ref(["jack", "johnny", "joe", "jim", "jack", "johnny"])
+const participants = ref(["jack", "johnny", "joe", "jim", "jack", "johnny", "jim", "jack", "johnny", "jim", "jack", "johnny"])
 const cardExpanded = ref(false);
 
 
@@ -194,20 +199,20 @@ const activeParticipants = computed(() => participants.value.length);
       transition: "transform 0.5s",
     };
   }
-
+/* 
   const hideNavigation = ref(false);
 
   onMounted(() => {
   window.addEventListener("scroll", () => {
     if (window.pageYOffset > 0) {
       hideNavigation.value = true;
-      animateNavigation.value = true;
+      stickyHeader.value = true;
     } else {
       hideNavigation.value = false;
-      animateNavigation.value = false;
+      stickyHeader.value = false;
     }
   });
-});
+}); */
 
 
  const username = computed(() => {
@@ -329,14 +334,26 @@ watchEffect(() => {
   .participantsBadge {
       background-color: #F98620;
       color: white;
-      font-size: 0.9rem;
-      padding:0;
-      width: 25%;
-      margin-left: 63%;
-      margin-top: 15%;
+      font-size: 0.7rem;
+      padding:2.5px;
+      margin-left: 3%;
       text-align: center;
       border-radius: 4rem;
   }
+
+  .themeBadge {
+    background-color: #F98620;
+      color: white;
+      font-size: 0.7rem;
+      padding:2.5px;
+      width: 15%;
+      margin-left: 0%;
+      margin-bottom: -8.5%;
+      margin-top: 15%;
+      text-align: center;
+      border-radius: 4rem;
+/*       border-bottom: 1px 3pxsolid white;
+ */  }
  
 
  
@@ -397,6 +414,7 @@ watchEffect(() => {
     text-align: left;
     text-overflow: ellipsis;
     cursor: pointer;
+    margin-top: 5%;
   }
 
   .modalGroupArea {
@@ -472,12 +490,7 @@ watchEffect(() => {
 
 .modal-content {
   padding: 2rem;
-<<<<<<< HEAD
-/*   padding: 20px;
- */  border-radius: 5px;
-=======
   border-radius: 1.5rem;
->>>>>>> 72f15c2bbe94593246b8ed24550fbf42b0646c6a
   box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
   background-color: #353E57;
   color: white;
@@ -562,7 +575,7 @@ watchEffect(() => {
   }
 
   .basic-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 
   }
 
