@@ -1,27 +1,50 @@
 <template>
     <div class="grid-container" style="overflow-y: scroll; max-height: 700px; width: 350px;">
-      <header class="groupsHeader" :class="{sticky: stickyHeader}">
+      <header class="groupsHeader">
 
           <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ activeParticipants }} participants</h1>
-          <input type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
+          <button @click="$emit('highlight-all-rooms')">Show all rooms</button>
+
+          <input class="searchQuery" type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
           </header>
           <div class="card" v-for="(card, index) of cards" :key="card" :style="getCardStyle(index)">
-            
-               <div class="cardContent">
-          <div class="cardTitle">Group {{ card.id }}</div>
-          <div class="cardDescription" @click="showModal(card)">Python is a high-level, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation. </div>
-          <div class="cardParticipants" v-if="cardExpanded">
-            <h4>Participants</h4>
-           
+        <div class="cardDetailsContainer">
+
+        <div class="cardContent">
+          <div class="cardTitle">Group {{ card.id }}
+
+            <div class="badgesContainer">
+  <span class="themeBadge" @click="showModal(card)">{{ card.themes[0] }}
+  <span v-if="card.themes.length > 1">+{{ card.themes.length - 1 }}</span>
+</span>
+  <span class="badgeCount">{{ card.participants.length }} people</span>
+  
+<!-- 
+  <div class="badgeTooltip" v-show="showTooltip">
+                  <span class="themeBadge" v-for="(theme, index) in card.themes.slice(1)" :key="index">{{ theme }}</span>
+    <span class="participantsBadge">{{activeParticipants}} People</span> 
+
+  </div> -->
+</div>          <div class="cardDescription" @click="showModal(card)">Readability with the use of significant readability with the use of significant indentation.Readability with the use of significant </div>
+
           </div>
+        </div>
         </div>
         <div class="buttonGroup">
           <button class="floorplanButton" @click="showModal(card)">Show more</button>
           <button class="floorplanButton" @click="joinRoom">Join room</button>
         </div>
-         </div>
-      </div>
-      <div class="modal" v-if="modalVisible" @click.self="hideModal">
+      
+          <div class="cardParticipants" v-if="cardExpanded">
+            <h4>Participants</h4>
+           </div>
+          </div>
+        </div>
+        
+
+
+
+        <div class="modal" v-if="modalVisible" @click.self="hideModal">
         <div class="modal-content" @click.stop>
           
           <div class="modal-card">
@@ -31,28 +54,46 @@
             </section>
             
             <p class="modal-description">{{ selectedCard.description }}</p>
-            <h4>Area</h4>
+            <section class="areaAndParticipantSection">
+            <h4>Themes</h4>
             <ul>
-              <li v-for="area in selectedCard.areas" :key="area">{{ area }}</li>
+            <li v-for="theme in selectedCard.themes" :key="theme">
+                <span :class="themeClass(theme)">{{ theme }}</span>
+            </li>            
+            </ul>
+            <h4>Area</h4> 
+            <ul>
+              <li class="modalGroupArea" v-for="area in selectedCard.areas" :key="area">{{ area }}</li>
             </ul>
             <h4>Participants</h4>
             <ul>
-              <li v-for="participant in selectedCard.participants" :key="participant">{{ participant }}</li>
+              <li class="modalGroupParticipants" v-for="participant in selectedCard.participants" :key="participant">{{ participant }}</li>
             </ul>
+          </section>
             <button class="floorplanButton" @click="joinRoom">Join room</button>
 
           </div>
         </div>
       </div>
-
 </template>
 
+
+
 <script setup>
-import { onMounted, ref, computed } from "vue";
+  import Navigation from "@/components/Navigation.vue";
+  import { onMounted, ref, computed } from "vue";
   import { getAuth, onAuthStateChanged } from "firebase/auth";
   import { useUserStore } from '@/stores/user.js';
+  import { watchEffect } from "vue";
 
-const storeUser = useUserStore();
+
+  function highlightAllRoomsHandler() {
+    highlightAllRooms();
+  }
+
+  const storeUser = useUserStore();
+  const groupTheme = ref('Coding');
+  const showTooltip = ref(false);
 
 
   const isLoggedIn = ref(false);
@@ -72,22 +113,29 @@ isLoggedIn.value = false;
 const cards = ref([
   {
     id: 1,
-    areas: ["area1", "area2"],
-    participants: ["jack", "johnny", "joe"]
+    areas: ["area1"],
+    themes: ["Coding", "Lunch", "Gaming", "Exam-practice", "Reading", "Sports", "General"],
+    participants: ["jack", "johnny", "joe", "Zac", "Håvard"]
   },
   {
     id: 2,
-    areas: ["area3", "area4"],
+    areas: ["area3",],
+    themes: ["exam-practice", "Coding", "Lunch", "Gaming"],
+
     participants: ["jim", "jack", "johnny"]
   },
    {
     id: 3,
-    areas: ["area5", "area6"],
+    areas: ["area5"],
+    themes: ["Coding", "Lunch", "Gaming"],
+
     participants: ["jim", "jack", "johnny"]
    },
    {
-    id: 4,
-    areas: ["area5", "area6"],
+    id: 3,
+    areas: ["area5"],
+    themes: ["Coding", "Lunch", "Gaming"],
+
     participants: ["jim", "jack", "johnny"]
    }
 ])
@@ -96,10 +144,29 @@ const cards = ref([
 const showForm = ref(false);
 const groupTitle = ref('');
 const searchQuery = ref('');
-const participants = ref(["jack", "johnny", "joe", "jim", "jack", "johnny"])
+const participants = ref(["jack", "johnny", "joe", "jim", "jack", "johnny", "jim", "jack", "johnny", "jim", "jack", "johnny"])
 const cardExpanded = ref(false);
 
 
+function themeClass(theme) {
+  if (theme.toLowerCase() === 'coding') {
+    return 'theme-coding';
+  } else if (theme.toLowerCase() === 'gaming') {
+    return 'theme-gaming';
+  } else if (theme.toLowerCase() === 'lunch') {
+    return 'theme-lunch';
+  } else if (theme.toLowerCase() === 'general') {
+    return 'theme-general';
+  } else if (theme.toLowerCase() === 'reading') {
+    return 'theme-reading';
+  } else if (theme.toLowerCase() === 'sports') {
+    return 'theme-sports';
+  } else if (theme.toLowerCase() === 'exam-practice') {
+    return 'theme-exam-practice';
+  } else {
+    return 'default-theme';
+  }
+}
 
 
 function toggleForm() {
@@ -128,7 +195,9 @@ function toggleCard() {
       title: `Group ${card.id}`,
       description: "certain conclusion in favor of their commercial interests. Reports written by big industry players can still be reliable secondary data, but should optimally be compared to similar reports to check for any bias or ulterior motives.",
       participants: participants.value,
-      areas: card.areas
+      areas: card.areas,
+      themes: card.themes
+
 
     };
     modalVisible.value = true;
@@ -161,7 +230,7 @@ function joinRoom() {
 } */
 
 const activeGroupsCount = computed(() => cards.value.length);
-const activeParticipants = computed(() => participants.value.length);
+const activeParticipants = computed(() => (participants.value ? participants.value.length : 0));
 
 
 
@@ -174,29 +243,35 @@ const activeParticipants = computed(() => participants.value.length);
     };
   }
 
-    const stickyHeader = ref(false);
-
-    window.addEventListener('scroll', () => {
-      if (window.pageYOffset >= 100) { 
-        stickyHeader.value = true;
-      } else {
-        stickyHeader.value = false;
-      }
-    });
-
  const username = computed(() => {
   return storeUser.username
 })
+
+watchEffect(() => {
+    const navigation = document.querySelector('.navigation');
+    if (navigation) {
+      if (hideNavigation.value) {
+        navigation.classList.add('hidden');
+      } else {
+        navigation.classList.remove('hidden');
+      }
+    }
+  });
+
 </script>
+
 <style>
 .grid-container {
     display: grid;
     grid-template-columns: 1fr;
+    margin-right: 1rem;
     width: 300px;
     gap: 1rem;
     left: 0;
+    z-index: 999;
     
   }
+
   
   .grid-container::-webkit-scrollbar {
 /*   display: none; 
@@ -206,8 +281,13 @@ const activeParticipants = computed(() => participants.value.length);
   .card {
     background-color: #353e57;
     padding: 1rem;
+    font-size: 1rem;
     border-radius: 0.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .cardDescription {
+    font-size: 1.1rem;
   }
 
   .activeGroupsButton {
@@ -215,5 +295,20 @@ const activeParticipants = computed(() => participants.value.length);
 
   }
 
+  .floorplanButton {
+    font-size: 18px;
+    padding:5px;
+    margin-right: 1rem;
+    background: #008080;
  
+  }
+
+  .grid-container {
+    position: relative;
+  }
+
+  .searchQuery {
+    border: 2px solid black;
+  }
+
 </style>

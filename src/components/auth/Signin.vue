@@ -28,7 +28,7 @@
         </div>
 
       <div class="altOptionAuth">
-        Already have an account? <span @click="moveToSignUp">Signup</span>
+        Don't have an account? <span @click="moveToSignUp">Signup</span>
       </div>
 
       
