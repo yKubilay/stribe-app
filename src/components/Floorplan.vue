@@ -578,6 +578,8 @@ import { ref, onMounted } from 'vue';
 import GroupCard from './GroupCard.vue';
 import { useGroupStore } from '@/stores/groups';
 import { defineComponent } from 'vue';
+import { useUserStore } from '@/stores/user.js';
+
 
 
 
@@ -594,6 +596,7 @@ const groupDescription = ref('');
 
 
 const groupStore = useGroupStore();
+const userStore = useUserStore();
 
 const groups = groupStore.groups;
 
@@ -619,6 +622,7 @@ async function createGroup() {
     title: groupTitle.value,
     themes: [groupTheme.value],
     description: groupDescription.value,
+    participants: [userStore.username],
   };
 
   await groupStore.createGroup(newGroup);
