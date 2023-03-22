@@ -222,13 +222,6 @@ function viewOnFloorplan() {
 
 }
 
-function joinRoom() {
-  if (!participants.value.includes(username.value)) {
-    participants.value.push(username.value);
-  } else {
-    alert("You are already in a group!");
-  }
-}
 
 
 

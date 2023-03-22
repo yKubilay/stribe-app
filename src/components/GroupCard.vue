@@ -14,6 +14,7 @@
            
             <span v-for="theme in group.themes" :key="theme">
                 <span @click=showModal(group) :class="themeClass(theme)">{{ theme }}</span>
+                <span :class="themeClass(theme)">{{ new Date(group.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}</span>
             </span>            
         
 <!--               <span class="badgeCount">{{ group.participants.length }} people</span>
@@ -24,10 +25,12 @@
       </div>
       <div class="buttonGroup">
         <button class="floorplanButton" @click="showModal(group)">Show more</button>
-        <button class="floorplanButton" @click="joinRoom">Join room</button>
+        <button class="floorplanButton" @click="joinRoom(group)">Join room</button>
       </div>
       <div class="cardParticipants" v-if="cardExpanded">
         <h4>Participants</h4>
+        <div class="cardParticipants" @click="showModal(group)">{{ group.participants }}</div>
+
       </div>
     </div>
   </div>
@@ -60,7 +63,7 @@
               <li class="modalGroupParticipants" v-for="participant in selectedCard.participants" :key="participant">{{ participant }}</li>
             </ul>
           </section>
-            <button class="floorplanButton" @click="joinRoom">Join room</button>
+            <button class="floorplanButton" @click="joinRoom(group)">Join room</button>
 
 
           </div>
@@ -109,35 +112,6 @@ isLoggedIn.value = false;
 });
 });
 
-/* const cards = ref([
-  {
-    id: 1,
-    areas: ["area1"],
-    themes: ["Coding", "Lunch", "Gaming", "Exam-practice", "Reading", "Sports", "General"],
-    participants: ["jack", "johnny", "joe", "Zac", "Håvard"]
-  },
-  {
-    id: 2,
-    areas: ["area3",],
-    themes: ["exam-practice", "Coding", "Lunch", "Gaming"],
-
-    participants: ["jim", "jack", "johnny"]
-  },
-   {
-    id: 3,
-    areas: ["area5"],
-    themes: ["Coding", "Lunch", "Gaming"],
-
-    participants: ["jim", "jack", "johnny"]
-   },
-   {
-    id: 3,
-    areas: ["area5"],
-    themes: ["Coding", "Lunch", "Gaming"],
-
-    participants: ["jim", "jack", "johnny"]
-   }
-]) */
 
 
 const showForm = ref(false);
@@ -203,6 +177,15 @@ function toggleCard() {
   }
  */
 
+ async function joinRoom(group) {
+  if (!group.participants.includes(userStore.username)) {
+    group.participants.push(userStore.username);
+    await groupStore.updateGroupParticipants(group.uid, group.participants);
+  } else {
+    alert("You are already in this group!");
+  }
+}
+
  function showModal(card) {
   selectedCard.value = {
     title: card.title,
@@ -226,13 +209,6 @@ function viewOnFloorplan() {
 
 }
 
-function joinRoom() {
-  if (!participants.value.includes(username.value)) {
-    participants.value.push(username.value);
-  } else {
-    alert("You are already in a group!");
-  }
-}
 
 
 

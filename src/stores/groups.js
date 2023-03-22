@@ -16,6 +16,7 @@ export const useGroupStore = defineStore({
         title: groupData.title,
         themes: groupData.themes,
         description: groupData.description,
+        participants: groupData.participants,
         createdAt: Date.now(),
       };
       const docRef = await groupCollection.doc();
@@ -34,6 +35,21 @@ export const useGroupStore = defineStore({
         this.groups = groups;
       });
     },
+
+    updateGroupParticipants(uid, participants) {
+      return new Promise((resolve, reject) => {
+        const groupRef = this.db.collection('groups').doc(uid);
+        groupRef.update({
+          participants: participants
+        }).then(() => {
+          resolve();
+        }).catch((error) => {
+          console.error('Error updating participants:', error);
+          reject(error);
+        });
+  });
+}
+
   },
 });
 
