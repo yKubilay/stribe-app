@@ -7,7 +7,6 @@
       <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ activeParticipants }} participants</h1>
       <input type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
     </header>
-
     <section class="basic-grid">
       <div class="card create-group-card" :style="formStyle" @click="toggleForm">
         <form :class="{form: showForm}"></form>
@@ -91,10 +90,18 @@
   import { getAuth, onAuthStateChanged } from "firebase/auth";
   import { useUserStore } from '@/stores/user.js';
   import { watchEffect } from "vue";
+  import  { useGroupStore } from '@/stores/groups.js';
 
   const storeUser = useUserStore();
   const groupTheme = ref('Coding');
   const showTooltip = ref(false);
+  const groups = useGroupStore();
+
+
+  const groupsTitle = computed(() => {
+  return groups.title
+})
+
 
 
   const isLoggedIn = ref(false);
@@ -193,7 +200,7 @@ function toggleCard() {
   
   function showModal(card) {
     selectedCard.value = {
-      title: `Group ${card.id}`,
+      title: card.title,
       description: "certain conclusion in favor of their commercial interests. Reports written by big industry players can still be reliable secondary data, but should optimally be compared to similar reports to check for any bias or ulterior motives.",
       participants: participants.value,
       areas: card.areas,
@@ -366,6 +373,7 @@ watchEffect(() => {
       display: flex;
       padding-bottom: 5px; 
       border-bottom: 2px solid lightgray; 
+
 }
 
     .themeBadge {
@@ -577,7 +585,7 @@ watchEffect(() => {
 }
 
   .cardTitle {
-   font-size: 2rem;
+   font-size: 1.5rem;
    color: #edf6f9;   
    text-align: left;
 

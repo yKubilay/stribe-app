@@ -52,6 +52,7 @@
   import { useUserStore } from "../../stores/user";
   import { computed } from "vue";
   import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+  
   const email = ref("");
   const password = ref("");
   const errorMsg = ref();

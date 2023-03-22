@@ -1,46 +1,36 @@
 <template>
-    <div class="grid-container" style="overflow-y: scroll; max-height: 700px; width: 350px;">
-      <header class="groupsHeader">
+   <div class="grid-container" style="overflow-y: scroll; max-height: 700px; width: 350px;">
 
-          <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ activeParticipants }} participants</h1>
-          <button @click="$emit('highlight-all-rooms')">Show all rooms</button>
-
-          <input class="searchQuery" type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
-          </header>
-          <div class="card" v-for="(card, index) of cards" :key="card" :style="getCardStyle(index)">
-        <div class="cardDetailsContainer">
-
+    <header class="groupsHeader">
+      <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ activeParticipants }} participants</h1>
+      <button @click="$emit('highlight-all-rooms')">Show all rooms</button>
+      <input class="searchQuery" type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
+    </header>
+    <div class="card" v-for="(group, index) in groupStore.groups" :key="group.uid" :style="getCardStyle(index)">
+      <div class="cardDetailsContainer">
         <div class="cardContent">
-          <div class="cardTitle">Group {{ card.id }}
-
+          <div class="cardTitle"> {{ group.title }}
             <div class="badgesContainer">
-  <span class="themeBadge" @click="showModal(card)">{{ card.themes[0] }}
-  <span v-if="card.themes.length > 1">+{{ card.themes.length - 1 }}</span>
-</span>
-  <span class="badgeCount">{{ card.participants.length }} people</span>
-  
-<!-- 
-  <div class="badgeTooltip" v-show="showTooltip">
-                  <span class="themeBadge" v-for="(theme, index) in card.themes.slice(1)" :key="index">{{ theme }}</span>
-    <span class="participantsBadge">{{activeParticipants}} People</span> 
-
-  </div> -->
-</div>          <div class="cardDescription" @click="showModal(card)">Readability with the use of significant readability with the use of significant indentation.Readability with the use of significant </div>
-
-          </div>
-        </div>
-        </div>
-        <div class="buttonGroup">
-          <button class="floorplanButton" @click="showModal(card)">Show more</button>
-          <button class="floorplanButton" @click="joinRoom">Join room</button>
-        </div>
-      
-          <div class="cardParticipants" v-if="cardExpanded">
-            <h4>Participants</h4>
-           </div>
-          </div>
-        </div>
+           
+            <span v-for="theme in group.themes" :key="theme">
+                <span @click=showModal(group) :class="themeClass(theme)">{{ theme }}</span>
+            </span>            
         
+<!--               <span class="badgeCount">{{ group.participants.length }} people</span>
+ -->            </div>     
+            <div class="cardDescription" @click="showModal(group)">{{ group.description }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="buttonGroup">
+        <button class="floorplanButton" @click="showModal(group)">Show more</button>
+        <button class="floorplanButton" @click="joinRoom">Join room</button>
+      </div>
+      <div class="cardParticipants" v-if="cardExpanded">
+        <h4>Participants</h4>
+      </div>
+    </div>
+  </div>
 
 
 
@@ -72,6 +62,7 @@
           </section>
             <button class="floorplanButton" @click="joinRoom">Join room</button>
 
+
           </div>
         </div>
       </div>
@@ -85,7 +76,15 @@
   import { getAuth, onAuthStateChanged } from "firebase/auth";
   import { useUserStore } from '@/stores/user.js';
   import { watchEffect } from "vue";
+  import { useGroupStore } from '@/stores/groups';
 
+
+const groupStore = useGroupStore();
+
+
+onMounted(() => {
+  groupStore.listenToGroups();
+});
 
   function highlightAllRoomsHandler() {
     highlightAllRooms();
@@ -110,7 +109,7 @@ isLoggedIn.value = false;
 });
 });
 
-const cards = ref([
+/* const cards = ref([
   {
     id: 1,
     areas: ["area1"],
@@ -138,7 +137,7 @@ const cards = ref([
 
     participants: ["jim", "jack", "johnny"]
    }
-])
+]) */
 
 
 const showForm = ref(false);
@@ -189,7 +188,7 @@ function toggleCard() {
   const modalVisible = ref(false);
   const selectedCard = ref(null);
 
-  
+/*   
   function showModal(card) {
     selectedCard.value = {
       title: `Group ${card.id}`,
@@ -202,6 +201,19 @@ function toggleCard() {
     };
     modalVisible.value = true;
   }
+ */
+
+ function showModal(card) {
+  selectedCard.value = {
+    title: card.title,
+    description: card.description,
+    participants: card.participants,
+    areas: card.areas,
+    themes: card.themes,
+  };
+  modalVisible.value = true;
+}
+
 
   function hideModal() {
     modalVisible.value = false;
@@ -229,9 +241,10 @@ function joinRoom() {
 
 } */
 
-const activeGroupsCount = computed(() => cards.value.length);
-const activeParticipants = computed(() => (participants.value ? participants.value.length : 0));
-
+/* const activeGroupsCount = computed(() => cards.value.length);
+ */
+/* const activeParticipants = computed(() => (participants.value ? participants.value.length : 0));
+ */
 
 
 
@@ -285,6 +298,8 @@ watchEffect(() => {
     border-radius: 0.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
+
+
 
   .cardDescription {
     font-size: 1.1rem;

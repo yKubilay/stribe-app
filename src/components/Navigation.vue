@@ -124,7 +124,7 @@ ul{
     position: sticky;
     top: 0;
     width: 100%;
-    z-index: 2;
+    z-index: 99999;
 }
 
 .logo{
