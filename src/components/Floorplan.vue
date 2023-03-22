@@ -1,7 +1,7 @@
 <template>
 
    <div class="firstFloor">
-       <svg class="firstFloorSVG"
+       <svg class="firstFloorSVG" 
        ref="svgElement"
        version="1.1"
        id="svg9"
@@ -528,24 +528,40 @@
     </svg>
     
     <div v-if="popupId" class="popup">
-         <div class="popup-header">
-           <h2>{{ popupId }}</h2>
-           <button class="closeButton" @click="hidePopup">X</button>
-         </div>
-         <div class="popup-body">
-           <h3 class="popupCreateText" >Create group in {{ popupId }}?</h3>
+  <div class="popup-header">
+    <h2>{{ popupId }}</h2>
+    <button class="closeButton" @click="hidePopup">X</button>
+  </div>
+  <h3 class="popupCreateText">Create group in {{ popupId }}?</h3>
+  <div class="popup-form">
            <form>
          <label for="meeting-title">Title:</label>
-         <input type="text" id="meeting-title" name="meeting-title"><br><br>
-         <label for="meeting-date">Date:</label>
-         <input type="date" id="meeting-date" name="meeting-date"><br><br>
-         <label for="meeting-time">Time:</label>
-         <input type="time" id="meeting-time" name="meeting-time"><br><br>
-         <label for="meeting-location">Location:</label>
-         <input type="text" id="meeting-location" name="meeting-location"><br><br>
+         <input type="text" id="meeting-title" name="meeting-title" v-model="groupTitle"><br><br>
+         
+ <!--         <label for="meeting-date">Date:</label>
+         <input type="date" id="meeting-date" name="meeting-date"><br><br> -->
+
+     <!--     <label for="meeting-time">Time:</label>
+         <input type="time" id="meeting-time" name="meeting-time"><br><br> -->
+
+         <label for="meeting-theme">Theme:</label>
+         <select id="meeting-theme" name="meeting-theme" v-model="groupTheme">
+            <option value="" selected disabled>Select theme</option>
+            <option value="Coding">Coding</option>
+            <option value="Gaming">Gaming</option>
+            <option value="Lunch">Lunch</option>
+            <option value="General">General</option>
+            <option value="Reading">Reading</option>
+            <option value="Sports">Sports</option>
+            <option value="Exam-practice">Exam Practice</option>
+         </select><br><br> 
+ 
+         
          <label for="meeting-description">Description:</label><br>
-         <textarea id="meeting-description" name="meeting-description" rows="4" cols="20"></textarea><br><br>
-         <input type="submit" value="Create group">
+         <textarea id="meeting-description" name="meeting-description" rows="4" cols="20" v-model="groupDescription"></textarea><br><br>
+
+         <button class="submit-style" @click.prevent="createGroup">Create group</button>
+         <button class="submit-style" @click="hidePopup">Cancel</button>
       </form>
          </div>
        </div>
@@ -555,43 +571,88 @@
       </div>
    
     </template>
+
     
-    <script>
-   import GroupCard from './GroupCard.vue';
-   
-   export default {
-      components: {
-         GroupCard
-      },
-    data() {
-        return {
-            popupId: null,
-        };
-    },
-    mounted() {
-        const svgElement = this.$refs.svgElement;
-        const elements = svgElement.querySelectorAll("rect, path");
-        elements.forEach((element) => {
-            element.addEventListener("click", () => {
-                this.showPopup(element.id);
-            });
-        });
+<script setup>
+import { ref, onMounted } from 'vue';
+import GroupCard from './GroupCard.vue';
+import { useGroupStore } from '@/stores/groups';
+import { defineComponent } from 'vue';
 
 
-    },
-    methods: {
-        showPopup(id) {
-            this.popupId = id;
-        },
-        hidePopup() {
-            this.popupId = null;
-        },
-    },
 
+
+/* import { useGroupStore } from '@/stores/groups';
+ */
+/* const groupStore = useGroupStore();
+ */
+const popupId = ref(null);
+const svgElement = ref(null);
+const groupTitle = ref('');
+const groupTheme = ref('');
+const groupDescription = ref('');
+
+
+const groupStore = useGroupStore();
+
+const groups = groupStore.groups;
+
+
+onMounted(() => {
+  if (svgElement.value) {
+    const elements = svgElement.value.querySelectorAll('rect, path');
+    elements.forEach((element) => {
+      element.addEventListener('click', () => {
+        showPopup(element.id);
+      });
+    });
+  }
+});
+
+async function createGroup() {
+  if (!groupTitle.value || !groupTheme.value || !groupDescription.value) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+
+  const newGroup = {
+    title: groupTitle.value,
+    themes: [groupTheme.value],
+    description: groupDescription.value,
+  };
+
+  await groupStore.createGroup(newGroup);
+
+  hidePopup();
 }
-   
-    </script>
-      
+
+
+function showPopup(id) {
+  popupId.value = id;
+}
+
+function hidePopup() {
+/*   resetForm();
+ */  popupId.value = null;
+}
+/* function resetForm() {
+  groupTitle.value = '';
+  groupTheme.value = '';
+  groupDescription.value = '';
+} */
+
+
+
+defineComponent({
+  components: {
+    GroupCard,
+  },
+
+});
+
+</script>
+
+
     <style scoped>
     
     path{
@@ -611,10 +672,19 @@
         opacity: 0.6;
         cursor:pointer;
       }
+   
+   select {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 4px;
+      background: #ffffff;
+      border: 1px solid #ccc;
+      }
 
 
     
-   .popup {
+  /*  .popup {
      position: absolute;
      top: 40px;
      left: 72%;
@@ -624,13 +694,26 @@
      height: 700px;
      color:  white;
    }
+ */
+
+ .popup {
+  position: absolute;
+  top: 40px;
+  left: 72%;
+  background-color: #353E57;
+  border: 2px solid black;
+  padding: 10px;
+  width: 350px; 
+  height: 700px;
+  color: white;
+}
 
    .popupCreateText {
          color: white;
-         font-size: 1.5rem;
-         margin-bottom: 10%;
-         padding-bottom: 5%;
-         border-bottom: 1px solid #ffffff;
+         font-size: 1.1rem;
+/*          margin-bottom: 10%;
+ */         padding-bottom: 5%;
+         border-bottom: 2px solid lightgray;
       }
 
    .closeButton {
@@ -640,12 +723,25 @@
       top: -20%;
       right: -5%;
       background: #008080;
-      width: 40%;
+      width: 20%;
       cursor: pointer;
 
    }
-
-   
+   .submit-style, input[type="submit"] {
+         width: 140px;
+         border: 0px;
+         padding: 8px 5px;
+         outline: none;
+         color: white;
+         background: #008080;
+         cursor: pointer;
+         border-radius: 7px;
+         margin-left: 2%;
+         transition: 0.5s;
+         font-size: 18px;
+         padding: 5px;
+         }
+            
    .popup-header {
      display: flex;
      justify-content: space-between;
@@ -697,18 +793,34 @@
      font-size: 18px;
     padding:5px;
 /*     background: #2F728D;
- */    background: #008080;
-     
+ */   
      
    }
+/* 
+   .popup-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; 
+}
+ */
+ .popup-form {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: calc(100% - 40px); 
+}
 
+.popup-form {
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 
 
    
-   input[type="submit"]:hover {
-     background-color: #45a049;
-   }
+
    
    textarea {
      resize: vertical;

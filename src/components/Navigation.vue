@@ -24,7 +24,7 @@
 
 
               <li v-if="isLoggedIn"><button class="signoutButton" @click="handleSignOut">Sign out</button></li>
-              <li v-else><router-link to="/signUp" :class="{ active: isCurrentPage('/signUp') }">Sign up</router-link></li>
+              <li v-else><router-link to="/login" :class="{ active: isCurrentPage('/login') }">Sign up</router-link></li>
             </ul>
         </nav>
     </header>
@@ -124,9 +124,9 @@ ul{
     position: sticky;
     top: 0;
     width: 100%;
-    z-index: 2;
+    z-index: 99999;
 }
-/* Logo */
+
 .logo{
     display: inline-block;
     color: #008080;
@@ -135,7 +135,9 @@ ul{
     margin-left: 6.5%;
     
 }
-/* Nav menu */
+
+
+
 .nav{
     width: 100%;
     height: 100%;
@@ -158,6 +160,10 @@ ul{
 .nav{
     max-height: 0;
     transition: max-height .5s ease-out;
+}
+
+.signoutButton {
+  margin-top: 1rem;
 }
 
 
@@ -186,14 +192,14 @@ nav a.active:after {
     cursor: pointer;
     float: right;
     padding: 40px 20px;
-}/* Style label tag */
+}
 .hamb-line {
     background: black;
     display: block;
     height: 3px;
     position: relative;
     width: 24px;
-} /* Style span tag */
+} 
 .hamb-line::before,
 .hamb-line::after{
     background: black;

@@ -33,6 +33,8 @@
   justify-content: center;
   margin-top: 200px;
 }
+
+
 .signUpform {
   background-color: White;
   width: 50%;
@@ -41,6 +43,34 @@
   box-shadow: 15px 15px 10px -15px #111;    
 
 }
+
+/* .homeButton {
+  font-size: 18px;
+  padding:5px;
+  position: absolute;
+  top: 1%;
+  right: -0.8rem;
+  background: #008080;
+  cursor: pointer;
+  z-index: 1;
+}
+ */
+
+ .button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 2rem;
+  margin-left: -1rem;
+}
+
+.homeButton {
+  margin: 0 1rem;
+  margin-top:1rem;
+  background: #008080;
+
+}
+
 
 .altOptionAuth {
   text-align: center;
@@ -96,17 +126,21 @@
 
 .col-1 {
   position: relative;
-  padding-left: 50px; /* This makes the pseudo-element positioned relative to the .col-1 element */
+  padding-left: 50px; 
 }
 
 .col-1::after {
   content: '';
-  display: block; /* This makes the pseudo-element a block-level element */
+  display: block; 
   width: 10px;
   height: 100%;
-  background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
-  position: absolute; /* This makes the pseudo-element positioned absolutely */
-  right: 520px; /* This moves the pseudo-element to the left of the .col-1 element */
+/*   background: linear-gradient(15deg, #13547a 0%, #008080 100%);
+ */  background: linear-gradient(15deg, #008080 0%, #13547a 70%, #80d0c7 100%);
+
+ 
+/*   background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+ */  position: absolute; 
+  right: 520px; 
   top: 0;
   bottom: 0;
 }
@@ -142,7 +176,7 @@ button {
   padding: 12px 10px;
   outline: none;
   color: white;
-  background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  background: #008080;
   cursor: pointer;
   border-radius: 7px;
   margin-top: 20px;
