@@ -16,6 +16,8 @@
   </div>
   
   <section class="container">
+    <!-- your swiper content here -->
+  
   <swiper
     :slidesPerView="1"
     :navigation="true"
@@ -40,13 +42,13 @@
               </div>
 
               <div class="card-content">
-                  <h2 class="name">Kasper Iversen</h2>
+                  <h2 class="name" data-name="Kasper">Kasper Iversen</h2>
                   <p class="description">
                     23 years old.
                     <br/>
                     Interests: Football, training and programming. 
                   </p>
-                  <button class="about-button">Read more</button>
+                  <button class="about-button" @click="showModal = true">Read more</button>
               </div>
             </div>
           </div>
@@ -67,13 +69,13 @@
               </div>
 
               <div class="card-content">
-                  <h2 class="name">Håvard Solheim Jenssen</h2>
+                  <h2 class="name" data-name="Håvard">Håvard Solheim Jenssen</h2>
                   <p class="description">
                     23 years old.
                     <br/>
                     Interests: Handball, training, programming and freesbee-golf. 
                   </p>
-                  <button class="about-button">Read more</button>
+                  <button class="about-button" @click="showModal = true">Read more</button>
               </div>
             </div>
           </div>
@@ -94,13 +96,13 @@
               </div>
 
               <div class="card-content">
-                  <h2 class="name">Zachary Laguda</h2>
+                  <h2 class="name" data-name="Zach">Zachary Laguda</h2>
                   <p class="description">
                     25 years old(?).
                     <br/>
                     Interests: Volleyball, training and programming. 
                   </p>
-                  <button class="about-button">Read more</button>
+                  <button class="about-button" @click="showModal = true">Read more</button>
               </div>
             </div>
           </div>
@@ -121,13 +123,13 @@
               </div>
 
               <div class="card-content">
-                  <h2 class="name">Kubilay Kerim Özdemir</h2>
+                  <h2 class="name">{{ currentPerson }}Kubilay Kerim Özdemir</h2>
                   <p class="description">
                     24 years old.
                     <br/>
                     Interests: yo-yo and programming. 
                   </p>
-                  <button class="about-button">Read more</button>
+                  <button class="about-button" @click="showModal = true">Read more</button>
               </div>
             </div>
           </div>
@@ -149,6 +151,9 @@ import FAQ from "../components/FAQ.vue";
   // import required modules
   import { Keyboard, Pagination, Navigation } from 'swiper';
 
+
+  
+
   export default {
     components: {
       Swiper,
@@ -162,8 +167,7 @@ import FAQ from "../components/FAQ.vue";
       };
     },
 
-    
-  };
+};
   
 </script>
 <style>
@@ -174,6 +178,41 @@ import FAQ from "../components/FAQ.vue";
     font-family: 'Poppins', sans-serif;
 
   }
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  z-index: 1;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+  border-radius: 5px;
+  position: relative;
+}
+
+.mySwiper {
+  position: relative;
+  z-index: 0;
+}
+
+.blur {
+  filter: blur(5px);
+}
+
+
 
   /* FAQ - Frequently asked questions */
   
