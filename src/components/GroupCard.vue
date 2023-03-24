@@ -10,19 +10,20 @@
       <div class="cardDetailsContainer">
         <div class="cardContent">
           <div class="cardTitle"> {{ group.title }}
+           
             <div class="badgesContainer">
            
-            <span v-for="theme in group.themes" :key="theme">
-                <span @click=showModal(group) :class="themeClass(theme)">{{ theme }}</span>
-                <span :class="themeClass(theme)">{{ new Date(group.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}</span>
-            </span>            
-        
+           <span v-for="theme in group.themes" :key="theme">
+               <span @click=showModal(group) :class="themeClass(theme)">{{ theme }}</span>
+               <span :class="themeClass(theme)">{{ new Date(group.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}</span>
+           </span>            
+       
 <!--               <span class="badgeCount">{{ group.participants.length }} people</span>
- -->            </div>     
-            <div class="cardDescription" @click="showModal(group)">{{ group.description }}</div>
-          </div>
-        </div>
-      </div>
+-->            </div>     
+           <div class="cardDescription" @click="showModal(group)">{{ group.description }}</div>
+         </div>
+       </div>
+     </div>
       <div class="buttonGroup">
         <button class="floorplanButton" @click="showModal(group)">Show more</button>
         <button class="floorplanButton" @click="joinRoom(group)">Join room</button>
@@ -80,6 +81,8 @@
   import { useUserStore } from '@/stores/user.js';
   import { watchEffect } from "vue";
   import { useGroupStore } from '@/stores/groups';
+  import moment from 'moment';
+
 
 
 const groupStore = useGroupStore();
@@ -192,7 +195,8 @@ function toggleCard() {
   }
 }
 
- function showModal(card) {
+
+function showModal(card) {
   selectedCard.value = {
     title: card.title,
     description: card.description,
@@ -202,6 +206,7 @@ function toggleCard() {
   };
   modalVisible.value = true;
 }
+
 
 
   function hideModal() {
@@ -267,6 +272,10 @@ watchEffect(() => {
     
   }
 
+  .themeClass {
+    margin: 5%;
+  }
+
   
   .grid-container::-webkit-scrollbar {
 /*   display: none; 
@@ -281,6 +290,7 @@ watchEffect(() => {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
+  
 
 
   .cardDescription {
@@ -299,6 +309,13 @@ watchEffect(() => {
     background: #008080;
  
   }
+
+/*  
+  .badgesContainer {
+     display: grid;
+      grid-template-rows:  repeat(3, 1fr);
+  }
+  */
 
   .grid-container {
     position: relative;
