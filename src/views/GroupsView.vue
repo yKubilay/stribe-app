@@ -362,11 +362,23 @@ watchEffect(() => {
       padding-right: 1rem;
       cursor:pointer;
     }
-    .badgesContainer {
+  /*   .badgesContainer {
       display: flex;
       padding-bottom: 5px; 
       border-bottom: 2px solid lightgray; 
 
+} */
+
+/* .badgesContainer {
+  display: flex;
+  padding-bottom: 5px;
+  margin: 2%;
+  border-bottom: 2px solid lightgray; 
+  } */
+
+  .badgesContainer  {
+ 
+  border-bottom: 2px solid lightgray; 
 }
 
     .themeBadge {
@@ -565,11 +577,11 @@ watchEffect(() => {
   flex-direction: column;
 }
 
-.badgesContainer {
+/* .badgesContainer {
   display: flex;
   gap: 5px;
 
-}
+} */
 
 .cardContent {
     text-align: left;

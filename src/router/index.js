@@ -4,9 +4,7 @@ import  AboutView  from '../views/AboutView.vue'
 import  GroupsView  from '../views/GroupsView.vue'
 import  FloorplanView  from '../views/FloorplanView.vue'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-
-
-
+import { useAuthStore } from '@/stores/auth.js';
 
 
 const router = createRouter({
@@ -63,9 +61,8 @@ const router = createRouter({
   ]
 });
 
-/* 
-const storeAuth = useAuthStore();
-const isLoggedIn = computed(() => storeAuth.isLoggedIn); */
+
+
 
 const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
@@ -80,14 +77,19 @@ const getCurrentUser = () => {
   });
 };
 
+
+
 router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore();
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (getCurrentUser) {
+    if ( authStore.isLoggedIn) {
       next();
     } else {
-      alert("No access! Sign in or register new account");
+      if (to.path !== "/") {
+        alert("No access! Sign in or register a new account");
+      }
       next("/");
-    } 
+    }
   } else {
     next();
   }
@@ -95,3 +97,4 @@ router.beforeEach(async (to, from, next) => {
 
 
 export default router
+
