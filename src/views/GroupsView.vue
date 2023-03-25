@@ -376,10 +376,6 @@ watchEffect(() => {
   border-bottom: 2px solid lightgray; 
   } */
 
-  .badgesContainer  {
- 
-  border-bottom: 2px solid lightgray; 
-}
 
     .themeBadge {
       background: #F8860D;
@@ -457,8 +453,8 @@ watchEffect(() => {
     display: flex;
     justify-content: flex-start;
     align-content: space-between;
-    margin-left: 1rem;
-  }
+/*     margin-left: 1rem;
+ */  }
   
   .span {
     font-weight: 750;
@@ -585,7 +581,7 @@ watchEffect(() => {
 
 .cardContent {
     text-align: left;
-    margin-left: 2rem;
+    margin-left: 1rem;
     
 }
 
@@ -617,7 +613,7 @@ watchEffect(() => {
     text-overflow: ellipsis;
     cursor: pointer;
     margin-top: 1.5rem;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     
   }
