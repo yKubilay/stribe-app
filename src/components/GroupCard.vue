@@ -4,25 +4,33 @@
     <header class="groupsHeader">
       <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ activeParticipants }} participants</h1>
       <button @click="$emit('highlight-all-rooms')">Show all rooms</button>
-      <input class="searchQuery" type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
+
+ <InputText type="text" id="searchQuery" name="meeting-title" v-model="groupTitle" placeholder="Search for groups, themes or other users!" style=" border-radius: 0;" />
     </header>
+
+
     <div class="card" v-for="(group, index) in groupStore.groups" :key="group.uid" :style="getCardStyle(index)">
       <div class="cardDetailsContainer">
         <div class="cardContent">
           <div class="cardTitle"> {{ group.title }}
-           
+                    
+            <div class="outerBadgesContainer">
+            <div class="createdAtContainer">
+              <span :class="themeClass(group.themes[0])" class="themeBadge">{{ moment(group.createdAt).fromNow() }}</span>
+            </div>
+
             <div class="badgesContainer">
-           
-           <span v-for="theme in group.themes" :key="theme">
-               <span @click=showModal(group) :class="themeClass(theme)">{{ theme }}</span>
-               <span :class="themeClass(theme)">{{ new Date(group.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}</span>
-           </span>            
-       
-<!--               <span class="badgeCount">{{ group.participants.length }} people</span>
--->            </div>     
-           <div class="cardDescription" @click="showModal(group)">{{ group.description }}</div>
-         </div>
-       </div>
+              <span v-if="group.themes.length > 0" class="themeBadge" @click="showModal(group)" :class="themeClass(group.themes[0])">
+                {{ group.themes[0] }} <span v-if="group.themes.length > 1">+{{ group.themes.length - 1 }}</span>
+              </span>
+              <span :class="themeClass(group.themes[0])" class="themeBadge">{{ group.participants.length }} people</span>
+            </div>
+          </div>
+          
+          <div class="cardDescription" @click="showModal(group)">{{ group.description }}</div>
+        </div>
+      </div>
+
      </div>
       <div class="buttonGroup">
         <button class="floorplanButton" @click="showModal(group)">Show more</button>
@@ -43,18 +51,21 @@
           
           <div class="modal-card">
             <section class="modal-header">
+              
               <button class="closeButton" @click="hideModal">X</button>
+              
               <h2>{{ selectedCard.title }}</h2>
             </section>
-            
+            <h4 class="modalDescriptionStyling">Description</h4>
+
             <p class="modal-description">{{ selectedCard.description }}</p>
             <section class="areaAndParticipantSection">
             <h4>Themes</h4>
             <ul>
             <li v-for="theme in selectedCard.themes" :key="theme">
-                <span :class="themeClass(theme)">{{ theme }}</span>
+              <span class="themeBadge" :class="themeClass(theme)">{{ theme }}</span>
             </li>            
-            </ul>
+          </ul>
             <h4>Area</h4> 
             <ul>
               <li class="modalGroupArea" v-for="area in selectedCard.areas" :key="area">{{ area }}</li>
@@ -81,6 +92,7 @@
   import { useUserStore } from '@/stores/user.js';
   import { watchEffect } from "vue";
   import { useGroupStore } from '@/stores/groups';
+  import InputText from 'primevue/inputtext';
   import moment from 'moment';
 
 
@@ -122,27 +134,6 @@ const groupTitle = ref('');
 const searchQuery = ref('');
 const participants = ref(["jack", "johnny", "joe", "jim", "jack", "johnny", "jim", "jack", "johnny", "jim", "jack", "johnny"])
 const cardExpanded = ref(false);
-
-
-function themeClass(theme) {
-  if (theme.toLowerCase() === 'coding') {
-    return 'theme-coding';
-  } else if (theme.toLowerCase() === 'gaming') {
-    return 'theme-gaming';
-  } else if (theme.toLowerCase() === 'lunch') {
-    return 'theme-lunch';
-  } else if (theme.toLowerCase() === 'general') {
-    return 'theme-general';
-  } else if (theme.toLowerCase() === 'reading') {
-    return 'theme-reading';
-  } else if (theme.toLowerCase() === 'sports') {
-    return 'theme-sports';
-  } else if (theme.toLowerCase() === 'exam-practice') {
-    return 'theme-exam-practice';
-  } else {
-    return 'default-theme';
-  }
-}
 
 
 function toggleForm() {
@@ -207,7 +198,25 @@ function showModal(card) {
   modalVisible.value = true;
 }
 
-
+function themeClass(theme) {
+  if (theme.toLowerCase() === 'coding') {
+    return 'theme-coding';
+  } else if (theme.toLowerCase() === 'gaming') {
+    return 'theme-gaming';
+  } else if (theme.toLowerCase() === 'lunch') {
+    return 'theme-lunch';
+  } else if (theme.toLowerCase() === 'general') {
+    return 'theme-general';
+  } else if (theme.toLowerCase() === 'reading') {
+    return 'theme-reading';
+  } else if (theme.toLowerCase() === 'sports') {
+    return 'theme-sports';
+  } else if (theme.toLowerCase() === 'exam-practice') {
+    return 'theme-exam-practice';
+  } else {
+    return 'default-theme';
+  }
+}
 
   function hideModal() {
     modalVisible.value = false;
@@ -246,6 +255,9 @@ function viewOnFloorplan() {
  const username = computed(() => {
   return storeUser.username
 })
+
+
+  
 
 watchEffect(() => {
     const navigation = document.querySelector('.navigation');
@@ -291,7 +303,92 @@ watchEffect(() => {
   }
 
   
-
+   /* Conditionally rendering theme colors */
+   .theme-coding {
+      background-color: #F88621;
+      color: #582E03;
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    }.theme-gaming {
+      background-color: #6F0A75;
+      color: #E99EEE; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    }.theme-lunch {
+      background-color: #9B6413;
+      color: #FCE2B5; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    } .theme-general {
+      background-color: #D6D2D0;
+      color: #453F3B; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    }.theme-reading {
+      background-color: #007EBD;
+      color: #BFEBFE; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    }.theme-sports {
+      background-color: #BA1729;
+      color: #FCBBC0; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    }.theme-exam-practice {
+      background-color: #FBBC22;
+      color: #624808; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    }
 
   .cardDescription {
     font-size: 1.1rem;
@@ -302,6 +399,10 @@ watchEffect(() => {
 
   }
 
+  .modalDescriptionStyling {
+    margin-left: 1rem;
+  }
+
   .floorplanButton {
     font-size: 18px;
     padding:5px;
@@ -310,12 +411,13 @@ watchEffect(() => {
  
   }
 
-/*  
-  .badgesContainer {
-     display: grid;
-      grid-template-rows:  repeat(3, 1fr);
+  span .themeBadge {
+    margin-right: 0.5rem;
   }
-  */
+
+  .badgesContainer {
+    border-bottom: 3px solid lightgray; 
+  }
 
   .grid-container {
     position: relative;

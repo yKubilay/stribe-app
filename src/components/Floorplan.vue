@@ -1838,33 +1838,30 @@ ref="svgElement"
   <h3 class="popupCreateText">Create group in {{ popupId }}?</h3>
   <div class="popup-form">
            <form>
-         <label for="meeting-title">Title:</label>
-         <input type="text" id="meeting-title" name="meeting-title" v-model="groupTitle"><br><br>
-         
+            <label for="groupTitle">Title</label><br>
+            <InputText type="text" id="meeting-title" name="meeting-title" v-model="groupTitle" placeholder="Group title" style=" border-radius: 0;" />
+            <br><br>
  <!--         <label for="meeting-date">Date:</label>
          <input type="date" id="meeting-date" name="meeting-date"><br><br> -->
 
      <!--     <label for="meeting-time">Time:</label>
          <input type="time" id="meeting-time" name="meeting-time"><br><br> -->
 
-         <label for="meeting-theme">Theme:</label>
-         <select id="meeting-theme" name="meeting-theme" v-model="groupTheme">
-            <option value="" selected disabled>Select theme</option>
-            <option value="Coding">Coding</option>
-            <option value="Gaming">Gaming</option>
-            <option value="Lunch">Lunch</option>
-            <option value="General">General</option>
-            <option value="Reading">Reading</option>
-            <option value="Sports">Sports</option>
-            <option value="Exam-practice">Exam Practice</option>
-         </select><br><br> 
- 
-         
-         <label for="meeting-description">Description:</label><br>
-         <textarea id="meeting-description" name="meeting-description" rows="4" cols="20" v-model="groupDescription"></textarea><br><br>
+         <label for="selectedCities">Select themes</label><br>   
 
-         <button class="submit-style" @click.prevent="createGroup(popupId)">Create group</button>
-         <button class="submit-style" @click="hidePopup">Cancel</button>
+         <MultiSelect id="groupTitle" v-model="groupTheme" name="groupTitle" :options="groupThemes" display="chip" placeholder="Select group themes" class="w-full md:w-20rem" style=" border-radius: 0;" >
+         </MultiSelect>
+         <br><br>
+
+
+
+      <label for="meeting-title">Description</label><br>   
+      <InputText type="text" id="meeting-description" name="meeting-description" v-model="groupDescription" placeholder="Describe your group" style=" border-radius: 0;" />            <br><br>
+
+
+
+         <button class="floorplanButton" @click.prevent="createGroup(popupId)">Create group</button>
+         <button class="floorplanButton" @click="hidePopup">Cancel</button>
       </form>
          </div>
        </div>
@@ -1882,8 +1879,8 @@ import GroupCard from './GroupCard.vue';
 import { useGroupStore } from '@/stores/groups';
 import { defineComponent } from 'vue';
 import { useUserStore } from '@/stores/user.js';
-
-
+import MultiSelect from 'primevue/multiselect';
+import InputText from 'primevue/inputtext';
 
 
 
@@ -1934,7 +1931,7 @@ async function createGroup(popupId) {
   const newGroup = {
     room: popupId,
     title: groupTitle.value,
-    themes: [groupTheme.value],
+    themes: groupTheme.value,
     description: groupDescription.value,
     participants: [userStore.username],
   };
@@ -1954,6 +1951,15 @@ function hidePopup() {
 }
 
 
+const groupThemes = [
+  'Coding',
+  'Gaming',
+  'Lunch',
+  'General',
+  'Reading',
+  'Sports',
+  'Exam-practice'
+];
 
 defineComponent({
   components: {
@@ -1966,6 +1972,16 @@ defineComponent({
 
 
     <style scoped>
+
+
+   input {
+      width: 100%;
+   }
+    .p-multiselect {
+      width: 100%;
+      
+      }
+
     
    path:not(.exclude){
    fill: transparent;
@@ -2043,7 +2059,8 @@ defineComponent({
       cursor: pointer;
 
    }
-   .submit-style, input[type="submit"] {
+
+   .floorplanButton, input[type="submit"] {
          width: 140px;
          border: 0px;
          padding: 8px 5px;
@@ -2051,13 +2068,13 @@ defineComponent({
          color: white;
          background: #008080;
          cursor: pointer;
-         border-radius: 7px;
          margin-left: 2%;
          transition: 0.5s;
          font-size: 18px;
          padding: 5px;
-         }
+         } 
             
+
    .popup-header {
      display: flex;
      justify-content: space-between;
@@ -2079,10 +2096,10 @@ defineComponent({
   
    
    label {
-     font-weight: bold;
+     font-size: 1rem;
      
    }
-   
+ /*   
    input[type="text"],
    input[type="date"],
    input[type="time"],
@@ -2107,11 +2124,11 @@ defineComponent({
      transition: 0.5s;
    
      font-size: 18px;
-    padding:5px;
+    padding:5px; */
 /*     background: #2F728D;
  */   
      
-   }
+   
 /* 
    .popup-body {
   display: flex;
