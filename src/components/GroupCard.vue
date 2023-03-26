@@ -179,19 +179,11 @@ function toggleCard() {
   }
  */
 
- async function joinRoom(group) {
-  console.log('Joining room:', group.uid);
-  console.log('Current participants:', group.participants);
-  
-  if (!group.participants.includes(userStore.username)) {
-    group.participants.push(userStore.username);
-    console.log('New participants list:', group.participants);
-    
-    await groupStore.updateGroupParticipants(group.uid, group.participants);
-    console.log('Participants list updated');
-  } else {
-    alert("You are already in this group!");
-  }
+ function joinRoom(group) {
+  const loggedInUserName = userStore.username;
+  const updatedParticipants = [...group.participants, loggedInUserName];
+
+  groupStore.updateGroupParticipants(group.uid, updatedParticipants);
 }
 
 
