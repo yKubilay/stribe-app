@@ -1827,6 +1827,9 @@ ref="svgElement"
 
 
 
+<div class="grid-container" style="overflow-y: scroll; max-height: 700px; width: 350px;">
+   <GroupCard :is-used-in-floor-plan="true" />
+       </div>
 
 
     
@@ -1861,13 +1864,11 @@ ref="svgElement"
 
 
          <button class="floorplanButton" @click.prevent="createGroup(popupId)">Create group</button>
-         <button class="floorplanButton" @click="hidePopup">Cancel</button>
+         <button class="floorplanButton" @click="hidePopup, resetForm()">Cancel</button>
       </form>
          </div>
        </div>
 
-       <GroupCard/>
-       
       </div>
    
     </template>
@@ -1947,6 +1948,7 @@ function showPopup(id) {
 }
 
 function hidePopup() {
+   resetForm();
    popupId.value = null;
 }
 
@@ -1960,6 +1962,12 @@ const groupThemes = [
   'Sports',
   'Exam-practice'
 ];
+
+function resetForm() {
+  groupTitle.value = '';
+  groupTheme.value = '';
+  groupDescription.value = '';
+}
 
 defineComponent({
   components: {
@@ -2092,7 +2100,24 @@ defineComponent({
    } */
    
    
-   
+   .grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-right: 1rem;
+    width: 300px;
+    gap: 1rem;
+    left: 0;
+    z-index: 999;
+    
+  }
+
+  .grid-container::-webkit-scrollbar {
+/*   display: none; 
+ */ 
+  }
+  .grid-container {
+    position: relative;
+  }
   
    
    label {

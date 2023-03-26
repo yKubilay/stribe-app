@@ -1,18 +1,21 @@
 <template>
-   <div class="grid-container" style="overflow-y: scroll; max-height: 700px; width: 350px;">
-
-    <header class="groupsHeader">
+<!--    <div class="grid-container" style="overflow-y: scroll; max-height: 700px; width: 350px;">
+ -->
+    <header class="groupsHeader" v-if="props.isUsedInFloorPlan">
       <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ activeParticipants }} participants</h1>
-      <button @click="$emit('highlight-all-rooms')">Show all rooms</button>
+      <button class="floorplanButton" @click="$emit('highlight-all-rooms')">Show all rooms</button>
+      <button class="floorplanButton" @click="$emit('highlight-all-rooms')">Create group</button>
 
- <InputText type="text" id="searchQuery" name="meeting-title" v-model="groupTitle" placeholder="Search for groups, themes or other users!" style=" border-radius: 0;" />
+      <InputText type="text" id="searchQuery" name="meeting-title" v-model="groupTitle" placeholder="Search for groups, themes or other users!" style=" border-radius: 0;" />
     </header>
 
 
     <div class="card" v-for="(group, index) in groupStore.groups" :key="group.uid" :style="getCardStyle(index)">
       <div class="cardDetailsContainer">
         <div class="cardContent">
-          <div class="cardTitle"> {{ group.title }}
+          <div class="cardTitle">
+            <div class="mainTitle" @click="showModal(group)">{{ group.title }}</div>
+
                     
             <div class="outerBadgesContainer">
             <div class="createdAtContainer">
@@ -42,8 +45,8 @@
 
       </div>
     </div>
-  </div>
-
+<!--   </div>
+ -->
 
 
         <div class="modal" v-if="modalVisible" @click.self="hideModal">
@@ -92,6 +95,8 @@
   import { useUserStore } from '@/stores/user.js';
   import { watchEffect } from "vue";
   import { useGroupStore } from '@/stores/groups';
+  import { defineProps } from 'vue';
+
   import InputText from 'primevue/inputtext';
   import moment from 'moment';
 
@@ -223,6 +228,9 @@ function themeClass(theme) {
     selectedCard.value = null;
   }
 
+  const props = defineProps({
+    isUsedInFloorPlan: { type: Boolean, default: false },
+  });
 
 
 function viewOnFloorplan() {
@@ -272,22 +280,18 @@ watchEffect(() => {
 
 </script>
 
-<style>
-.grid-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    margin-right: 1rem;
-    width: 300px;
-    gap: 1rem;
-    left: 0;
-    z-index: 999;
-    
-  }
+<style scoped>
+
 
   .themeClass {
     margin: 5%;
   }
 
+ 
+
+  .themeBadge {
+  margin-right: 1rem;
+}
   
   .grid-container::-webkit-scrollbar {
 /*   display: none; 
@@ -390,6 +394,22 @@ watchEffect(() => {
       cursor:pointer;
     }
 
+    .mainTitle {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.mainTitle:hover {
+  text-decoration: underline;
+}
+
+
+
+
   .cardDescription {
     font-size: 1.1rem;
   }
@@ -419,10 +439,10 @@ watchEffect(() => {
     border-bottom: 3px solid lightgray; 
   }
 
-  .grid-container {
-    position: relative;
-  }
+ 
 
+
+  
   .searchQuery {
     border: 2px solid black;
   }
