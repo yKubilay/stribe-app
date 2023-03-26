@@ -59,30 +59,30 @@ ref="svgElement"
 <path
    style="stroke-width:0.984942"
    d="m 401.69761,563.21502 -0.29871,-40.03938 25.07385,-0.98937 0.11842,41.20364 z"
-   id="66"
+   id="D1-058"
    sodipodi:nodetypes="ccccc" />
 <path
    style="stroke-width:0.996488"
    d="m 453.52973,521.96491 -25.85685,0.71607 0.47899,40.74299 25.55815,-0.11759 z"
-   id="67"
+   id="D1-057"
    sodipodi:nodetypes="ccccc" />
 <path
    style="stroke-width:1.00628"
    d="m 455.18143,522.61102 26.73624,-0.17859 0.12105,41.18113 -26.97834,-0.23462 z"
-   id="68"
+   id="D1-056"
    sodipodi:nodetypes="ccccc" />
 <path
    style="stroke-width:1.0102"
    d="m 507.69365,522.80802 -24.917,0.18115 0.48649,40.50781 24.85956,0.35696 z"
-   id="69"
+   id="D1-055"
    sodipodi:nodetypes="ccccc" />
 <path
    d="m 529.29742,563.43681 -0.29871,-40.97433 -19.73774,0.36057 0.47899,40.79405 z"
-   id="70"
+   id="D1-054"
    sodipodi:nodetypes="ccccc" />
 <path
    d="m 531.03841,563.13811 19.9746,0.2987 -0.95799,-41.33491 -20.21674,0.18029 z"
-   id="71"
+   id="D1-053"
    sodipodi:nodetypes="ccccc" />
 <rect
    style="stroke-width:1.01847"
@@ -94,7 +94,7 @@ ref="svgElement"
    inkscape:label="klasserom" />
 <rect
    style="stroke-width:1.04223"
-   id="aud5"
+   id="Atrie"
    width="26.549715"
    height="63.320911"
    x="265.12772"
@@ -102,162 +102,162 @@ ref="svgElement"
    inkscape:label="auditorium" />
 <rect
    style="stroke-width:1.04008"
-   id="10"
+   id="054"
    width="35.875076"
    height="24.149439"
    x="228.02422"
    y="278.44763" />
 <rect
    style="stroke-width:0.98409"
-   id="12"
+   id="G1-064"
    width="27.654402"
    height="23.456575"
    x="164.04402"
    y="279.32077" />
 <rect
    style="stroke-width:0.886313"
-   id="13"
+   id="G1-078"
    width="30.798792"
    height="23.451267"
    x="132.1582"
    y="279.44449" />
 <rect
    style="stroke-width:0.996991"
-   id="14"
+   id="079"
    width="27.265553"
    height="23.546719"
    x="103.8728"
    y="279.43921" />
 <rect
    style="stroke-width:1.01557"
-   id="15"
+   id="080"
    width="30.386967"
    height="23.546719"
    x="72.646278"
    y="279.64777" />
 <rect
    style="stroke-width:1.01951"
-   id="16"
+   id="Aud 5"
    width="219.26799"
    height="24.73139"
    x="72.479881"
    y="242.31779" />
 <rect
    style="stroke-width:0.942583"
-   id="21"
+   id="G1-095"
    width="33.655087"
    height="24.986351"
    x="264.14142"
    y="203.4603" />
 <rect
    style="stroke-width:0.968507"
-   id="20"
+   id="G1-093"
    width="37.989452"
    height="28.300867"
    x="259.54123"
    y="171.33499" />
 <rect
    style="stroke-width:1.02511"
-   id="19"
+   id="G1-090"
    width="33.400124"
    height="29.320721"
    x="209.99707"
    y="172.18123" />
 <rect
    style="stroke-width:0.94066"
-   id="18"
+   id="089"
    width="27.790943"
    height="28.810795"
    x="181.10492"
    y="172.42531" />
 <rect
    style="stroke-width:0.987373"
-   id="17"
+   id="G1-084"
    width="28.364609"
    height="35.248604"
    x="181.21478"
    y="203.26909" />
 <rect
-   id="26"
+   id="E1-064"
    width="30.178392"
    height="24.775133"
    x="422.87231"
    y="230.18765" />
 <rect
-   id="27"
+   id="E1-062"
    width="25.676577"
    height="24.656708"
    x="464.1507"
    y="229.46651" />
 <rect
-   id="30"
+   id="E1-065"
    width="32.032501"
    height="24.296137"
    x="560.31543"
    y="229.28622" />
 <rect
-   id="29"
+   id="E1-059"
    width="26.397678"
    height="24.414562"
    x="532.05829"
    y="229.34808" />
 <rect
-   id="28"
+   id="E1-061"
    width="29.333574"
    height="25.073858"
    x="491.2695"
    y="228.98752" />
 <rect
-   id="25"
+   id="E1-074"
    width="17.275623"
    height="10.914358"
    x="404.70059"
    y="244.888" />
 <rect
    style="stroke-width:1.01224"
-   id="37"
+   id="E1-044"
    width="25.552862"
    height="26.250998"
    x="452.03088"
    y="294.76526" />
 <rect
    style="stroke-width:1.0052"
-   id="35"
+   id="E1-054"
    width="34.917076"
    height="27.113529"
    x="452.05917"
    y="266.51343" />
 <rect
    style="stroke-width:1.02998"
-   id="34"
+   id="Atrie"
    width="26.652662"
    height="27.0287"
    x="488.13"
    y="266.18115" />
 <rect
    style="stroke-width:0.995881"
-   id="33"
+   id="E1-055"
    width="26.133699"
    height="26.64361"
    x="516.42706"
    y="266.05365" />
 <rect
    style="stroke-width:1.0216"
-   id="32"
+   id="E1-058"
    width="23.276302"
    height="27.421314"
    x="553.29486"
    y="265.42529" />
 <rect
    style="stroke-width:1.03773"
-   id="40"
+   id="E1-041"
    width="24.3361"
    height="24.717058"
    x="552.65747"
    y="293.8718" />
 <rect
    style="stroke-width:1.01047"
-   id="39"
+   id="Atrie"
    width="24.669523"
    height="24.551105"
    x="526.99902"
@@ -265,28 +265,28 @@ ref="svgElement"
    ry="0" />
 <rect
    style="stroke-width:0.975541"
-   id="38"
+   id="E1-042"
    width="36.587158"
    height="24.619375"
    x="489.01862"
    y="294.33905" />
 <rect
    style="stroke-width:1.04762"
-   id="41"
+   id="E1-041"
    width="22.859129"
    height="25.648314"
    x="544.77551"
    y="331.15289" />
 <rect
    style="stroke-width:1.05966"
-   id="42"
+   id="E1-037"
    width="35.396088"
    height="25.918741"
    x="508.60172"
    y="331.00089" />
 <rect
    style="stroke-width:1.01417"
-   id="43"
+   id="Atrie"
    width="27.564236"
    height="25.710138"
    x="480.10773"
@@ -294,14 +294,14 @@ ref="svgElement"
    ry="0" />
 <rect
    style="stroke-width:1.00995"
-   id="44"
+   id="E1-036"
    width="32.833645"
    height="25.79497"
    x="446.18219"
    y="331.15289" />
 <rect
    style="stroke-width:0.618352"
-   id="61"
+   id="Outside balcony"
    width="54.083065"
    height="76.715851"
    x="469.63611"
@@ -323,7 +323,7 @@ ref="svgElement"
    y="587.43427" />
 <rect
    style="stroke-width:1.0524"
-   id="57"
+   id="Quiet work room"
    width="17.413511"
    height="24.013691"
    x="360.89865"
@@ -331,38 +331,38 @@ ref="svgElement"
    transform="matrix(0.99996266,-0.00864188,0.00857753,0.99996321,0,0)" />
 <rect
    style="stroke-width:1.02719"
-   id="56"
+   id="Work room"
    width="18.125582"
    height="23.604034"
    x="335.53101"
    y="349.80896" />
 <rect
-   id="59"
+   id="Chill study area F"
    width="10.6775"
    height="15.478051"
    x="391.20038"
    y="357.42688" />
 <rect
-   id="58"
+   id="Chill study area E"
    width="11.094612"
    height="15.359627"
    x="390.9017"
    y="340.81058" />
 <rect
-   id="49"
+   id="Chill study area D"
    width="11.517069"
    height="15.478057"
    x="390.36084"
    y="315.07211" />
 <rect
    style="stroke-width:0.984784"
-   id="48"
+   id="Chill study area C"
    width="11.578918"
    height="15.720204"
    x="390.36084"
    y="298.45581" />
 <rect
-   id="53"
+   id="Chill study area J"
    width="11.866104"
    height="15.506378"
    x="313.85519"
@@ -370,49 +370,49 @@ ref="svgElement"
    ry="0" />
 <rect
    style="stroke-width:0.993012"
-   id="52"
+   id="Chill study area I"
    width="11.849326"
    height="15.795802"
    x="313.82693"
    y="298.99667" />
 <rect
-   id="50"
+   id="Chill study area G"
    width="11.860844"
    height="14.863861"
    x="313.7085"
    y="274.33994" />
 <rect
-   id="46"
+   id="Chill study area A"
    width="10.91434"
    height="15.596483"
    x="390.60297"
    y="272.30026" />
 <rect
-   id="51"
+   id="Chill study area H"
    width="11.860812"
    height="7.9785185"
    x="313.73679"
    y="290.13351" />
 <rect
-   id="47"
+   id="Chill study area B"
    width="10.919658"
    height="7.7982535"
    x="390.83981"
    y="289.45743" />
 <rect
-   id="54"
+   id="Chill study area K"
    width="12.046984"
    height="14.27791"
    x="314.11414"
    y="343.30737" />
 <rect
-   id="55"
+   id="Chill study area L"
    width="12.301961"
    height="14.022935"
    x="314.11414"
    y="359.05133" />
 <rect
-   id="7"
+   id="Student parlament/Music room"
    width="170.83597"
    height="33.958702"
    x="131.03996"
@@ -428,14 +428,14 @@ ref="svgElement"
    transform="matrix(0.99998757,-0.00498552,0.00455005,0.99998965,0,0)" />
 <rect
    style="stroke-width:1.0628"
-   id="9"
+   id="047"
    width="26.037136"
    height="33.840679"
    x="187.11174"
    y="308.20361" />
 <rect
    style="stroke-width:0.986525"
-   id="8"
+   id="G1-040"
    width="21.056303"
    height="35.334217"
    x="164.79344"
@@ -458,14 +458,14 @@ ref="svgElement"
    y="176.0518" />
 <rect
    style="stroke-width:0.955839"
-   id="22"
+   id="082 - 088"
    width="12.621956"
    height="82.212608"
    x="237.23627"
    y="51.269463" />
 <rect
    style="stroke-width:1.15511"
-   id="23"
+   id="071 - 076"
    width="44.873447"
    height="10.88622"
    x="236.76599"
@@ -554,7 +554,7 @@ ref="svgElement"
    y="480.34894" />
 <rect
    style="stroke-width:0.710486"
-   id="Cafeteria_lounge_A"
+   id="Cafeteria lounge A"
    width="17.267527"
    height="33.157856"
    x="301.06171"
@@ -562,7 +562,7 @@ ref="svgElement"
    transform="matrix(0.9999332,-0.01155862,0.00554904,0.9999846,0,0)" />
 <rect
    style="stroke-width:0.703779"
-   id="Cafeteria_lounge_B"
+   id="Cafeteria lounge B"
    width="19.229412"
    height="29.215506"
    x="300.29712"
@@ -618,14 +618,14 @@ ref="svgElement"
      style="stroke-width:3.44316;fill:#744e27;fill-opacity:1">H</tspan></text>
 <rect
    style="stroke-width:3.16488"
-   id="Sport_hall"
+   id="Sports hall"
    width="150.99847"
    height="75.240654"
    x="168.81903"
    y="551.32465" />
 <rect
    style="stroke-width:1.21438"
-   id="Main_entrance_lounge"
+   id="Main entrance"
    width="48.559998"
    height="34.44632"
    x="338.92099"
@@ -633,7 +633,7 @@ ref="svgElement"
    transform="matrix(0.99996642,0.00819561,-0.00432308,0.99999066,0,0)" />
 <rect
    style="stroke-width:0.898052"
-   id="60"
+   id="Table tennis area"
    width="45.773548"
    height="19.984564"
    x="324.92935"
@@ -641,7 +641,7 @@ ref="svgElement"
    transform="matrix(0.99999655,-0.00262728,0.0244074,0.9997021,0,0)" />
 <rect
    style="stroke-width:0.542558"
-   id="rect7987"
+   id="Pool table area"
    width="29.375628"
    height="11.366055"
    x="371.97205"
@@ -649,7 +649,7 @@ ref="svgElement"
    transform="matrix(0.99999729,-0.00232816,0.02754098,0.99962068,0,0)" />
 <rect
    style="stroke-width:1.15987"
-   id="45"
+   id="021 - 013"
    width="91.687401"
    height="16.642597"
    x="394.43207"
@@ -657,7 +657,7 @@ ref="svgElement"
    transform="matrix(0.99999941,-0.00109073,0.05870721,0.99827524,0,0)" />
 <rect
    style="stroke-width:0.783648"
-   id="24"
+   id="064 - 070"
    width="12.475057"
    height="55.9109"
    x="294.17322"
@@ -767,7 +767,7 @@ ref="svgElement"
      style="stroke-width:2.80022">E</tspan></text>
 <rect
    style="stroke-width:1.20585"
-   id="Studentkro_Aud_6"
+   id="Aud 6"
    width="60.399845"
    height="27.306091"
    x="193.69838"
@@ -798,7 +798,7 @@ ref="svgElement"
    transform="matrix(0.99998843,-0.00480973,0.00251722,0.99999683,0,0)" />
 <rect
    style="stroke-width:0.515141"
-   id="Cafeteria_counter"
+   id="Cafeteria counter"
    width="32.540833"
    height="9.2498245"
    x="448.42212"
@@ -806,7 +806,7 @@ ref="svgElement"
    transform="matrix(-0.00480691,0.99998845,-0.99941823,0.03410568,0,0)" />
 <rect
    style="stroke-width:0.374542"
-   id="rect9493"
+   id="Outside area right"
    width="84.168671"
    height="18.085316"
    x="385.49838"
@@ -815,7 +815,7 @@ ref="svgElement"
    ry="0" />
 <rect
    style="stroke-width:0.130548"
-   id="rect9507"
+   id="Outdoor bench B"
    width="9.400836"
    height="19.672121"
    x="399.26636"
@@ -824,7 +824,7 @@ ref="svgElement"
    ry="0" />
 <rect
    style="stroke-width:0.138536"
-   id="rect9509"
+   id="Outdoor bench A"
    width="10.212122"
    height="20.393265"
    x="398.45508"
@@ -833,7 +833,7 @@ ref="svgElement"
    ry="0" />
 <rect
    style="stroke-width:0.138536"
-   id="rect9511"
+   id="Outdoor bench C"
    width="10.212122"
    height="20.393265"
    x="426.8501"
@@ -842,7 +842,7 @@ ref="svgElement"
    ry="0" />
 <rect
    style="stroke-width:0.140663"
-   id="rect9515"
+   id="Outdoor bench D"
    width="10.212122"
    height="21.024265"
    x="455.33527"
@@ -851,7 +851,7 @@ ref="svgElement"
    ry="0" />
 <rect
    style="stroke-width:0.13047"
-   id="rect9521"
+   id="Outdoor bench E"
    width="9.2205496"
    height="20.032692"
    x="455.96628"
@@ -979,7 +979,7 @@ ref="svgElement"
    y="662.64825" />
 <rect
    style="stroke-width:3.00591"
-   id="Swimming_pool"
+   id="Swimming pool"
    width="150.48854"
    height="68.101692"
    x="169.50258"
@@ -1307,7 +1307,7 @@ ref="svgElement"
    y="278.61328" />
 <rect
    style="stroke-width:1.10091"
-   id="rect452"
+   id="063"
    width="33.904404"
    height="23.944857"
    x="193.14558"
@@ -1321,7 +1321,7 @@ ref="svgElement"
    y="280.35678" />
 <rect
    style="stroke-width:0.996728"
-   id="36"
+   id="Atrie"
    width="27.417582"
    height="54.412701"
    x="423.41315"
@@ -1342,7 +1342,7 @@ ref="svgElement"
    y="503.32031" />
 <rect
    style="stroke-width:1.06399"
-   id="New_seating_area"
+   id="New lounge area"
    width="34.86293"
    height="36.831257"
    x="342.27774"
@@ -1607,22 +1607,22 @@ ref="svgElement"
 <path
    style="stroke-width:0.35902"
    d="m 479.70733,616.3058 h 12.56033 l -0.13552,-13.39567 h -12.56032 z"
-   id="path6090"
+   id="006"
    sodipodi:nodetypes="ccccc" />
 <path
    style="stroke-width:0.345766"
    d="m 466.54419,616.65106 h 11.4147 l -0.12316,-13.67188 h -11.41469 z"
-   id="path6092"
+   id="005"
    sodipodi:nodetypes="ccccc" />
 <path
    style="stroke-width:0.27055"
    d="m 458.34815,616.4439 h 6.98868 l -0.0754,-13.67188 h -6.98868 z"
-   id="path6094"
+   id="004"
    sodipodi:nodetypes="ccccc" />
 <path
    style="stroke-width:0.313779"
    d="m 447.98746,616.4439 h 9.44809 l -0.1019,-13.60284 h -9.44808 z"
-   id="path6096"
+   id="003"
    sodipodi:nodetypes="ccccc" />
 <rect
    style="fill:#000000;fill-opacity:1;stroke-width:0.646111"
@@ -1635,7 +1635,7 @@ ref="svgElement"
 <path
    style="stroke-width:1.03256"
    d="m 554.38558,619.70363 h 27.79971 l -0.29994,-50.06303 h -27.79972 z"
-   id="path6100"
+   id="D1-042"
    sodipodi:nodetypes="ccccc" />
 <rect
    style="fill:#000000;fill-opacity:1;stroke-width:0.498327"
@@ -1730,7 +1730,7 @@ ref="svgElement"
 <path
    style="stroke-width:0.598235"
    d="m 554.25042,637.3813 h 28.07297 l -0.30288,-16.64119 h -28.07299 z"
-   id="041"
+   id="D1-043"
    sodipodi:nodetypes="ccccc" />
 <rect
    style="fill:#000000;fill-opacity:1;stroke-width:0.480634"
@@ -1771,16 +1771,16 @@ ref="svgElement"
 <path
    style="stroke-width:0.4214"
    d="m 497.45367,647.45816 h 10.04838 l -0.10842,-23.06856 h -10.04837 z"
-   id="path6148"
+   id="Meeting room"
    sodipodi:nodetypes="ccccc" />
 <path
    style="fill-opacity:1"
    d="m 494.14061,616.01561 26.17188,0.0977 v -38.28125 l -32.32422,-0.0977 v 23.24219 l 6.05469,-0.19531 z"
-   id="path10814" />
+   id="D1-044" />
 <path
    style="stroke-width:0.460136"
    d="m 508.90031,647.65347 h 11.98065 l -0.12927,-23.06856 h -11.98064 z"
-   id="check"
+   id="Atrie"
    sodipodi:nodetypes="ccccc" />
 <path
    style="fill:#ffd42a;fill-opacity:1;stroke-width:2.46383"
@@ -1819,7 +1819,7 @@ ref="svgElement"
 <path
    style="stroke-width:0.999788"
    d="m 302.39812,505.74246 -1.03884,-28.02166 -45.70914,1.00078 v 27.02088 z"
-   id="3"
+   id="Bookstore"
    inkscape:label="bokhandel" />
 </g>
 </svg>
@@ -1862,9 +1862,10 @@ ref="svgElement"
       <InputText type="text" id="meeting-description" name="meeting-description" v-model="groupDescription" placeholder="Describe your group" style=" border-radius: 0;" />            <br><br>
 
 
-
+         <div class="buttonGroup">
          <button class="floorplanButton" @click.prevent="createGroup(popupId)">Create group</button>
          <button class="floorplanButton" @click="hidePopup, resetForm()">Cancel</button>
+      </div>
       </form>
          </div>
        </div>
@@ -1954,10 +1955,11 @@ function hidePopup() {
 
 
 const groupThemes = [
+  'General',
   'Coding',
   'Gaming',
   'Lunch',
-  'General',
+  'Assignment work',
   'Reading',
   'Sports',
   'Exam-practice'
@@ -2076,8 +2078,8 @@ defineComponent({
          color: white;
          background: #008080;
          cursor: pointer;
-         margin-left: 2%;
-         transition: 0.5s;
+/*          margin-left: 2%;
+ */         transition: 0.5s;
          font-size: 18px;
          padding: 5px;
          } 

@@ -15,7 +15,7 @@
         <div class="plusSymbol" v-if="!showForm">+</div>
         <div class="formContainer" v-else>
           <div class="buttonGroup">
-            <button class="gridCreateButton" to="/floorplan" tag="button">Create</button>
+            <button class="gridCancelButton">Create group</button>
             <button class="gridCancelButton">Cancel</button>
           </div>
             
@@ -221,6 +221,10 @@ watchEffect(() => {
 
 </script>
 <style>
+
+  .buttonGroup {
+    gap: 2rem;
+  }
     /* Conditionally rendering theme colors */
   .theme-coding {
       background-color: #F88621;
@@ -359,6 +363,7 @@ watchEffect(() => {
     height: 100%;
   }
 
+
 /*   .floorplanButton {
     color:White;
     text-decoration: none;
@@ -385,7 +390,7 @@ watchEffect(() => {
     gap: 1rem;
     margin-bottom: 5%;
     margin-top: 2%;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 /*     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
  */
   }
@@ -394,39 +399,18 @@ watchEffect(() => {
     margin-left: 1rem;
   }
 
+
+    
+
   .buttonGroup {
     display: flex;
-    justify-content: flex-start;
-    align-content: space-between;
-
-/*     margin-left: 1rem;
- */  }
-
-
+    justify-content: space-between;
+  }
  
   .span {
     font-weight: 750;
   }
-/*   .floorplanButton {
-    font-size: 18px;
-    padding:5px;
-    margin-right: 2rem;
-    background: #008080;
-    text-decoration: none;
-    color:white;
- 
-  } */
 
-/*   a.floorplanButton {
-    padding-top: 0.6rem;
-    background: #008080;
-    text-decoration: none;
-    width: 73%;
-    height: 60%;
-    color: white;
-    margin-top: 1rem;
-
-  } */
 
 
   .closeButton {
@@ -514,10 +498,20 @@ watchEffect(() => {
 
 
 }
+.cardTitle {
+  font-size: 1.5rem;
+  color: #edf6f9;
+  text-align: left;
+  max-width: 100%;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
 
-.cardDetailsContainer {
-  display: flex;
-  flex-direction: column;
+.buttonGroup {
+  display: inline-flex;
+
+  justify-content: space-between;
+  max-width: 100%;
 }
 
 /* .badgesContainer {
@@ -528,9 +522,10 @@ watchEffect(() => {
 
 .cardContent {
     text-align: left;
-    margin-left: 1rem;
     
 }
+
+
 
   .cardTitle {
    font-size: 1.5rem;
@@ -560,8 +555,8 @@ watchEffect(() => {
     text-align: left;
     text-overflow: ellipsis;
     cursor: pointer;
-    margin-top: 1.5rem;
-    -webkit-line-clamp: 1;
+    margin-top: 0.5rem;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     
   }
@@ -693,6 +688,17 @@ watchEffect(() => {
 
 }
 
+  .closeButton {
+      font-size: 18px;
+      padding:0%;
+      position: absolute;
+      top: -20%;
+      right: -5%;
+      background: #008080;
+      width: 20%;
+      cursor: pointer;
+
+  }
 .modal-description {
   margin-top: 2%;
   margin-left: 2rem;
@@ -761,6 +767,7 @@ watchEffect(() => {
   overflow: auto;
   }
 
+  
   .container {
     max-width: 100%;
     padding: 0.5rem;
@@ -771,11 +778,7 @@ watchEffect(() => {
 
   }
 
-  .closeButton {
-    font-size: 1rem;
-    padding: 3px 6px;
-  }
-
+ 
 }
 
 </style>

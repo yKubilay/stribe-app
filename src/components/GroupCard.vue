@@ -31,14 +31,15 @@
           </div>
           
           <div class="cardDescription" @click="showModal(group)">{{ group.description }}</div>
+          
         </div>
       </div>
 
-     </div>
-      <div class="buttonGroup">
+     </div><div class="buttonGroup">
         <button class="floorplanButton" @click="showModal(group)">Show more</button>
         <button class="floorplanButton" @click="joinRoom(group)">Join room</button>
       </div>
+    
       <div class="cardParticipants" v-if="cardExpanded">
         <h4>Participants</h4>
         <div class="cardParticipants" @click="showModal(group)">{{ group.participants }}</div>
@@ -69,10 +70,12 @@
               <span class="themeBadge" :class="themeClass(theme)">{{ theme }}</span>
             </li>            
           </ul>
-            <h4>Area</h4> 
+            <h4>Area</h4>
             <ul>
-              <li class="modalGroupArea" v-for="area in selectedCard.areas" :key="area">{{ area }}</li>
-            </ul>
+<!--             <li v-for="room in selectedCard.room" :key="room">
+ -->               {{ selectedCard.room }}<!-- </li> -->
+               
+              </ul>
             <h4>Participants</h4>
             <ul>
               <li class="modalGroupParticipants" v-for="participant in selectedCard.participants" :key="participant">{{ participant }}</li>
@@ -197,7 +200,7 @@ function showModal(card) {
     title: card.title,
     description: card.description,
     participants: card.participants,
-    areas: card.areas,
+    room: card.room,
     themes: card.themes,
   };
   modalVisible.value = true;
@@ -296,7 +299,12 @@ watchEffect(() => {
   .grid-container::-webkit-scrollbar {
 /*   display: none; 
  */ 
-  }
+  } 
+
+  .closeButton {
+  width: 4.5rem;
+  margin-right: 3rem;
+}
 
   .card {
     background-color: #353e57;
@@ -408,8 +416,8 @@ watchEffect(() => {
 }
 
 
-
-
+  
+ 
   .cardDescription {
     font-size: 1.1rem;
   }
@@ -424,22 +432,24 @@ watchEffect(() => {
   }
 
   .floorplanButton {
-    font-size: 18px;
+    font-size: 1rem;
     padding:5px;
-    margin-right: 1rem;
     background: #008080;
- 
+    margin: 0;
+
   }
+
 
   span .themeBadge {
     margin-right: 0.5rem;
   }
-
-  .badgesContainer {
-    border-bottom: 3px solid lightgray; 
-  }
-
  
+  .badgesContainer::after {
+  content: " ";
+  display: block;
+  width: 100%;
+  border-bottom: 3px solid lightgray;
+}
 
 
   
