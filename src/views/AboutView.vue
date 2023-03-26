@@ -1,9 +1,8 @@
 <template>
   <NavigationBar/>
   <div class="project_description_container">
-      <h3>Stribe</h3>
-      <p>Why did we choose to make Stribe?</p>
-      <p>Her skal vi skrive litt om prosjektet</p>
+      <h1>Stribe</h1>
+      <p>Stribe is an online platform exclusively for students to connect, create meetups, and support each other towards graduating. Join us today and start making meaningful connections with other students on your academic journey!</p>
       <FAQ />
       <br/>
       <h1 style="text-align: center;">Stribes' developers</h1>
@@ -317,5 +316,11 @@ import FAQ from "../components/FAQ.vue";
 
   .about-button:hover {
     background: #4cd1ca;
+  }
+  .project_description_container p {
+    border: solid 3px #353e57;
+    margin: 20px;
+    padding: 20px;
+    font-size: large;
   }
 </style>

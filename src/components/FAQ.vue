@@ -23,8 +23,8 @@
       return {
         faqList: [
           {
-            question: "What is Stribe?",
-            answer: "Stribe is an online platform designed specifically for students to connect with each other, create meetups, and provide support to help each other graduate.",
+            question: "Is Stribe only for students?",
+            answer: "Yes, Stribe is exclusively for students who are currently enrolled in HIOF.",
             icon: "ic:baseline-plus",
             isOpen: false,
           },
