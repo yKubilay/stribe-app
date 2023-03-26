@@ -8,78 +8,22 @@
       <input type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
     </header>
     <section class="basic-grid">
+      <!-- Move the create group card div here -->
       <div class="card create-group-card" :style="formStyle" @click="toggleForm">
         <form :class="{form: showForm}"></form>
         <h2 class="createGroup" v-if="!showForm">Create group</h2>
         <div class="plusSymbol" v-if="!showForm">+</div>
         <div class="formContainer" v-else>
           <div class="buttonGroup">
-            <router-link to="/floorplan" tag="button" class="floorplanButton">Create</router-link>
-            <button class="floorplanButton">Cancel</button>
+            <button class="gridCancelButton">Create group</button>
+            <button class="gridCancelButton">Cancel</button>
           </div>
-        </div>
-      </div>
-
-      <div class="card" v-for="(card, index) of cards" :key="card" :style="getCardStyle(index)">
-        <div class="cardDetailsContainer">
-
-        <div class="cardContent">
-          <div class="cardTitle">Group {{ card.id }}
-
-            <div class="badgesContainer">
-  <span class="themeBadge" @click="showModal(card)">{{ card.themes[0] }}
-  <span v-if="card.themes.length > 1">+{{ card.themes.length - 1 }}</span>
-</span>
-  <span class="badgeCount">{{ card.participants.length }} people</span>
-
-</div>
-
-          <div class="cardDescription" @click="showModal(card)">Readability with the use of significant readability with the use of significant indentation.Readability with the use of significant </div>
-        </div>
-
-          <div class="cardParticipants" v-if="cardExpanded">
-            <h4>Participants</h4>
-           </div>
-          </div>
-        </div>
-        
-        <div class="buttonGroup">
-          <button class="floorplanButton" @click="showModal(card)">Show more</button>
-          <button class="floorplanButton" @click="joinRoom">Join room</button>
-        </div>
-      </div>
-
-      <div class="modal" v-if="modalVisible" @click.self="hideModal">
-        <div class="modal-content" @click.stop>
-          
-          <div class="modal-card">
-            <section class="modal-header">
-              <button class="closeButton" @click="hideModal">X</button>
-              <h2>{{ selectedCard.title }}</h2>
-            </section>
             
-            <p class="modal-description">{{ selectedCard.description }}</p>
-            <section class="areaAndParticipantSection">
-            <h4>Themes</h4>
-            <ul>
-            <li v-for="theme in selectedCard.themes" :key="theme">
-                <span :class="themeClass(theme)">{{ theme }}</span>
-            </li>            
-            </ul>
-            <h4>Area</h4> 
-            <ul>
-              <li class="modalGroupArea" v-for="area in selectedCard.areas" :key="area">{{ area }}</li>
-            </ul>
-            <h4>Participants</h4>
-            <ul>
-              <li class="modalGroupParticipants" v-for="participant in selectedCard.participants" :key="participant">{{ participant }}</li>
-            </ul>
-          </section>
-            <button class="floorplanButton" @click="joinRoom">Join room</button>
-
-          </div>
         </div>
       </div>
+
+      <GroupCard />
+
     </section>
   </div>
 </template>
@@ -87,6 +31,7 @@
 <script setup>
   import Navigation from "@/components/Navigation.vue";
   import { onMounted, ref, computed } from "vue";
+  import GroupCard from "@/components/GroupCard.vue";
   import { getAuth, onAuthStateChanged } from "firebase/auth";
   import { useUserStore } from '@/stores/user.js';
   import { watchEffect } from "vue";
@@ -276,6 +221,10 @@ watchEffect(() => {
 
 </script>
 <style>
+
+  .buttonGroup {
+    gap: 2rem;
+  }
     /* Conditionally rendering theme colors */
   .theme-coding {
       background-color: #F88621;
@@ -376,11 +325,10 @@ watchEffect(() => {
   border-bottom: 2px solid lightgray; 
   } */
 
-
+/* 
     .themeBadge {
       background: #F8860D;
-/*     background: #ffb703;
- */   color: #582E03;
+   color: #582E03;
       font-weight: 550;
       font-size: 1rem;
       border-radius: 0.3rem;
@@ -390,7 +338,7 @@ watchEffect(() => {
       padding-left: 1rem;
       padding-right: 1rem;
       cursor:pointer;
-   }
+   } */
 
   .activeGroupsButton {
     margin-bottom: 1%;
@@ -414,6 +362,7 @@ watchEffect(() => {
     width: 100%;
     height: 100%;
   }
+
 
 /*   .floorplanButton {
     color:White;
@@ -442,44 +391,26 @@ watchEffect(() => {
     margin-bottom: 5%;
     margin-top: 2%;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-
+/*     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+ */
   }
 
   .areaAndParticipantSection {
     margin-left: 1rem;
   }
 
+
+    
+
   .buttonGroup {
     display: flex;
-    justify-content: flex-start;
-    align-content: space-between;
-/*     margin-left: 1rem;
- */  }
-  
+    justify-content: space-between;
+  }
+ 
   .span {
     font-weight: 750;
   }
-  .floorplanButton {
-    font-size: 18px;
-    padding:5px;
-    margin-right: 2rem;
-    background: #008080;
-    text-decoration: none;
-    color:white;
- 
-  }
 
-  a.floorplanButton {
-    font-size: 18px;
-    padding: 5px;
-    background: #008080;
-    text-decoration: none;
-    border-radius: 0.4rem;
-    width: 50%;
-    height: 60%;
-    margin-top: 0.8rem;
-
-  }
 
 
   .closeButton {
@@ -533,8 +464,8 @@ watchEffect(() => {
     font-size: 0.8rem;
 /*     background:#F5F0E7;
  */  
-    color: #000000;
-    font-weight: 750;
+/*     color: #000000;
+ */    font-weight: 750;
     border-radius: 0.3rem;
     padding: 0.1rem;
     padding-top: 0.2rem;
@@ -567,10 +498,20 @@ watchEffect(() => {
 
 
 }
+.cardTitle {
+  font-size: 1.5rem;
+  color: #edf6f9;
+  text-align: left;
+  max-width: 100%;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
 
-.cardDetailsContainer {
-  display: flex;
-  flex-direction: column;
+.buttonGroup {
+  display: inline-flex;
+
+  justify-content: space-between;
+  max-width: 100%;
 }
 
 /* .badgesContainer {
@@ -581,14 +522,16 @@ watchEffect(() => {
 
 .cardContent {
     text-align: left;
-    margin-left: 1rem;
     
 }
+
+
 
   .cardTitle {
    font-size: 1.5rem;
    color: #edf6f9;   
    text-align: left;
+   
 
 }
 
@@ -612,7 +555,7 @@ watchEffect(() => {
     text-align: left;
     text-overflow: ellipsis;
     cursor: pointer;
-    margin-top: 1.5rem;
+    margin-top: 0.5rem;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     
@@ -745,6 +688,17 @@ watchEffect(() => {
 
 }
 
+  .closeButton {
+      font-size: 18px;
+      padding:0%;
+      position: absolute;
+      top: -20%;
+      right: -5%;
+      background: #008080;
+      width: 20%;
+      cursor: pointer;
+
+  }
 .modal-description {
   margin-top: 2%;
   margin-left: 2rem;
@@ -813,6 +767,7 @@ watchEffect(() => {
   overflow: auto;
   }
 
+  
   .container {
     max-width: 100%;
     padding: 0.5rem;
@@ -823,11 +778,7 @@ watchEffect(() => {
 
   }
 
-  .closeButton {
-    font-size: 1rem;
-    padding: 3px 6px;
-  }
-
+ 
 }
 
 </style>
