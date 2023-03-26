@@ -55,7 +55,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/images/img_2.jfif" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_2.jpg" alt="img 1" class="card-img">
                 </div>
               </div>
 
@@ -82,7 +82,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/images/img_3.jfif" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_3.jpg" alt="img 1" class="card-img">
                 </div>
               </div>
 
