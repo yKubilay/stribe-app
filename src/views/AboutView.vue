@@ -190,7 +190,7 @@ import FAQ from "../components/FAQ.vue";
     align-items: center;
     gap: 1.4rem;
     height: fit-content;
-    background: teal;
+    background: #353e57;
     cursor: pointer;
     font-style: bold;
 } 
@@ -255,7 +255,7 @@ import FAQ from "../components/FAQ.vue";
     top: 0;
     height: 100%;
     width: 100%;
-    background-color: teal;
+    background-color: #353e57;
     border-radius: 25px 25px 0 25px;
   }
 
@@ -267,7 +267,7 @@ import FAQ from "../components/FAQ.vue";
     bottom: -40px;
     height: 40px;
     width: 40px;
-    background-color: teal;
+    background-color: #353e57;
   }
 
   .overlay::after {
@@ -289,7 +289,7 @@ import FAQ from "../components/FAQ.vue";
     width: 100%;
     object-fit: cover;
     border-radius: 50%;
-    border: solid 4px teal;
+    border: solid 4px #353e57;
   }
 
   .name {
