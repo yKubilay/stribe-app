@@ -40,7 +40,7 @@ export const useGroupStore = defineStore({
         this.groups = groups;
       });
     },
-/*Maybe 10 meeting on monday*/
+
     updateGroupParticipants(uid, participants) {
       return new Promise((resolve, reject) => {
         const groupRef = this.db.collection('groups').doc(uid);
