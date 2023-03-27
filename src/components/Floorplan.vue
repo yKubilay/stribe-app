@@ -1827,10 +1827,9 @@ ref="svgElement"
 
 
 
-<div class="grid-container" style="overflow-y: scroll; max-height: 700px; width: 350px;">
+       <div class="grid-container" style="overflow-y: scroll; max-height: 700px; width: 350px;" v-if="isDesktop">
    <GroupCard :is-used-in-floor-plan="true" />
        </div>
-
 
     
     <div v-if="popupId" class="popup">
@@ -1876,13 +1875,17 @@ ref="svgElement"
 
     
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import GroupCard from './GroupCard.vue';
 import { useGroupStore } from '@/stores/groups';
 import { defineComponent } from 'vue';
 import { useUserStore } from '@/stores/user.js';
 import MultiSelect from 'primevue/multiselect';
 import InputText from 'primevue/inputtext';
+import panzoom from 'panzoom';
+import svgPanZoom from 'svg-pan-zoom';
+
+
 
 
 
@@ -1902,15 +1905,18 @@ const userStore = useUserStore();
 
 const groups = groupStore.groups;
 
-
+const isDesktop = computed(() => {
+  return window.innerWidth >= 768;
+});
  onMounted(() => {
   if (svgElement.value) {
     const elements = svgElement.value.querySelectorAll('rect, path');
     elements.forEach((element) => {
       groups.forEach((groups) => {
         if (groups.room === element.id) {
-          element.style.fill = 'orange';
+          element.style.fill = 'teal';
           element.style.opacity = '0.6';
+          element.classList.add('breathing-effect');
         }
       });
       element.addEventListener('click', () => {
@@ -1922,13 +1928,13 @@ const groups = groupStore.groups;
 
 
 
+
 async function createGroup(popupId) {
   if (!groupTitle.value || !groupTheme.value || !groupDescription.value) {
     alert('Please fill in all required fields.');
     return;
-  }
+  };
 
-  
 
   const newGroup = {
     room: popupId,
@@ -1944,14 +1950,18 @@ async function createGroup(popupId) {
 }
 
 
-function showPopup(id) {
-  popupId.value = id;
-}
 
 function hidePopup() {
    resetForm();
    popupId.value = null;
 }
+
+
+function showPopup(id) {
+  popupId.value = id;
+}
+
+
 
 
 const groupThemes = [
@@ -1965,11 +1975,35 @@ const groupThemes = [
   'Exam-practice'
 ];
 
+
+
 function resetForm() {
   groupTitle.value = '';
   groupTheme.value = '';
   groupDescription.value = '';
 }
+/* 
+onMounted(() => {
+  const panZoom = svgPanZoom(svgElement.value, {
+    zoomEnabled: true,
+    controlIconsEnabled: true,
+    fit: true,
+    center: true,
+    minZoom: 0.5,
+    maxZoom: 2,
+    scale: false,
+    zoomScaleSensitivity: 0.2,
+    panEnabled: true,
+    mouseWheelZoomEnabled: true,
+    preventMouseEventsDefault: false,
+    zoom: () => {
+      const panZoomInstance = svgPanZoom(svgElement.value);
+      const zoomLevel = panZoomInstance.getZoom();
+      const pan = panZoomInstance.getPan();
+      svgElement.value.setAttribute('style', `transform: translate(${pan.x}px, ${pan.y}px); width: ${zoomLevel * 100}%; height: ${zoomLevel * 100}%`);
+    },
+  });
+}); */
 
 defineComponent({
   components: {
@@ -1980,10 +2014,25 @@ defineComponent({
 
 </script>
 
-
     <style scoped>
 
 
+
+@keyframes ease-in-out {
+    0% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0.4;
+    }
+  }
+
+  .breathing-effect {
+    animation: ease-in-out 4s infinite;
+  }
    input {
       width: 100%;
    }
@@ -2050,6 +2099,12 @@ defineComponent({
   color: white;
 }
 
+.firstFloorContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
    .popupCreateText {
          color: white;
          font-size: 1.1rem;
@@ -2101,7 +2156,16 @@ defineComponent({
      width: 10%;
    } */
    
-   
+   @media (max-width: 768px) {
+    .firstFloorSVG {
+      height: 70vh;
+      margin: 0;
+    }
+
+    .grid-container {
+    display: none;
+  }
+   }
    .grid-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -2217,4 +2281,3 @@ defineComponent({
    }
    
     </style>
-      
