@@ -246,10 +246,11 @@ button:hover {
 
     .row .homeImage {
       width: 80%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+     
     }
 
     
@@ -276,9 +277,10 @@ button:hover {
   .col-2 .homeImage {
     width: 80%;
     position: absolute;
-    top: 0;
+    top: 40px;
     left: 0;
     z-index: 1;
+
   }
 }
 }
