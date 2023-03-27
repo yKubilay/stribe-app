@@ -211,6 +211,8 @@ function themeClass(theme) {
     return 'theme-reading';
   } else if (theme.toLowerCase() === 'sports') {
     return 'theme-sports';
+  } else if (theme.toLowerCase() === 'assignment work') {
+    return 'theme-assignment-work';
   } else if (theme.toLowerCase() === 'exam-practice') {
     return 'theme-exam-practice';
   } else {
@@ -344,6 +346,20 @@ watchEffect(() => {
       padding-left: 1rem;
       padding-right: 1rem;
       cursor:pointer;
+    }
+      .theme-assignment-work {
+      background-color: #9B6413;
+      color: #FCE2B5; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+
     } .theme-general {
       background-color: #D6D2D0;
       color: #453F3B; 
