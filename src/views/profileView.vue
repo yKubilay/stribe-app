@@ -61,7 +61,7 @@
 <script>
 import Navigation from '@/components/Navigation.vue';
 import { ref, onMounted } from 'vue';
-import { auth, db } from '../main.js';
+import { auth, db } from '@/firebase';
 
 export default {
   components: {

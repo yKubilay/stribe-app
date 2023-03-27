@@ -33,6 +33,8 @@
   justify-content: center;
   margin-top: 200px;
 }
+
+
 .signUpform {
   background-color: White;
   width: 50%;
@@ -41,6 +43,34 @@
   box-shadow: 15px 15px 10px -15px #111;    
 
 }
+
+/* .homeButton {
+  font-size: 18px;
+  padding:5px;
+  position: absolute;
+  top: 1%;
+  right: -0.8rem;
+  background: #008080;
+  cursor: pointer;
+  z-index: 1;
+}
+ */
+
+ .button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 2rem;
+  margin-left: -1rem;
+}
+
+.homeButton {
+  margin: 0 1rem;
+  margin-top:1rem;
+  background: #008080;
+
+}
+
 
 .altOptionAuth {
   text-align: center;
@@ -72,7 +102,6 @@
 
 .col-1 h2 {
   font-size: 54px;
-
 }
 
 .col-1 h3 {
@@ -96,17 +125,22 @@
 
 .col-1 {
   position: relative;
-  padding-left: 50px; /* This makes the pseudo-element positioned relative to the .col-1 element */
+  padding-left: 50px; 
+  
 }
 
 .col-1::after {
   content: '';
-  display: block; /* This makes the pseudo-element a block-level element */
+  display: block; 
   width: 10px;
   height: 100%;
-  background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
-  position: absolute; /* This makes the pseudo-element positioned absolutely */
-  right: 520px; /* This moves the pseudo-element to the left of the .col-1 element */
+/*   background: linear-gradient(15deg, #13547a 0%, #008080 100%);
+ */  background: linear-gradient(15deg, #008080 0%, #13547a 70%, #80d0c7 100%);
+
+ 
+/*   background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+ */  position: absolute; 
+  right: 520px; 
   top: 0;
   bottom: 0;
 }
@@ -120,7 +154,7 @@
 }
 
 .col-2 .homeImage {
-  width: 80%;
+  width: 60%;
   position: absolute;
   top: 0;
   left: 0;
@@ -142,7 +176,7 @@ button {
   padding: 12px 10px;
   outline: none;
   color: white;
-  background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  background: #008080;
   cursor: pointer;
   border-radius: 7px;
   margin-top: 20px;
@@ -157,7 +191,6 @@ button:hover {
 
 .svg {
   z-index: 0;
-  
 }
 
 .firstFloor {
@@ -188,24 +221,40 @@ button:hover {
 @media only screen and (max-width:1300px) {
 
     .row {
-      flex-direction: column;
-      margin-top: 200px;
+      width: 1000px;
+      margin: 8px 0;
     }
 
-    .col-1 {
-      flex-basis: 100%;
-      padding-left: 20%;
+    .col-1 { 
+      padding: 0 12px 0 100px;
+      width: 100%;
     }
-
-    .svg { 
-      display: none;
+    .col-1::after {
+      position: absolute; 
+      right: 400px; 
+    }
+    .col-1 h2 {
+      
+      font-size: 40px;
+      width: 80%;
     }
     
+    .col-1 h3 {
+      font-size: 24px;
+      width: 80%;
+    }
 
-    .col-2 {
-      flex-basis: 100%;
-      justify-content: center;
-    } 
+    .row .homeImage {
+      width: 80%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+     
+    }
+
+    
+
     .firstFloor {
       padding-top: 10%;
       width: 100%;
@@ -220,5 +269,18 @@ button:hover {
       height: 100%;
     
     }
+}
+@media only screen and (max-width:600px) { 
+  .svg {
+    display: none;
+  }
+  .col-2 .homeImage {
+    width: 80%;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    z-index: 1;
+
+  }
 }
 }

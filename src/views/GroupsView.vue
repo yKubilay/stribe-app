@@ -7,63 +7,23 @@
       <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ activeParticipants }} participants</h1>
       <input type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
     </header>
-
     <section class="basic-grid">
+      <!-- Move the create group card div here -->
       <div class="card create-group-card" :style="formStyle" @click="toggleForm">
         <form :class="{form: showForm}"></form>
         <h2 class="createGroup" v-if="!showForm">Create group</h2>
         <div class="plusSymbol" v-if="!showForm">+</div>
         <div class="formContainer" v-else>
           <div class="buttonGroup">
-            <button class="floorplanButton">Create</button>
-            <button class="floorplanButton" >Cancel</button>
+            <button class="gridCancelButton">Create group</button>
+            <button class="gridCancelButton">Cancel</button>
           </div>
-        </div>
-      </div>
-
-      <div class="card" v-for="(card, index) of cards" :key="card" :style="getCardStyle(index)">
-        <div class="cardContent">
-          <div class="cardTitle">Group {{ card.id }}</div>
-          <div class="cardDescription" @click="showModal(card)"> readability with the use of significant indentation. </div>
-          <div class="cardParticipants" v-if="cardExpanded">
-            <h4>Participants</h4>
-           
-          </div>
-        </div>
-       
-
-        <span class="participantsBadge">{{activeParticipants}} People</span> 
-        <div class="buttonGroup">
-          <button class="floorplanButton" @click="showModal(card)">Show more</button>
-          <button class="floorplanButton" @click="joinRoom">Join room</button>
-        </div>
-      </div>
-
-      <div class="modal" v-if="modalVisible" @click.self="hideModal">
-        <div class="modal-content" @click.stop>
-          
-          <div class="modal-card">
-            <section class="modal-header">
-              <button class="closeButton" @click="hideModal">X</button>
-              <h2>{{ selectedCard.title }}</h2>
-            </section>
             
-            <p class="modal-description">{{ selectedCard.description }}</p>
-            <section class="areaAndParticipantSection">
-            <h4>Area</h4>
-            <ul>
-              <li class="modalGroupArea" v-for="area in selectedCard.areas" :key="area">{{ area }}</li>
-            </ul>
-            <h4>Participants</h4>
-            <ul>
-              <li class="modalGroupParticipants" v-for="participant in selectedCard.participants" :key="participant">{{ participant }}</li>
-            </ul>
-          </section>
-            <button class="floorplanButton" @click="joinRoom">Join room</button>
-
-          </div>
         </div>
       </div>
+
+      <GroupCard />
+
     </section>
   </div>
 </template>
@@ -71,11 +31,22 @@
 <script setup>
   import Navigation from "@/components/Navigation.vue";
   import { onMounted, ref, computed } from "vue";
+  import GroupCard from "@/components/GroupCard.vue";
   import { getAuth, onAuthStateChanged } from "firebase/auth";
   import { useUserStore } from '@/stores/user.js';
   import { watchEffect } from "vue";
+  import  { useGroupStore } from '@/stores/groups.js';
 
   const storeUser = useUserStore();
+  const groupTheme = ref('Coding');
+  const showTooltip = ref(false);
+  const groups = useGroupStore();
+
+
+  const groupsTitle = computed(() => {
+  return groups.title
+})
+
 
 
   const isLoggedIn = ref(false);
@@ -95,22 +66,29 @@ isLoggedIn.value = false;
 const cards = ref([
   {
     id: 1,
-    areas: ["area1", "area2"],
+    areas: ["area1"],
+    themes: ["Coding", "Lunch", "Gaming", "Exam-practice", "Reading", "Sports", "General"],
     participants: ["jack", "johnny", "joe", "Zac", "Håvard"]
   },
   {
     id: 2,
-    areas: ["area3", "area4"],
+    areas: ["area3",],
+    themes: ["exam-practice", "Coding", "Lunch", "Gaming"],
+
     participants: ["jim", "jack", "johnny"]
   },
    {
     id: 3,
-    areas: ["area5", "area6"],
+    areas: ["area5"],
+    themes: ["Coding", "Lunch", "Gaming"],
+
     participants: ["jim", "jack", "johnny"]
    },
    {
     id: 3,
-    areas: ["area5", "area6"],
+    areas: ["area5"],
+    themes: ["Coding", "Lunch", "Gaming"],
+
     participants: ["jim", "jack", "johnny"]
    }
 ])
@@ -119,9 +97,29 @@ const cards = ref([
 const showForm = ref(false);
 const groupTitle = ref('');
 const searchQuery = ref('');
-const participants = ref(["jack", "johnny", "joe", "jim", "jack", "johnny"])
+const participants = ref(["jack", "johnny", "joe", "jim", "jack", "johnny", "jim", "jack", "johnny", "jim", "jack", "johnny"])
 const cardExpanded = ref(false);
 
+
+function themeClass(theme) {
+  if (theme.toLowerCase() === 'coding') {
+    return 'theme-coding';
+  } else if (theme.toLowerCase() === 'gaming') {
+    return 'theme-gaming';
+  } else if (theme.toLowerCase() === 'lunch') {
+    return 'theme-lunch';
+  } else if (theme.toLowerCase() === 'general') {
+    return 'theme-general';
+  } else if (theme.toLowerCase() === 'reading') {
+    return 'theme-reading';
+  } else if (theme.toLowerCase() === 'sports') {
+    return 'theme-sports';
+  } else if (theme.toLowerCase() === 'exam-practice') {
+    return 'theme-exam-practice';
+  } else {
+    return 'default-theme';
+  }
+}
 
 
 function toggleForm() {
@@ -147,10 +145,12 @@ function toggleCard() {
   
   function showModal(card) {
     selectedCard.value = {
-      title: `Group ${card.id}`,
+      title: card.title,
       description: "certain conclusion in favor of their commercial interests. Reports written by big industry players can still be reliable secondary data, but should optimally be compared to similar reports to check for any bias or ulterior motives.",
       participants: participants.value,
-      areas: card.areas
+      areas: card.areas,
+      themes: card.themes
+
 
     };
     modalVisible.value = true;
@@ -167,13 +167,6 @@ function viewOnFloorplan() {
 
 }
 
-function joinRoom() {
-  if (!participants.value.includes(username.value)) {
-    participants.value.push(username.value);
-  } else {
-    alert("You are already in a group!");
-  }
-}
 
 
 
@@ -183,7 +176,7 @@ function joinRoom() {
 } */
 
 const activeGroupsCount = computed(() => cards.value.length);
-const activeParticipants = computed(() => participants.value.length);
+const activeParticipants = computed(() => (participants.value ? participants.value.length : 0));
 
 
 
@@ -195,16 +188,20 @@ const activeParticipants = computed(() => participants.value.length);
       transition: "transform 0.5s",
     };
   }
+/* 
+  const hideNavigation = ref(false);
 
-  const stickyHeader = ref(false);
-
-    window.addEventListener('scroll', () => {
-      if (window.pageYOffset >= 100) { 
-        stickyHeader.value = true;
-      } else {
-        stickyHeader.value = false;
-      }
-    });
+  onMounted(() => {
+  window.addEventListener("scroll", () => {
+    if (window.pageYOffset > 0) {
+      hideNavigation.value = true;
+      stickyHeader.value = true;
+    } else {
+      hideNavigation.value = false;
+      stickyHeader.value = false;
+    }
+  });
+}); */
 
 
  const username = computed(() => {
@@ -216,6 +213,123 @@ const activeParticipants = computed(() => participants.value.length);
 </script>
 <style>
 
+  .buttonGroup {
+    gap: 2rem;
+  }
+    /* Conditionally rendering theme colors */
+  .theme-coding {
+      background-color: #F88621;
+      color: #582E03;
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    }.theme-gaming {
+      background-color: #6F0A75;
+      color: #E99EEE; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    }.theme-lunch {
+      background-color: #9B6413;
+      color: #FCE2B5; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    } .theme-general {
+      background-color: #D6D2D0;
+      color: #453F3B; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    }.theme-reading {
+      background-color: #007EBD;
+      color: #BFEBFE; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    }.theme-sports {
+      background-color: #BA1729;
+      color: #FCBBC0; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    }.theme-exam-practice {
+      background-color: #FBBC22;
+      color: #624808; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+    }
+  /*   .badgesContainer {
+      display: flex;
+      padding-bottom: 5px; 
+      border-bottom: 2px solid lightgray; 
+
+} */
+
+/* .badgesContainer {
+  display: flex;
+  padding-bottom: 5px;
+  margin: 2%;
+  border-bottom: 2px solid lightgray; 
+  } */
+
+/* 
+    .themeBadge {
+      background: #F8860D;
+   color: #582E03;
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+   } */
 
   .activeGroupsButton {
     margin-bottom: 1%;
@@ -241,6 +355,11 @@ const activeParticipants = computed(() => participants.value.length);
   }
 
 
+/*   .floorplanButton {
+    color:White;
+    text-decoration: none;
+  }
+ */
   
 
 
@@ -262,39 +381,42 @@ const activeParticipants = computed(() => participants.value.length);
     gap: 1rem;
     margin-bottom: 5%;
     margin-top: 2%;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+/*     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+ */
   }
 
   .areaAndParticipantSection {
     margin-left: 1rem;
   }
 
+
+    
+
   .buttonGroup {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
   }
-  
-  .floorplanButton {
-    font-size: 18px;
-    padding:5px;
-    margin-top: -0%;
-/*     background: #2F728D;
- */    background: #008080;
  
+  .span {
+    font-weight: 750;
   }
+
+
 
   .closeButton {
     font-size: 18px;
     padding:5px;
     position: absolute;
     top: 1%;
-    right: 15px;
+    right: -0.8rem;
     background: #008080;
     cursor: pointer;
     z-index: 1;
 
   }
+
+  
 
 
   .createGroup {
@@ -312,19 +434,39 @@ const activeParticipants = computed(() => participants.value.length);
      
   }
 
-  .participantsBadge {
-      background-color: #F98620;
-      color: white;
-      font-size: 0.9rem;
-      padding:0;
-      width: 25%;
-      margin-left: 63%;
-      margin-top: 15%;
-      text-align: center;
-      border-radius: 4rem;
+ /*  .participantsBadge, .themeBadge {
+    font-size: 0.8rem;
+    padding:5px;
+    position: absolute;
+    top: 1%;
+    border-radius: 0.6rem;
+    right: -0.8rem;
+    background: #F8860D;
+    color: #582E03;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 1;
   }
- 
-  
+
+   */
+
+
+   .participantsBadge,.themeBadge {
+    font-size: 0.8rem;
+/*     background:#F5F0E7;
+ */  
+/*     color: #000000;
+ */    font-weight: 750;
+    border-radius: 0.3rem;
+    padding: 0.1rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    
+   }
+
+
  
    .card {
   display: flex;
@@ -334,8 +476,7 @@ const activeParticipants = computed(() => participants.value.length);
   width: 100%;
   background: #353e57;
   color: white;
-  box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem,
-    rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
+
   border-radius: 4px;
   overflow: hidden;
   position:relative;
@@ -344,25 +485,47 @@ const activeParticipants = computed(() => participants.value.length);
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0;
-  transform: translate(-10%, -10%);
+  transition: 0.5s;
+
+
 }
- 
-  .card:hover {
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
-  transform: translateY(-10px);
+.cardTitle {
+  font-size: 1.5rem;
+  color: #edf6f9;
+  text-align: left;
+  max-width: 100%;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
 }
+
+.buttonGroup {
+  display: inline-flex;
+
+  justify-content: space-between;
+  max-width: 100%;
+}
+
+/* .badgesContainer {
+  display: flex;
+  gap: 5px;
+
+} */
 
 .cardContent {
     text-align: left;
-    margin-left: 2rem;
+    
 }
+
+
 
   .cardTitle {
-   font-size: 2rem;
+   font-size: 1.5rem;
    color: #edf6f9;   
    text-align: left;
+   
 
 }
+
 
 .Navigation {
   transform: translateY(0%);
@@ -378,16 +541,69 @@ const activeParticipants = computed(() => participants.value.length);
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #edf6f9;
     text-align: left;
     text-overflow: ellipsis;
     cursor: pointer;
+    margin-top: 0.5rem;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    
   }
 
   .modalGroupArea {
     font-size: 1.1rem;
   }
+
+  .badge-separator {
+  display: block;
+  width: 90%;
+  height: 0.1rem;
+  background-color: #e6e0e0d3;
+  border-radius: 2px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.badgeCount {
+  font-size: 0.8rem;
+  background: #e6ccb2;
+  color: #000000;
+  font-weight: 750;
+  border-radius: 0.3rem;
+  padding: 0.1rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  cursor: pointer;
+}
+
+.badgeTooltip {
+  background-color: #353e57;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0; /* Added */
+  transition: opacity 0.3s; /* Added */
+}
+.badgeCount:hover + .badgeTooltip { /* Added */
+  opacity: 1;
+}
+
+
+.badgesContainer:hover .badgeTooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
 
 
   .cardDescription:hover {
@@ -419,11 +635,6 @@ const activeParticipants = computed(() => participants.value.length);
 
 
 
-  .card:hover {
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
-    
-  }
-
   
 
   .fixed-card {
@@ -437,7 +648,6 @@ const activeParticipants = computed(() => participants.value.length);
 
   }
 
-  /*Modal that pops up when "Show more" is pressed*/
   .modal {
   position: fixed;
   top: 0;
@@ -452,6 +662,7 @@ const activeParticipants = computed(() => participants.value.length);
   will-change: transform, opacity;
   font-size: 1.2rem;
 
+  z-index: 99999;
   
 }
 
@@ -468,6 +679,17 @@ const activeParticipants = computed(() => participants.value.length);
 
 }
 
+  .closeButton {
+      font-size: 18px;
+      padding:0%;
+      position: absolute;
+      top: -20%;
+      right: -5%;
+      background: #008080;
+      width: 20%;
+      cursor: pointer;
+
+  }
 .modal-description {
   margin-top: 2%;
   margin-left: 2rem;
@@ -481,14 +703,20 @@ const activeParticipants = computed(() => participants.value.length);
 
 
   .close {
-    position: absolute;
     top: 10px;
-    right: 10px;
     font-size: 30px;
 /*     font-weight: bold;
  */    cursor: pointer;
   }
   
+  .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  padding-left:0;
+  padding-right:0;
+}
 
   /* animate cards */
   @keyframes cardAnimation {
@@ -530,16 +758,18 @@ const activeParticipants = computed(() => participants.value.length);
   overflow: auto;
   }
 
+  
   .container {
     max-width: 100%;
     padding: 0.5rem;
   }
 
   .basic-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 
   }
 
+ 
 }
 
 </style>

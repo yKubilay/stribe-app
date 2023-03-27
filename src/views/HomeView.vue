@@ -19,8 +19,11 @@
     <div class="col-1">
         <h2>Welcome to Stribe</h2>  
         <h3>Meet and collaborate with <br>likeminded students!</h3>  
-        <a href="/signup"><button type="button">Get started</button></a>
-        <a href="/about"><button type="button">About us</button></a>
+
+        <div class="button-container">
+        <a href="/signup"><button class="homeButton" type="button">Get started</button></a>
+        <a href="/about"><button class="homeButton" type="button">About us</button></a>
+        </div>
     </div>
   <div class="col-2">
     <img src="/src/assets/images/wplaceNoBg.png" class="homeImage" >
@@ -56,3 +59,15 @@ onMounted (() => {
   });
 });
 </script>  
+
+<style>
+.button {
+  font-size: 18px;
+  padding:5px;
+  margin-top: -0%;
+/*     background: #2F728D;
+*/    background: #008080;
+}
+
+
+</style>

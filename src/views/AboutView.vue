@@ -1,15 +1,8 @@
 <template>
   <NavigationBar/>
   <div class="project_description_container">
-      <div class="about_description">
-      <h4>Why did we make Stribe?</h4>
-      <p>Stribe was created with the goal of providing a platform for students to connect and collaborate with one another in a convenient and effective way. <br/>
-          We realized that students often face challenges when it comes to finding study groups or like-minded individuals to work on projects with. <br/>This can be especially 
-          difficult in the era of remote learning, where students may feel isolated and disconnected from their peers.<br/><br/>
-
-          By creating Stribe, we aim to provide a space where students can easily create meetings and connect with others who share similar interests or academic goals.<br/> Whether they need help with a specific subject or simply want to bounce ideas off of each other, <br/>Stribe provides a space where students can come together to learn and grow.
-      </p>
-    </div>
+      <h1>Stribe</h1>
+      <p>Stribe is an online platform exclusively for students to connect, create meetups, and support each other towards graduating. Join us today and start making meaningful connections with other students on your academic journey!</p>
       <FAQ />
       <br/>
       <h1 style="text-align: center;">Stribes' developers</h1>
@@ -64,7 +57,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/images/img_2.jfif" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_2.jpg" alt="img 1" class="card-img">
                 </div>
               </div>
 
@@ -91,7 +84,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/images/img_3.jfif" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_3.jpg" alt="img 1" class="card-img">
                 </div>
               </div>
 
@@ -236,7 +229,7 @@ import FAQ from "../components/FAQ.vue";
     align-items: center;
     gap: 1.4rem;
     height: fit-content;
-    background: #353E57;
+    background: #353e57;
     cursor: pointer;
     font-style: bold;
 } 
@@ -301,7 +294,7 @@ import FAQ from "../components/FAQ.vue";
     top: 0;
     height: 100%;
     width: 100%;
-    background-color: #353E57;
+    background-color: #353e57;
     border-radius: 25px 25px 0 25px;
   }
 
@@ -313,7 +306,7 @@ import FAQ from "../components/FAQ.vue";
     bottom: -40px;
     height: 40px;
     width: 40px;
-    background-color: #353E57;
+    background-color: #353e57;
   }
 
   .overlay::after {
@@ -335,7 +328,7 @@ import FAQ from "../components/FAQ.vue";
     width: 100%;
     object-fit: cover;
     border-radius: 50%;
-    border: solid 6px #353E57;
+    border: solid 4px #353e57;
   }
 
   .name {
@@ -364,14 +357,10 @@ import FAQ from "../components/FAQ.vue";
   .about-button:hover {
     background: #353E57;
   }
-  .about_description {
-  font-size: 16px;
-  line-height: 1.5;
-  padding: 20px;
-  border: solid 4px #353E57;
-  margin: 20px;
-}
-
-
-
+  .project_description_container p {
+    border: solid 3px #353e57;
+    margin: 20px;
+    padding: 20px;
+    font-size: large;
+  }
 </style>

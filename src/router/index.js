@@ -4,7 +4,7 @@ import  AboutView  from '../views/AboutView.vue'
 import  GroupsView  from '../views/GroupsView.vue'
 import  FloorplanView  from '../views/FloorplanView.vue'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-
+import { useAuthStore } from '@/stores/auth.js';
 
 
 const router = createRouter({
@@ -14,6 +14,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
+      
 
     },
     {
@@ -60,6 +61,9 @@ const router = createRouter({
   ]
 });
 
+
+
+
 const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
     const removeListener = onAuthStateChanged(
@@ -74,19 +78,23 @@ const getCurrentUser = () => {
 };
 
 
-router.beforeEach(async (to, from, next) => {
+
+/* router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore();
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (await getCurrentUser()) {
+    if ( authStore.isLoggedIn) {
       next();
     } else {
-      alert("No access! Sign in or register new account");
+      if (to.path !== "/") {
+        alert("No access! Sign in or register a new account");
+      }
       next("/");
-    } 
+    }
   } else {
     next();
   }
 });
-
-
+ */
 
 export default router
+

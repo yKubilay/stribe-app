@@ -8,12 +8,12 @@
     <div class="signUpform">
     <h2 class="mb-3">Create an account</h2>
     <div class="input">
-        <label for="name">Full name</label>
+        <label for="name">Username</label>
           <input
             class="form-control"
             type="text"
             v-model="username"
-            placeholder="Full name"
+            placeholder="Username"
           />  
     <div class="input">
         <label for="email">Email</label>
@@ -41,7 +41,7 @@
   
   
   
-  <button type="submit" class="mt-4 btn-pers" id="login_button" @click="signup">Signup</button>
+  <button type="submit" class="mt-4 btn-pers" id="login_button" @click="signup">Sign up</button>
   </div>
   </div>
   
