@@ -1929,6 +1929,7 @@ onMounted(() => {
       center: false,
       panEnabled: false,
       minZoom: 1,
+      zoomScaleSensitivity: 0.5,
     });
 
     let initialZoom = instance.getZoom();
@@ -2229,6 +2230,14 @@ defineComponent({
       height: 70vh;
       margin: 0;
     }
+    .firstFloorSVG {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      -webkit-perspective: 1000;
+      perspective: 1000;
+}
 
     .grid-container {
     display: none;
