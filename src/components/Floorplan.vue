@@ -1,11 +1,12 @@
 <template>
-
-<div class="firstFloor">
-<svg class="firstFloorSVG" 
-
-ref="svgElement"
+   <div class="main-container">
+     <div class="grid-container" style="overflow-y: scroll; max-height: 650px; width: 350px;" v-if="isDesktop">
+       <GroupCard :is-used-in-floor-plan="true" />
+     </div>
+     <div class="firstFloorContainer">
+       <svg class="firstFloorSVG" 
+         ref="svgElement"
    version="1.1"
-   id="svg9"
    viewBox="0 0 645 822"
    sodipodi:docname="floorplanoverlayColored2.svg"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
@@ -1823,13 +1824,9 @@ ref="svgElement"
    inkscape:label="bokhandel" />
 </g>
 </svg>
+</div>
+ </div>
 
-
-
-
-       <div class="grid-container" style="overflow-y: scroll; max-height: 700px; width: 350px;" v-if="isDesktop">
-   <GroupCard :is-used-in-floor-plan="true" />
-       </div>
 
     
     <div v-if="popupId" class="popup">
@@ -1869,8 +1866,7 @@ ref="svgElement"
          </div>
        </div>
 
-      </div>
-   
+  
     </template>
 
     
@@ -1882,8 +1878,7 @@ import { defineComponent } from 'vue';
 import { useUserStore } from '@/stores/user.js';
 import MultiSelect from 'primevue/multiselect';
 import InputText from 'primevue/inputtext';
-import panzoom from 'panzoom';
-import svgPanZoom from 'svg-pan-zoom';
+import svgPanZoom, { setMinZoom } from 'svg-pan-zoom';
 
 
 
@@ -1908,7 +1903,8 @@ const groups = groupStore.groups;
 const isDesktop = computed(() => {
   return window.innerWidth >= 768;
 });
- onMounted(() => {
+
+onMounted(() => {
   if (svgElement.value) {
     const elements = svgElement.value.querySelectorAll('rect, path');
     elements.forEach((element) => {
@@ -1923,9 +1919,31 @@ const isDesktop = computed(() => {
         showPopup(element.id);
       });
     });
-  }
-}); 
 
+    const instance = svgPanZoom(svgElement.value, {
+      zoomEnabled: true,
+      controlIconsEnabled: true,
+      fit: false,
+      center: false,
+      panEnabled: false,
+      minZoom: 1,
+    });
+
+    let initialZoom = instance.getZoom();
+    let initialPosition = instance.getPan();
+    let currentPosition = initialPosition;
+
+    instance.setOnZoom((newZoom) => {
+      if (newZoom > initialZoom) {
+        currentPosition = instance.getPan();
+        initialZoom = newZoom;
+      } else if (newZoom < initialZoom) {
+        instance.zoom(initialZoom);
+        instance.pan(currentPosition);
+      }
+    });
+  }
+});
 
 
 
@@ -1982,28 +2000,8 @@ function resetForm() {
   groupTheme.value = '';
   groupDescription.value = '';
 }
-/* 
-onMounted(() => {
-  const panZoom = svgPanZoom(svgElement.value, {
-    zoomEnabled: true,
-    controlIconsEnabled: true,
-    fit: true,
-    center: true,
-    minZoom: 0.5,
-    maxZoom: 2,
-    scale: false,
-    zoomScaleSensitivity: 0.2,
-    panEnabled: true,
-    mouseWheelZoomEnabled: true,
-    preventMouseEventsDefault: false,
-    zoom: () => {
-      const panZoomInstance = svgPanZoom(svgElement.value);
-      const zoomLevel = panZoomInstance.getZoom();
-      const pan = panZoomInstance.getPan();
-      svgElement.value.setAttribute('style', `transform: translate(${pan.x}px, ${pan.y}px); width: ${zoomLevel * 100}%; height: ${zoomLevel * 100}%`);
-    },
-  });
-}); */
+
+
 
 defineComponent({
   components: {
@@ -2041,7 +2039,42 @@ defineComponent({
       
       }
 
-    
+.main-container {
+  display: grid;
+  grid-template-columns: 30% 40% 30%;
+  width: 100%;
+  margin-top: 5%;
+}
+
+
+/*    .firstFloorSVG {
+      overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   } */
+ .firstFloorContainer {
+  width: 100%;
+  height: 100%;
+  padding-bottom: calc(822 / 645 * 100%);
+  position: relative;
+  display: flex;
+ /*  justify-content: center;
+  align-items: center; */
+}
+
+.firstFloorSVG {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
    path:not(.exclude){
    fill: transparent;
    }
@@ -2074,7 +2107,16 @@ defineComponent({
       }
 
 
-    
+/*       .svg-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.firstFloorSVG {
+  flex: 1;
+} */
   /*  .popup {
      position: absolute;
      top: 40px;
@@ -2125,6 +2167,31 @@ defineComponent({
 
    }
 
+   /* Add this media query to update the main-container for mobile */
+@media (max-width: 768px) {
+  .main-container {
+    grid-template-columns: 100%;
+  }
+}
+
+/* Update the firstFloorSVG class inside the existing media query */
+@media (max-width: 768px) {
+  .firstFloorSVG {
+    height: 70vh;
+    width: 100%; /* Add this line to make it take the full width */
+  }
+
+  .grid-container {
+    display: none;
+  }
+}
+
+/* Update the .firstFloorContainer class */
+.firstFloorContainer {
+  /* Remove width and height */
+  position: relative;
+  display: flex;
+}
    .floorplanButton, input[type="submit"] {
          width: 140px;
          border: 0px;
