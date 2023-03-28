@@ -1907,14 +1907,16 @@ const isDesktop = computed(() => {
 onMounted(() => {
   if (svgElement.value) {
     const elements = svgElement.value.querySelectorAll('rect, path');
+    const roomToGroup = new Map(groups.map(group => [group.room, group]));
+
     elements.forEach((element) => {
-      groups.forEach((groups) => {
-        if (groups.room === element.id) {
-          element.style.fill = 'teal';
-          element.style.opacity = '0.6';
-          element.classList.add('breathing-effect');
-        }
-      });
+      const group = roomToGroup.get(element.id);
+      if (group) {
+        element.style.fill = 'teal';
+        element.style.opacity = '0.6';
+        element.classList.add('breathing-effect');
+      }
+
       element.addEventListener('click', () => {
         showPopup(element.id);
       });
@@ -1944,7 +1946,6 @@ onMounted(() => {
     });
   }
 });
-
 
 
 async function createGroup(popupId) {
