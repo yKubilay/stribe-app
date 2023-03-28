@@ -1,9 +1,8 @@
 <template>
   <NavigationBar/>
   <div class="project_description_container">
-      <h3>Stribe</h3>
-      <p>Why did we choose to make Stribe?</p>
-      <p>Her skal vi skrive litt om prosjektet</p>
+      <h1>Stribe</h1>
+      <p>Stribe is an online platform exclusively for students to connect, create meetups, and support each other towards graduating. Join us today and start making meaningful connections with other students on your academic journey!</p>
       <FAQ />
       <br/>
       <h1 style="text-align: center;">Stribes' developers</h1>
@@ -56,7 +55,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/images/img_2.jfif" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_2.jpg" alt="img 1" class="card-img">
                 </div>
               </div>
 
@@ -83,7 +82,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/images/img_3.jfif" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_3.jpg" alt="img 1" class="card-img">
                 </div>
               </div>
 
@@ -190,7 +189,7 @@ import FAQ from "../components/FAQ.vue";
     align-items: center;
     gap: 1.4rem;
     height: fit-content;
-    background: teal;
+    background: #353e57;
     cursor: pointer;
     font-style: bold;
 } 
@@ -255,7 +254,7 @@ import FAQ from "../components/FAQ.vue";
     top: 0;
     height: 100%;
     width: 100%;
-    background-color: teal;
+    background-color: #353e57;
     border-radius: 25px 25px 0 25px;
   }
 
@@ -267,7 +266,7 @@ import FAQ from "../components/FAQ.vue";
     bottom: -40px;
     height: 40px;
     width: 40px;
-    background-color: teal;
+    background-color: #353e57;
   }
 
   .overlay::after {
@@ -289,7 +288,7 @@ import FAQ from "../components/FAQ.vue";
     width: 100%;
     object-fit: cover;
     border-radius: 50%;
-    border: solid 4px teal;
+    border: solid 4px #353e57;
   }
 
   .name {
@@ -317,5 +316,11 @@ import FAQ from "../components/FAQ.vue";
 
   .about-button:hover {
     background: #4cd1ca;
+  }
+  .project_description_container p {
+    border: solid 3px #353e57;
+    margin: 20px;
+    padding: 20px;
+    font-size: large;
   }
 </style>

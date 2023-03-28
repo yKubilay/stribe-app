@@ -23,26 +23,26 @@
       return {
         faqList: [
           {
-            question: "What is the color code for red?",
-            answer: "Red color dot is for coding relevant work",
+            question: "Is Stribe only for students?",
+            answer: "Yes, Stribe is exclusively for students who are currently enrolled in HIOF.",
             icon: "ic:baseline-plus",
             isOpen: false,
           },
           {
-            question: "What is the color code for blue?",
-            answer: "Blue color dot is for coding non-relevant work",
+            question: "How can Stribe help me graduate?",
+            answer: "Stribe provides a supportive community where you can connect with other students who are also striving to graduate. By creating meetups and providing support to each other, you can stay motivated and on track towards achieving your academic goals.",
             icon: "ic:baseline-plus",
             isOpen: false,
           },
           {
-            question: "What is the color code for green?",
-            answer: "Green color dot is for coding testing",
+            question: "How do I join Stribe?",
+            answer: "To join Stribe, simply create an account using your email address and provide a username and a secure password. You can then start exploring the web app and create meetups.",
             icon: "ic:baseline-plus",
             isOpen: false,
           },
           {
-            question: "What is the color code for yellow?",
-            answer: "Yellow color dot is for coding non-coding work",
+            question: "Is Stribe free to use?",
+            answer: "Yes, Stribe is completely free to use for all students.",
             icon: "ic:baseline-plus",
             isOpen: false,
           },
@@ -60,3 +60,8 @@
   };
   </script>
   
+  <style>
+    .faq {
+      color: white;
+    }
+</style>
