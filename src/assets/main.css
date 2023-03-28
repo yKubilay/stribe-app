@@ -240,19 +240,19 @@ button:hover {
       flex-basis: 100%;
       justify-content: center;
     } 
-    .firstFloor {
+   /*  .firstFloor {
       padding-top: 10%;
       width: 100%;
       height: 0;
       padding-top: 10%;
-      padding-bottom: 100%; /* Set this to the aspect ratio of your SVG (e.g. 100% for a square SVG, 50% for a rectangular SVG with a 2:1 aspect ratio) */
+      padding-bottom: 100%; 
       position: relative
-    }
-    .firstFloorSVG {
+    } */
+   /*  .firstFloorSVG {
       position: absolute;
       width: 100%;
       height: 100%;
     
-    }
+    } */
 }
 }

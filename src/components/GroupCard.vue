@@ -2,7 +2,7 @@
 <!--    <div class="grid-container" style="overflow-y: scroll; max-height: 700px; width: 350px;">
  -->
     <header class="groupsHeader" v-if="props.isUsedInFloorPlan">
-      <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ activeParticipants }} participants</h1>
+      <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ popupId }} participants</h1>
       <button class="floorplanButton" @click="$emit('highlight-all-rooms')">Show all rooms</button>
       <button class="floorplanButton" @click="$emit('highlight-all-rooms')">Create group</button>
 
