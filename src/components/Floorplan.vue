@@ -1826,7 +1826,6 @@ ref="svgElement"
 
 
 
-
 <div class="grid-container" style="overflow-y: scroll; max-height: 700px; width: 350px;">
    <GroupCard :is-used-in-floor-plan="true" />
        </div>
@@ -1871,8 +1870,8 @@ ref="svgElement"
        </div>
 
       </div>
-   
-    </template>
+
+   </template>
 
     
 <script setup>
@@ -2215,6 +2214,9 @@ defineComponent({
      color: #999;
      font-size: 16px;
    }
+   
+
+
    
     </style>
       
