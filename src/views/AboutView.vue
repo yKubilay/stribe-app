@@ -8,7 +8,9 @@
       <h1 style="text-align: center;">Stribes' developers</h1>
   </div>
   
-  <section class="container">
+  <section class="container" id="about_container">
+    <!-- your swiper content here -->
+  
   <swiper
     :slidesPerView="1"
     :navigation="true"
@@ -19,6 +21,40 @@
     :modules="modules"
     class="mySwiper"
   >
+  <swiper-slide>
+      <div class="slide-container">
+        <div class="slide-content">
+          <div class="card-wrapper">
+            <div class="about_card">
+              <div class="image-content">
+                <span class="overlay"></span>
+
+                <div class="card-image">
+                  <img src="../assets/images/img_4.jpg" alt="img 1" class="card-img">
+                </div>
+              </div>
+
+              <div class="card-content">
+                  <h2 class="name">{{ currentPerson }}Kubilay Kerim Özdemir</h2>
+                  <p class="description" v-if="isExpanded">
+                    24 years old.
+                    <br/>
+                    Interests: Yoyo-ing, programming <br/>
+                    In my leisure time, I enjoy traveling, playing
+                    video games, being with friends and keeping up with software-related content online
+                  </p>
+                  <p class="description" v-else>
+                    24 years old.
+                    <br/>
+                    Project leader and SCRUM Master
+                  </p>
+                  <button class="about-button"  @click="isExpanded = !isExpanded">{{ isExpanded ? 'Read less' : 'Read more' }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </swiper-slide>
     <swiper-slide>
       <div class="slide-container">
         <div class="slide-content">
@@ -33,13 +69,21 @@
               </div>
 
               <div class="card-content">
-                  <h2 class="name">Kasper Iversen</h2>
-                  <p class="description">
+                  <h2 class="name" data-name="Kasper">Kasper Iversen</h2>
+                  <p class="description" v-if="isExpanded">
                     23 years old.
                     <br/>
-                    Interests: Football, training and programming. 
+                    Interests: Football, training and programming. <br/>
+                    In my spare time, I play video
+                    games, take care of my dog, strength training, work and code websites for
+                    fun and for learning.
                   </p>
-                  <button class="about-button">Read more</button>
+                  <p class="description" v-else>
+                    23 years old.
+                    <br/>
+                    Development Team Coding
+                  </p>
+                  <button class="about-button" @click="isExpanded = !isExpanded">{{ isExpanded ? 'Read less' : 'Read more' }}</button>
               </div>
             </div>
           </div>
@@ -60,13 +104,20 @@
               </div>
 
               <div class="card-content">
-                  <h2 class="name">Håvard Solheim Jenssen</h2>
-                  <p class="description">
+                  <h2 class="name" data-name="Håvard">Håvard Solheim Jenssen</h2>
+                  <p class="description" v-if="isExpanded">
                     23 years old.
                     <br/>
-                    Interests: Handball, training, programming and freesbee-golf. 
+                    Interests: Handball, training, programming <br/>
+                    I generally like engaging in different sports and activities,
+                    which includes gaming and a general interest in tech.
                   </p>
-                  <button class="about-button">Read more</button>
+                  <p class="description" v-else>
+                    23 years old.
+                    <br/>
+                    Development Team Design
+                  </p>
+                  <button class="about-button" @click="isExpanded = !isExpanded">{{ isExpanded ? 'Read less' : 'Read more' }}</button>
               </div>
             </div>
           </div>
@@ -87,46 +138,26 @@
               </div>
 
               <div class="card-content">
-                  <h2 class="name">Zachary Laguda</h2>
-                  <p class="description">
-                    25 years old(?).
+                  <h2 class="name" data-name="Zach">Zachary Rotea Laguda</h2>
+                  <p class="description" v-if="isExpanded">
+                    23 years old.
                     <br/>
-                    Interests: Volleyball, training and programming. 
+                    Interests: Volleyball, training and programming. <br/>
+                    In my sparetime I like to work out, spend time with my girlfriend and play volleyball and video games.
                   </p>
-                  <button class="about-button">Read more</button>
+                  <p class="description" v-else>
+                    23 years old.
+                    <br/>
+                    Secretary and Product Owner
+                  </p>
+                  <button class="about-button" @click="isExpanded = !isExpanded">{{ isExpanded ? 'Read less' : 'Read more' }}</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </swiper-slide>
-    <swiper-slide>
-      <div class="slide-container">
-        <div class="slide-content">
-          <div class="card-wrapper">
-            <div class="about_card">
-              <div class="image-content">
-                <span class="overlay"></span>
-
-                <div class="card-image">
-                  <img src="../assets/images/img_4.jpg" alt="img 1" class="card-img">
-                </div>
-              </div>
-
-              <div class="card-content">
-                  <h2 class="name">Kubilay Kerim Özdemir</h2>
-                  <p class="description">
-                    24 years old.
-                    <br/>
-                    Interests: yo-yo and programming. 
-                  </p>
-                  <button class="about-button">Read more</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </swiper-slide>
+    
   </swiper>
 </section>
 </template>
@@ -141,6 +172,9 @@ import "swiper/css/navigation";
 import FAQ from "../components/FAQ.vue";
   // import required modules
   import { Keyboard, Pagination, Navigation } from 'swiper';
+  import {ref} from 'vue';
+
+  
 
   export default {
     components: {
@@ -149,14 +183,18 @@ import FAQ from "../components/FAQ.vue";
       NavigationBar,
       FAQ
     },
+    data() {
+      return {
+        isExpanded: false
+      }
+    }, 
     setup() {
       return {
         modules: [Keyboard, Pagination, Navigation],
       };
     },
 
-    
-  };
+};
   
 </script>
 <style>
@@ -168,19 +206,35 @@ import FAQ from "../components/FAQ.vue";
 
   }
 
+#about_container {
+  min-height: 50vh;
+}
+
+.mySwiper {
+  position: relative;
+  z-index: 0;
+}
+
+.blur {
+  filter: blur(5px);
+}
+
+
+
   /* FAQ - Frequently asked questions */
   
   .faqs {
     opacity: 0.9;
     margin: 10px;
     padding: 10px;
+    
 }
 
 .faqs_container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    
+    color: white;
 }
 
 .faq {
@@ -217,6 +271,7 @@ import FAQ from "../components/FAQ.vue";
   }
   .project_description_container{
     text-align: center;
+    margin-top: 20px;
   }
   .swiper-slide {
     min-height: 60vh;
@@ -315,7 +370,7 @@ import FAQ from "../components/FAQ.vue";
   }
 
   .about-button:hover {
-    background: #4cd1ca;
+    background: #353E57;
   }
   .project_description_container p {
     border: solid 3px #353e57;
