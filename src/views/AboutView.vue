@@ -41,8 +41,7 @@
                     <br/>
                     Interests: Yoyo-ing, programming <br/>
                     In my leisure time, I enjoy traveling, playing
-                    video games, being with friends and keeping up with software-related con-
-                    tent online
+                    video games, being with friends and keeping up with software-related content online
                   </p>
                   <p class="description" v-else>
                     24 years old.
