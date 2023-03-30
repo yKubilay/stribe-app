@@ -220,7 +220,7 @@ watchEffect(() => {
   });
 
 </script>
-<style>
+<style >
 
   .buttonGroup {
     gap: 2rem;
@@ -391,9 +391,10 @@ watchEffect(() => {
     margin-bottom: 5%;
     margin-top: 2%;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
 /*     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
  */
-  }
+  
 
   .areaAndParticipantSection {
     margin-left: 1rem;

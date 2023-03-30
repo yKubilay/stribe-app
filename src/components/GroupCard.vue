@@ -1,6 +1,5 @@
 <template>
-<!--    <div class="grid-container" style="overflow-y: scroll; max-height: 700px; width: 350px;">
- -->
+
     <header class="groupsHeader" v-if="props.isUsedInFloorPlan">
       <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ popupId }} participants</h1>
       <button class="floorplanButton" @click="$emit('highlight-all-rooms')">Show all rooms</button>
@@ -464,5 +463,6 @@ watchEffect(() => {
   .searchQuery {
     border: 2px solid black;
   }
+
 
 </style>
