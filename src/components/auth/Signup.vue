@@ -9,28 +9,29 @@
     <h2 class="mb-3">Create an account</h2>
     <div class="input">
         <label for="name">Username</label>
-          <input
+          <InputText
             class="form-control"
             type="text"
             v-model="username"
             placeholder="Username"
           />  
+          
     <div class="input">
         <label for="email">Email</label>
-          <input
+          <InputText
             class="form-control"
             type="text"
             v-model="email"
-            placeholder="email@adress.com"
+            placeholder="Email@adress.com"
           />
       </div>
         <div class="input">
           <label for="password">Password</label>
-            <input
+            <InputText
               class="form-control"
               type="password"
               v-model="password"
-              placeholder="password123"
+              placeholder="Password1!"
             />
         </div>
   
@@ -59,6 +60,7 @@
     import { getFirestore, doc, setDoc } from "firebase/firestore";
     import { useAuthStore } from '@/stores/auth.js';
     import { useUserStore } from "../../stores/user";
+    import InputText from 'primevue/inputtext';
     const db = getFirestore();
     const email = ref("");
     const password = ref("");
