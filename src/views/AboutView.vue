@@ -212,6 +212,7 @@ import FAQ from "../components/FAQ.vue";
 .mySwiper {
   position: relative;
   z-index: 0;
+  
 }
 
 .blur {
@@ -273,10 +274,10 @@ import FAQ from "../components/FAQ.vue";
     margin-top: 20px;
   }
   .swiper-slide {
-    min-height: 60vh;
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
+    min-height: 60vh;
     background: #F5F0E7;
   }
   .slide-container {
