@@ -135,12 +135,14 @@ export default {
     
 }
 .profile_card {
+  height: 100%;
   padding: 20px;
   background: #353e57;
   color: white;
   position: relative;
   left: 0;
   border-radius: 0.5rem;
+  
 }
 
 .card-header {
@@ -176,11 +178,15 @@ export default {
 }
 
 .modal-dialog {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: auto;
   max-width: 500px;
-  margin: 100px auto;
+  margin-top: -200px; 
   background-color: none;
-  margin: 20px;
-  margin-top: 20%;
+  
 }
 
 .modal-title {
@@ -191,6 +197,7 @@ export default {
 .modal-content {
     max-width: 100%;
     border-radius: 0.5rem;
+    
 }
 
 
