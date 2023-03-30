@@ -12,6 +12,8 @@
        <section class="container">
   
            <Floorplan/>
+           
+
        </section>
   
   </template>
@@ -21,6 +23,8 @@
   
   import Navigation from "@/components/Navigation.vue"   
   import Floorplan from "@/components/Floorplan.vue"
+import SwiperGroupCard from "../components/swiperGroupCard.vue";
+  
   
   
   </script>

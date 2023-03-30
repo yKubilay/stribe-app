@@ -8,7 +8,7 @@
       <h1 style="text-align: center;">Stribes' developers</h1>
   </div>
   
-  <section class="container">
+  <section class="container" id="about_container">
     <!-- your swiper content here -->
   
   <swiper
@@ -172,7 +172,6 @@ import "swiper/css/navigation";
 import FAQ from "../components/FAQ.vue";
   // import required modules
   import { Keyboard, Pagination, Navigation } from 'swiper';
-  import {ref} from 'vue';
 
   
 
@@ -206,28 +205,8 @@ import FAQ from "../components/FAQ.vue";
 
   }
 
-/* Modal */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.8);
-  z-index: 1;
-  display: none;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  width: 80%;
-  max-height: 80%;
-  overflow-y: auto;
-  border-radius: 5px;
-  position: relative;
+#about_container {
+  min-height: 50vh;
 }
 
 .mySwiper {
@@ -291,6 +270,7 @@ import FAQ from "../components/FAQ.vue";
   }
   .project_description_container{
     text-align: center;
+    margin-top: 20px;
   }
   .swiper-slide {
     min-height: 60vh;
@@ -320,6 +300,7 @@ import FAQ from "../components/FAQ.vue";
     flex-direction: column;
     align-items: center;
     padding: 10px 14px;
+    
   }
 
   .overlay {
@@ -396,5 +377,12 @@ import FAQ from "../components/FAQ.vue";
     margin: 20px;
     padding: 20px;
     font-size: large;
+  }
+
+
+  @media only screen and (max-width: 768px) {
+    .about_card {
+      width: 100%;
+    }
   }
 </style>
