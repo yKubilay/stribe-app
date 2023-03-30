@@ -172,7 +172,6 @@ import "swiper/css/navigation";
 import FAQ from "../components/FAQ.vue";
   // import required modules
   import { Keyboard, Pagination, Navigation } from 'swiper';
-  import {ref} from 'vue';
 
   
 
@@ -301,6 +300,7 @@ import FAQ from "../components/FAQ.vue";
     flex-direction: column;
     align-items: center;
     padding: 10px 14px;
+    
   }
 
   .overlay {
@@ -377,5 +377,12 @@ import FAQ from "../components/FAQ.vue";
     margin: 20px;
     padding: 20px;
     font-size: large;
+  }
+
+
+  @media only screen and (max-width: 768px) {
+    .about_card {
+      width: 100%;
+    }
   }
 </style>
