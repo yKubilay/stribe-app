@@ -1,79 +1,89 @@
 <template>
-      <Navigation />
-      <section class="container" id="profile_container">
-        <div class="row justify-content-center">
-            <div class="profile_card">
-              <div class="card-header">{{ storeUser.username + '´s profile'}}</div>
-          <div class="card-body">
+  <Navigation />
+  <section class="container" id="profile_container">
+    <div class="row justify-content-center">
+      <div class="profile_card">
+        <div class="card-header"><Icon id="user_icon" icon="mdi:user-box" width="50" height="50"></Icon>{{ storeUser.username + "'s profile" }}</div>
+        <div class="card-body">
+          <div>
+            <label for="email">Email</label>
             <div>
-              <label for="email">Email</label>
-  
-              <div>
-                <input id="email" type="email" class="form-control" name="email" v-model="email" required autocomplete="email" autofocus>
-              </div>
+              <InputText type="text" id="email" name="email" v-model="email" required autocomplete="email"  />
             </div>
-  
+            
+          </div>
+
+          <div>
+            <label for="username">Username</label>
             <div>
-              <label for="username">Username</label>
-  
-              <div>
-                <input id="username" type="text" name="username" v-model="username" required autocomplete="username">
-              </div>
+              <InputText type="text"  id="username" name="username" v-model="username" required autocomplete="username" />
+
             </div>
-  
+          </div>
+
+          <div>
             <div>
-              <div>
-                <button type="submit" class="btn btn-primary" @click="showModal = true">
-                  Edit profile
-                </button>
-              </div>
+              <button type="submit" class="btn btn-primary" @click="showModal = true">
+                Edit profile
+              </button>
             </div>
           </div>
         </div>
+      </div>
     </div>
-  <div class="modal" tabindex="-1" role="dialog" :class="{ 'd-block': showModal }">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Edit Profile</h5>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input type="text" class="form-control" id="username" v-model="username">
-            </div>
-            <div class="form-group">
-              <label for="email">Email address</label>
-              <input type="email" class="form-control" id="email" v-model="email">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="showModal = false">Close</button>
-          <button type="button" class="btn btn-primary" @click="saveChanges()">Save changes</button>
+
+    <div class="modal" tabindex="-1" role="dialog" :class="{ 'd-block': showModal }">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Profile</h5>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="username">Username</label>
+                <InputText type="text" class="form-control" id="username" name="profile_username" v-model="username" placeholder="Username" />
+              </div>
+              <div class="form-group">
+                <label for="email">Email address</label>
+                <InputText type="text" class="form-control" id="email" name="profile_email" v-model="email" placeholder="Email"/>
+
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="showModal = false">
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" @click="saveChanges()">Save changes</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 </template>
+
 <script>
-import Navigation from '@/components/Navigation.vue';
-import { ref, onMounted } from 'vue';
-import { auth, db } from '@/firebase';
+import Navigation from "@/components/Navigation.vue";
+import { ref, onMounted } from "vue";
+import { auth, db } from "@/firebase";
+import { Icon } from "@iconify/vue";
+import InputText from 'primevue/inputtext';
 
 export default {
   components: {
     Navigation,
+    Icon,
+    InputText
   },
   setup() {
     // Define reactive data properties
     const showModal = ref(false);
     const storeUser = ref({});
-    const username = ref('');
-    const email = ref('');
+    const username = ref("");
+    const email = ref("");
 
+    // Fetch user data on component mount
     // Fetch user data on component mount
     onMounted(async () => {
       try {
@@ -121,20 +131,16 @@ export default {
 <style>
    
 #profile_container {
-    max-width: 800px;
-    height: 100%;
+    width: 50%;
+    
 }
 .profile_card {
-  border: 1px solid #ccc;
-  border-radius: 4px;
   padding: 20px;
-  height: 100%;
- 
-  height: 300px;
-  width: 100%;
   background: #353e57;
   color: white;
-
+  position: relative;
+  left: 0;
+  border-radius: 0.5rem;
 }
 
 .card-header {
@@ -144,11 +150,18 @@ export default {
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 20px;  
+}
+
+.p-inputtext {
+  border-radius: 0;
 }
 
 
 
+#user_icon {
+  margin: 10px;
+}
 
 .modal {
   position: fixed;
@@ -159,14 +172,15 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
   display: none;
+  
 }
 
 .modal-dialog {
   max-width: 500px;
   margin: 100px auto;
-  background-color: #fff;
-  border-radius: 4px;
-  padding: 20px;
+  background-color: none;
+  margin: 20px;
+  margin-top: 20%;
 }
 
 .modal-title {
@@ -176,7 +190,10 @@ export default {
 }
 .modal-content {
     max-width: 100%;
+    border-radius: 0.5rem;
 }
+
+
 
 .close {
   position: absolute;
@@ -192,6 +209,31 @@ export default {
 
 .close:hover {
   opacity: 1;
+}
+
+.btn-primary {
+  --bs-btn-bg: teal;
+  --bs-btn-border-color: rgb(0, 105, 105);
+  --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: rgb(0, 105, 105);
+    --bs-btn-hover-border-color: rgb(0, 105, 105);
+    border-radius: 0;
+}
+.btn-secondary {
+  position: relative;
+  left: -50px;
+  border-radius: 0;
+}
+@media only screen and (max-width: 768px) {
+  #profile_container {
+    width: 100%;
+    display: flex;
+  }
+
+  .profile_card {
+    height: 50%;
+  }
+
 }
 
 </style>
