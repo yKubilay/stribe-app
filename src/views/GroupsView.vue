@@ -1,10 +1,10 @@
 <template>
 <Navigation v-if="!hideNavigation" :class="{ 'hidden': hideNavigation, 'Navigation': true }" />
   
-  <div class="container">
-    <header class="groupsHeader" :class="{sticky: stickyHeader}">
+  <div class="container" >
+    <header class="groupsHeader" :class="{sticky: stickyHeader}" v-if="groupStore.groups.length > 0">
       <div class="header-buttons">
-        <h1 class="activeGroupsButton">
+        <h1 class="activeGroupsButton" >
           Currently {{ groupStore.groups.length }} Groups with {{ groupStore.totalParticipants }} participants
         </h1>
        <!--  <div class="activeFiltersButton">
@@ -16,7 +16,7 @@
     </header>
     <section class="basic-grid">
 
-      <div class="card create-group-card" :style="formStyle" @click="toggleForm">
+      <div class="card create-group-card" :style="formStyle" @click="toggleForm" v-if="groupStore.groups.length > 0">
         <form :class="{form: showForm}"></form>
         <h2 class="createGroup" v-if="!showForm">Create group</h2>
         <div class="plusSymbol" v-if="!showForm">+</div>
