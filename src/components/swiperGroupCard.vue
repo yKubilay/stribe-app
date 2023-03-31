@@ -2,12 +2,26 @@
   <section class="container">
     <swiper
     :slidesPerView="1"
-    :pagination="{ clickable: true }"
     :keyboard="true"
     :modules="modules"
-    class="mySwiper"
+    class="mySwiper swiper-container"
+
+    :spaceBetween="16"
+    :pagination="{ 
+        clickable: true,
+        type: 'bullets',
+        el: '.swiper-pagination',
+        dynamicBullets: true,
+        dynamicMainBullets: 5
+    }"
+
   >
+
+ 
   <swiper-slide v-for="(group, index) in groupStore.groups" :key="group.uid" class="custom-swiper-slide">
+  
+        <div class="swiper-pagination"></div>
+
         <div class="slide-container">
           <div class="card" :style="getCardStyle(index)">
             <div class="cardDetailsContainer">
@@ -49,6 +63,8 @@
         </div>
       </swiper-slide>
     </swiper>
+    <div class="swiper-pagination"></div>
+
   </section>
 </template>
 
@@ -255,16 +271,21 @@ watchEffect(() => {
 </script>
 <style scoped>
 .card {
-  margin-top: 2rem;
+  border-radius: 0.5rem;
   height: 100%;
+  width: 100%;
+  padding: 1rem;
+  
 }
 
 .cardDescription {
-  padding: 1rem;
   display: none;
 }
+.cardContent {
+  margin-left: 0.5rem;
+}
 
-.swiper-navigation {
+/* .swiper-navigation {
   position: absolute;
   width: 100%;
   top: 50%;
@@ -273,8 +294,33 @@ watchEffect(() => {
   display: flex;
   justify-content: space-between;
   pointer-events: none; 
+} */
+.swiper-pagination-bullet {
+  background-color: orange;
 }
 
+.swiper-pagination {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border-radius: 20px; 
+  display: inline-block;
+  align-items: center;
+/*   margin-top: 1rem;
+ */  
+}
+
+
+.swiper-pagination-bullet {
+  background-color: #ccc; 
+}
+
+.swiper-pagination {
+
+  display: none;
+}
 
 .swiper-button-prev,
 .swiper-button-next {
@@ -303,6 +349,9 @@ watchEffect(() => {
   left: 20px;
 }
 
+.swiper-container {
+  height: auto;
+}
 
 
 </style>

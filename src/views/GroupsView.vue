@@ -3,12 +3,19 @@
   
   <div class="container">
     <header class="groupsHeader" :class="{sticky: stickyHeader}">
+      <div class="header-buttons">
+        <h1 class="activeGroupsButton">
+          Currently {{ groupStore.groups.length }} Groups with {{ groupStore.totalParticipants }} participants
+        </h1>
+        <div class="activeFiltersButton">
+          <i class="pi-filter" style="color: green"></i>
 
-      <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ activeParticipants }} participants</h1>
+      </div>
+      </div>
       <input type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
     </header>
     <section class="basic-grid">
-      <!-- Move the create group card div here -->
+
       <div class="card create-group-card" :style="formStyle" @click="toggleForm">
         <form :class="{form: showForm}"></form>
         <h2 class="createGroup" v-if="!showForm">Create group</h2>
@@ -36,11 +43,15 @@
   import { useUserStore } from '@/stores/user.js';
   import { watchEffect } from "vue";
   import  { useGroupStore } from '@/stores/groups.js';
+  import 'primeicons/primeicons.css';
+
+
 
   const storeUser = useUserStore();
   const groupTheme = ref('Coding');
   const showTooltip = ref(false);
   const groups = useGroupStore();
+  const groupStore = useGroupStore();
 
 
   const groupsTitle = computed(() => {
@@ -62,36 +73,6 @@ isLoggedIn.value = false;
 }
 });
 });
-
-const cards = ref([
-  {
-    id: 1,
-    areas: ["area1"],
-    themes: ["Coding", "Lunch", "Gaming", "Exam-practice", "Reading", "Sports", "General"],
-    participants: ["jack", "johnny", "joe", "Zac", "Håvard"]
-  },
-  {
-    id: 2,
-    areas: ["area3",],
-    themes: ["exam-practice", "Coding", "Lunch", "Gaming"],
-
-    participants: ["jim", "jack", "johnny"]
-  },
-   {
-    id: 3,
-    areas: ["area5"],
-    themes: ["Coding", "Lunch", "Gaming"],
-
-    participants: ["jim", "jack", "johnny"]
-   },
-   {
-    id: 3,
-    areas: ["area5"],
-    themes: ["Coding", "Lunch", "Gaming"],
-
-    participants: ["jim", "jack", "johnny"]
-   }
-])
 
 
 const showForm = ref(false);
@@ -120,6 +101,9 @@ function themeClass(theme) {
     return 'default-theme';
   }
 }
+
+const activeGroups = computed(() => groupStore.groups.value);
+  console.log(activeGroups);
 
 
 function toggleForm() {
@@ -174,9 +158,6 @@ function viewOnFloorplan() {
   cards.value = cards.value.filter((card) => card !== toRemove);
 
 } */
-
-const activeGroupsCount = computed(() => cards.value.length);
-const activeParticipants = computed(() => (participants.value ? participants.value.length : 0));
 
 
 
@@ -325,7 +306,7 @@ watchEffect(() => {
   border-bottom: 2px solid lightgray; 
   } */
 
-/* 
+
     .themeBadge {
       background: #F8860D;
    color: #582E03;
@@ -338,10 +319,57 @@ watchEffect(() => {
       padding-left: 1rem;
       padding-right: 1rem;
       cursor:pointer;
-   } */
-
+   }
+/* 
   .activeGroupsButton {
     margin-bottom: 1%;
+    font-size: 2rem;
+    border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.4rem;
+      padding-bottom: 0.4rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      background: #008080;
+      color: white;
+  }
+
+  .activeFiltersButton {
+    margin-bottom: 1%;
+    font-size: 2rem;
+    border-radius: 0.3rem;
+    padding: 0.1rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background: #008080;
+    color: white;
+    margin-left: 75%;
+  } */
+
+  .activeFiltersButton {
+    border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.4rem;
+      padding-bottom: 0.4rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      background: #008080;
+      color: white;
+  }
+
+  .activeGroupsButton {
+    border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.4rem;
+      padding-bottom: 0.4rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+/*       width: 49%;
+ */      font-size: 2.15rem;
+      background: #008080;
+      color: white;
   }
 
   .groupsHeader {
@@ -658,6 +686,8 @@ watchEffect(() => {
 
   }
 
+
+
   .modal {
   position: fixed;
   top: 0;
@@ -710,6 +740,10 @@ watchEffect(() => {
   font-size: 1.1rem;
 }
 
+.header-buttons {
+  display: flex;
+  justify-content: space-between;
+}
 
 
   .close {
@@ -768,7 +802,37 @@ watchEffect(() => {
   overflow: auto;
   }
 
+  .activeFiltersButton {
+    border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.4rem;
+      padding-bottom: 0.4rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      background: #008080;
+      color: white;
+      display: none;
+  }
+
+  .activeGroupsButton {
+    border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.4rem;
+      padding-bottom: 0.4rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+/*       width: 49%;
+ */      font-size: 1.15rem;
+      background: #008080;
+      color: white;
+  }
+
+  .groupsHeader {
+    background-color: #F5F0E7;
+    margin-top: 2%;
   
+  }
+
   .container {
     max-width: 100%;
     padding: 0.5rem;

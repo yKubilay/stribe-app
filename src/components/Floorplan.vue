@@ -1828,13 +1828,25 @@
  </div>
 
 
- <swiperGroupCard />
+ 
+ <header class="groupsHeader" :class="{sticky: stickyHeader}">
+      <div class="header-buttons">
+        <h1 class="activeGroupsButton">
+         {{ groupStore.groups.length }} Groups and {{ groupStore.totalParticipants }} participants
+        </h1>
+        <h1></h1>
+        <div class="activeFiltersButton">
+          <i class="pi-filter" style="color: green"></i>
+
+      </div>
+      </div>
+    </header>
+ <swiperGroupCard v-if="!isDesktop"/>
 
 
     <div v-if="popupId" class="popup">
   <div class="popup-header">
     <h2>{{ popupId }}</h2>
-    <button class="closeButton" @click="hidePopup">X</button>
   </div>
   <h3 class="popupCreateText">Create group in {{ popupId }}?</h3>
   <div class="popup-form">
@@ -1858,6 +1870,8 @@
 
          <div class="buttonGroup">
          <button class="floorplanButton" @click.prevent="createGroup(popupId)">Create group</button>
+         <button class="floorplanButton" @click="hidePopup">Cancel</button>
+
       </div>
       </form>
          </div>
@@ -2074,7 +2088,6 @@ defineComponent({
   margin-top: 5%;
 }
 
-
 .firstFloorContainer {
   width: 100%;
   position: relative;
@@ -2092,6 +2105,10 @@ defineComponent({
 /*   object-fit: contain;
  */}
 
+
+   .activeGroupsButton, .activeFiltersButton {
+      display: none;
+   }
 
    path:not(.exclude){
    fill: transparent;
@@ -2180,6 +2197,8 @@ defineComponent({
   margin: 10px;
 }
 
+
+
 .swiper-slide p {
   margin: 10px;
   flex-grow: 1;
@@ -2189,6 +2208,11 @@ defineComponent({
   background-color: #333;
   opacity: 0.5;
 }
+
+.hide-on-desktop {
+  display: none;
+}
+
 
 .swiper-pagination-bullet-active {
   opacity: 1;
@@ -2207,6 +2231,14 @@ defineComponent({
          padding: 5px;
    } 
 
+
+   .hide-on-desktop {
+    display: block;
+  }
+   
+/*    .hide-on-desktop {
+    display: block;
+  } */
    .no-scroll {
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
@@ -2264,7 +2296,6 @@ defineComponent({
  .grid-container {
   display: grid;
   grid-template-columns: 1fr;
-  margin-right: 1rem;
   width: 300px;
   gap: 1rem;
   left: 0;
