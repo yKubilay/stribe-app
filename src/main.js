@@ -8,6 +8,7 @@ import router from "./router";
 import { autoAnimatePlugin } from "@formkit/auto-animate/vue";
 import PrimeVue from 'primevue/config';
 import 'swiper/swiper-bundle.css';
+import SwiperCore, { Pagination, Navigation, Keyboard } from 'swiper';
 
 
 /* import 'primevue/resources/themes/bootstrap4-light-blue/theme.css';
@@ -27,3 +28,6 @@ app.use(pinia);
 
 
 app.mount("#app");
+
+
+SwiperCore.use([Pagination, Navigation, Keyboard]);

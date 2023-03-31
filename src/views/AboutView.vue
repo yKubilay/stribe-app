@@ -159,7 +159,7 @@ import FAQ from "../components/FAQ.vue";
   };
   
 </script>
-<style>
+<style scoped>
   * {
     margin: 0;
     padding: 0;
@@ -313,10 +313,12 @@ import FAQ from "../components/FAQ.vue";
      cursor: pointer;
      transition: all 0.3 ease;
   }
-
+ 
   .about-button:hover {
     background: #4cd1ca;
   }
+
+  
   .project_description_container p {
     border: solid 3px #353e57;
     margin: 20px;

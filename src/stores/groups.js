@@ -56,6 +56,16 @@ export const useGroupStore = defineStore({
 }
 
   },
+
+  getters: {
+    totalParticipants: (state) => {
+      let total = 0;
+      state.groups.forEach(group => {
+        total += group.participants.length;
+      });
+      return total;
+    },
+  },
 });
 
 

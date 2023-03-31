@@ -1,12 +1,17 @@
 <template>
 
     <header class="groupsHeader" v-if="props.isUsedInFloorPlan">
-      <h1 class="activeGroupsButton">Currently {{ activeGroupsCount }} Groups with {{ popupId }} participants</h1>
+      <h1 class="activeGroupsButton">
+        Currently {{ groupStore.groups.length }} Groups with {{ groupStore.totalParticipants }} participants
+
+      </h1>
       <button class="floorplanButton" @click="$emit('highlight-all-rooms')">Show all rooms</button>
       <button class="floorplanButton" @click="$emit('highlight-all-rooms')">Create group</button>
 
       <InputText type="text" id="searchQuery" name="meeting-title" v-model="groupTitle" placeholder="Search for groups, themes or other users!" style=" border-radius: 0;" />
     </header>
+
+
 
 
     <div class="card" v-for="(group, index) in groupStore.groups" :key="group.uid" :style="getCardStyle(index)">
@@ -45,8 +50,6 @@
 
       </div>
     </div>
-<!--   </div>
- -->
 
 
         <div class="modal" v-if="modalVisible" @click.self="hideModal">
@@ -139,8 +142,8 @@ isLoggedIn.value = false;
 const showForm = ref(false);
 const groupTitle = ref('');
 const searchQuery = ref('');
-const participants = ref(["jack", "johnny", "joe", "jim", "jack", "johnny", "jim", "jack", "johnny", "jim", "jack", "johnny"])
-const cardExpanded = ref(false);
+/* const participants = ref(["jack", "johnny", "joe", "jim", "jack", "johnny", "jim", "jack", "johnny", "jim", "jack", "johnny"])
+ */const cardExpanded = ref(false);
 
 
 function toggleForm() {
@@ -241,10 +244,11 @@ function viewOnFloorplan() {
 
 } */
 
-/* const activeGroupsCount = computed(() => cards.value.length);
- */
-/* const activeParticipants = computed(() => (participants.value ? participants.value.length : 0));
- */
+
+
+ 
+ const activeParticipants = computed(() => (participants.value ? participants.value.length : 0));
+ 
 
 
 
@@ -307,6 +311,8 @@ watchEffect(() => {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
+
+  
   
    /* Conditionally rendering theme colors */
    .theme-coding {
