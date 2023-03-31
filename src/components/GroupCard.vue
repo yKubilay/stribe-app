@@ -91,7 +91,6 @@
         </div>
       </div>
 
-<Message severity="error" text="An error occurred" />
 
 
 </template>

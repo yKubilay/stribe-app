@@ -1982,6 +1982,7 @@ async function createGroup(popupId) {
   };
 
 
+
   const newGroup = {
     room: popupId,
     title: groupTitle.value,
