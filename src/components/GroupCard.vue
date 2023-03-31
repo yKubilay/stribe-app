@@ -91,7 +91,6 @@
         </div>
       </div>
 
-<Message severity="error" text="An error occurred" />
 
 
 </template>
@@ -106,10 +105,8 @@
   import { watchEffect } from "vue";
   import { useGroupStore } from '@/stores/groups';
   import { defineProps } from 'vue';
-  import { defineComponent } from 'vue';
   import InputText from 'primevue/inputtext';
   import moment from 'moment';
-  import Message from 'primevue/message';
 
 
 const userStore = useUserStore();
@@ -154,11 +151,6 @@ const searchQuery = ref('');
 
 function toggleForm() {
   showForm.value = !showForm.value;
-}
-
-function showError(message) {
-  errorMessage.value = message;
-  showErrorModal.value = true;
 }
 
 
@@ -309,11 +301,7 @@ watchEffect(() => {
   });
 
 
-   defineComponent({
-    setup() {
-      return { message }
-    }
-  })
+ 
 
 </script>
 
