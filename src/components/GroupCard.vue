@@ -41,7 +41,8 @@
 
      </div><div class="buttonGroup">
         <button class="floorplanButton" @click="showModal(group)">Show more</button>
-        <button class="floorplanButton" @click="joinRoom(group)">Join room</button>
+        <button v-if="isUserInGroup(group)" class="leaveRoomButton" @click="leaveRoom(group)">Leave Room</button>
+        <button v-else class="floorplanButton" @click="joinRoom(group)">Join Room</button>
       </div>
     
       <div class="cardParticipants" v-if="cardExpanded">
@@ -89,6 +90,10 @@
           </div>
         </div>
       </div>
+
+<Message severity="error" text="An error occurred" />
+
+
 </template>
 
 
@@ -101,12 +106,13 @@
   import { watchEffect } from "vue";
   import { useGroupStore } from '@/stores/groups';
   import { defineProps } from 'vue';
-
+  import { defineComponent } from 'vue';
   import InputText from 'primevue/inputtext';
   import moment from 'moment';
+  import Message from 'primevue/message';
 
 
-
+const userStore = useUserStore();
 const groupStore = useGroupStore();
 
 
@@ -118,7 +124,6 @@ onMounted(() => {
     highlightAllRooms();
   }
 
-  const storeUser = useUserStore();
   const groupTheme = ref('Coding');
   const showTooltip = ref(false);
 
@@ -138,6 +143,7 @@ isLoggedIn.value = false;
 });
 
 
+const errorModalRef = ref(null);
 
 const showForm = ref(false);
 const groupTitle = ref('');
@@ -150,7 +156,10 @@ function toggleForm() {
   showForm.value = !showForm.value;
 }
 
-
+function showError(message) {
+  errorMessage.value = message;
+  showErrorModal.value = true;
+}
 
 
 function toggleCard() {
@@ -181,12 +190,6 @@ function toggleCard() {
   }
  */
 
- function joinRoom(group) {
-  const loggedInUserName = userStore.username;
-  const updatedParticipants = [...group.participants, loggedInUserName];
-
-  groupStore.updateGroupParticipants(group.uid, updatedParticipants);
-}
 
 
 function showModal(card) {
@@ -236,19 +239,46 @@ function viewOnFloorplan() {
 
 }
 
+function joinRoom(group) {
+  const loggedInUserName = userStore.username;
+
+  const userInGroup = group.participants.includes(loggedInUserName);
+  if (userInGroup) {
+
+    alert('You are already in this group!');
+    return;
+  }
+
+  const inAnotherGroup = groupStore.groups.some(g => g.participants.includes(loggedInUserName));
+  if (inAnotherGroup) {
+
+    alert('You are already in this group!');
+    return;
+  }
+
+  const updatedParticipants = [...group.participants, loggedInUserName];
+  groupStore.updateGroupParticipants(group.id, updatedParticipants);
+}
 
 
-
-/* function removeItem(toRemove) {
-  cards.value = cards.value.filter((card) => card !== toRemove);
-
-} */
-
+function leaveRoom(group) {
+  const loggedInUserName = userStore.username;
+  const updatedParticipants = group.participants.filter(
+    participant => participant !== loggedInUserName
+  );
+  
+  groupStore.updateGroupParticipants(group.id, updatedParticipants);
+}
 
 
  
  const activeParticipants = computed(() => (participants.value ? participants.value.length : 0));
- 
+
+
+function isUserInGroup(group) {
+  const loggedInUserName = userStore.username;
+  return group.participants.includes(loggedInUserName);
+}
 
 
 
@@ -277,6 +307,13 @@ watchEffect(() => {
       }
     }
   });
+
+
+   defineComponent({
+    setup() {
+      return { message }
+    }
+  })
 
 </script>
 
@@ -429,7 +466,13 @@ watchEffect(() => {
 }
 
 
-  
+  .leaveRoomButton {
+    font-size: 1rem;
+    padding:5px;
+    background: #BA1729;
+    margin: 0;
+
+  }
  
   .cardDescription {
     font-size: 1.1rem;

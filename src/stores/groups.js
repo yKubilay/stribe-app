@@ -37,14 +37,20 @@ export const useGroupStore = defineStore({
           groups.push({ id: doc.id, ...doc.data() });
         });
 
+
         this.groups = groups;
+        groups.forEach((group) => {
+          if (group.participants.length === 0) {
+            this.deleteEmptyGroup(group);
+          }
+        });
       });
     },
 
     updateGroupParticipants(uid, participants) {
       return new Promise((resolve, reject) => {
-        const groupRef = this.db.collection('groups').doc(uid);
-        groupRef.update({
+        const groupRef = groupCollection.doc(uid);
+          groupRef.update({
           participants: participants
         }).then(() => {
           resolve();
@@ -52,10 +58,16 @@ export const useGroupStore = defineStore({
           console.error('Error updating participants:', error);
           reject(error);
         });
-  });
-}
+      });
+    },
 
+
+    async deleteEmptyGroup(group) {
+      await groupCollection.doc(group.id).delete();
+    },
   },
+
+   
 
   getters: {
     totalParticipants: (state) => {

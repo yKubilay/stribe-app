@@ -7,10 +7,10 @@
         <h1 class="activeGroupsButton">
           Currently {{ groupStore.groups.length }} Groups with {{ groupStore.totalParticipants }} participants
         </h1>
-        <div class="activeFiltersButton">
+       <!--  <div class="activeFiltersButton">
           <i class="pi-filter" style="color: green"></i>
 
-      </div>
+      </div> -->
       </div>
       <input type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
     </header>
@@ -368,8 +368,9 @@ watchEffect(() => {
       padding-right: 1rem;
 /*       width: 49%;
  */      font-size: 2.15rem;
-      background: #008080;
-      color: white;
+      background: #037171;
+/*       background: #353E57;
+ */      color: white;
   }
 
   .groupsHeader {
