@@ -3,7 +3,17 @@
   <div class="project_description_container">
       <h1>Stribe</h1>
       <p>Stribe is an online platform exclusively for students to connect, create meetups, and support each other towards graduating. Join us today and start making meaningful connections with other students on your academic journey!</p>
-      <FAQ />
+      <section class="faqs">
+      <h2>FAQs</h2>
+      <div class="faqs_container">
+        <article class="faq" v-for="(faq, index) in faqList" :key="index" @click="toggleFAQ(index)">
+          <div class="faq_icon"><Icon :icon="faq.icon"></Icon></div>
+          <div class="question_answer">
+            <h4>{{ faq.isOpen ? faq.answer : faq.question }}</h4>
+          </div>
+        </article>
+      </div>
+    </section>
       <br/>
       <h1 style="text-align: center;">Stribes' developers</h1>
   </div>
@@ -19,7 +29,7 @@
     }"
     :keyboard="true"
     :modules="modules"
-    class="mySwiper"
+    class="my_swiper"
   >
   <swiper-slide>
       <div class="slide-container">
@@ -169,7 +179,6 @@ import NavigationBar from '../components/Navigation.vue';
   import 'swiper/css';
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import FAQ from "../components/FAQ.vue";
   // import required modules
   import { Keyboard, Pagination, Navigation } from 'swiper';
 
@@ -179,24 +188,56 @@ import FAQ from "../components/FAQ.vue";
     components: {
       Swiper,
       SwiperSlide,
-      NavigationBar,
-      FAQ
+      NavigationBar
     },
     data() {
       return {
-        isExpanded: false
-      }
-    }, 
+        isExpanded: false,
+        faqList: [
+          {
+            question: "Is Stribe only for students?",
+            answer: "Yes, Stribe is exclusively for students who are currently enrolled in HIOF.",
+            icon: "ic:baseline-plus",
+            isOpen: false,
+          },
+          {
+            question: "How can Stribe help me graduate?",
+            answer: "Stribe provides a supportive community where you can connect with other students who are also striving to graduate. By creating meetups and providing support to each other, you can stay motivated and on track towards achieving your academic goals.",
+            icon: "ic:baseline-plus",
+            isOpen: false,
+          },
+          {
+            question: "How do I join Stribe?",
+            answer: "To join Stribe, simply create an account using your email address and provide a username and a secure password. You can then start exploring the web app and create meetups.",
+            icon: "ic:baseline-plus",
+            isOpen: false,
+          },
+          {
+            question: "Is Stribe free to use?",
+            answer: "Yes, Stribe is completely free to use for all students.",
+            icon: "ic:baseline-plus",
+            isOpen: false,
+          },
+        ],
+      };
+    },
+    methods: {
+      toggleFAQ(index) {
+        // toggle current faq
+        const faq = this.faqList[index];
+        faq.isOpen = !faq.isOpen;
+        faq.icon = faq.isOpen ? "ic:baseline-minus" : "ic:baseline-plus";
+      },
+    },
     setup() {
       return {
         modules: [Keyboard, Pagination, Navigation],
       };
     },
-
 };
   
 </script>
-<style scoped>
+<style>
   * {
     margin: 0;
     padding: 0;
@@ -204,12 +245,14 @@ import FAQ from "../components/FAQ.vue";
     font-family: 'Poppins', sans-serif;
 
   }
-
+  .faq {
+      color: white;
+    }
 #about_container {
   min-height: 50vh;
 }
 
-.mySwiper {
+.my_swiper {
   position: relative;
   z-index: 0;
   
@@ -280,9 +323,9 @@ import FAQ from "../components/FAQ.vue";
     min-height: 60vh;
     background: #F5F0E7;
   }
+  
   .slide-container {
     max-width: 1120px;
-    
   }
   .about_card {
     border-radius: 35px;
@@ -369,12 +412,10 @@ import FAQ from "../components/FAQ.vue";
      cursor: pointer;
      transition: all 0.3 ease;
   }
- 
+
   .about-button:hover {
     background: #353E57;
   }
-
-  
   .project_description_container p {
     border: solid 3px #353e57;
     margin: 20px;
