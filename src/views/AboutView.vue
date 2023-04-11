@@ -40,7 +40,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/images/img_4.jpg" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_1.jpg" alt="img 1" class="card-img">
                 </div>
               </div>
 
@@ -74,7 +74,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/images/img_1.png" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_2.jpg" alt="img 1" class="card-img">
                 </div>
               </div>
 
@@ -109,7 +109,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/images/img_2.jpg" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_3.jpg" alt="img 1" class="card-img">
                 </div>
               </div>
 
@@ -143,7 +143,7 @@
                 <span class="overlay"></span>
 
                 <div class="card-image">
-                  <img src="../assets/images/img_3.jpg" alt="img 1" class="card-img">
+                  <img src="../assets/images/img_4.jpg" alt="img 1" class="card-img">
                 </div>
               </div>
 
@@ -249,7 +249,7 @@ import "swiper/css/navigation";
       color: white;
     }
 #about_container {
-  min-height: 50vh;
+  min-height: 60vh;
 }
 
 .my_swiper {
