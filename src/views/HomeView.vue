@@ -123,8 +123,12 @@ onMounted (() => {
    
    } */
   }
-@media only screen and (max-width:600px) { 
- .svg {
+@media only screen and (max-width:768px) { 
+ 
+ template {
+  overflow: hidden;
+ }
+  .svg {
    display: none;
  }
 
