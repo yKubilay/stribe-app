@@ -131,7 +131,8 @@ onMounted (() => {
 
  .col-1 {
    margin-top: 40px;
-   padding: 0 4px 0 50px;
+   padding: 10px 15px 0 30px;
+   margin: 15px;
  }
  .col-1 h2 {
    font-size: 30px;
@@ -141,7 +142,7 @@ onMounted (() => {
  }
 
  .col-1 .homeButton {
-  font-size: small;
+  font-size: 12pt;
   margin-left: 10px;
   
  }
