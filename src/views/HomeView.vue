@@ -132,7 +132,7 @@ onMounted (() => {
  .col-1 {
    margin-top: 40px;
    padding: 10px 15px 0 30px;
-   margin: 15px;
+   margin: 20px;
  }
  .col-1 h2 {
    font-size: 30px;
