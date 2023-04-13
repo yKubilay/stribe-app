@@ -251,14 +251,7 @@ button:hover {
       width: 80%;
     }
 
-    .row .homeImage {
-      width: 80%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-     
-    }
+    
 
     
 
@@ -289,13 +282,21 @@ button:hover {
   .svg {
     display: none;
   }
-  .col-2 .homeImage {
-    width: 80%;
-    position: absolute;
-    top: 40px;
-    left: 0;
-    z-index: 1;
 
+
+  .col-1 {
+    margin-top: 40px;
+  }
+  .col-1 h2 {
+    font-size: 30px;
+  }
+  .col-1 h4{
+    font-size: 10px;
+  }
+
+
+  .col-2 .homeImage {
+    width: 50%;
   }
 }
 }

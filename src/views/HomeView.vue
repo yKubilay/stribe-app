@@ -18,7 +18,7 @@
   <div class="row">
     <div class="col-1">
         <h2>Welcome to Stribe</h2>  
-        <h3>Meet and collaborate with <br>likeminded students!</h3>  
+        <h3>Meet and collaborate with likeminded students!</h3>  
 
         <div class="button-container">
         <a href="/signup"><button class="homeButton" type="button">Get started</button></a>
