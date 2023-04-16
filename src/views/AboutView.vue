@@ -23,9 +23,9 @@
   
   <swiper
     :slidesPerView="1"
-    :navigation="true"
     :pagination="{
       clickable: true,
+      dynamicBullets: true,
     }"
     :keyboard="true"
     :modules="modules"
@@ -58,7 +58,7 @@
                     <br/>
                     Project leader and SCRUM Master
                   </p>
-                  <button class="about-button"  @click="isExpanded = !isExpanded">{{ isExpanded ? 'Read less' : 'Read more' }}</button>
+                  <button class="about-button"  @click="isExpanded = !isExpanded1">{{ isExpanded ? 'Read less' : 'Read more' }}</button>
               </div>
             </div>
           </div>
@@ -80,7 +80,7 @@
 
               <div class="card-content">
                   <h2 class="name" data-name="Kasper">Kasper Iversen</h2>
-                  <p class="description" v-if="isExpanded">
+                  <p class="description" v-if="isExpanded2">
                     23 years old.
                     <br/>
                     Interests: Football, training and programming. <br/>
@@ -180,7 +180,7 @@ import NavigationBar from '../components/Navigation.vue';
 import "swiper/css/pagination";
 import "swiper/css/navigation";
   // import required modules
-  import { Keyboard, Pagination, Navigation } from 'swiper';
+  import { Keyboard, Pagination} from 'swiper';
 
   
 
@@ -188,7 +188,7 @@ import "swiper/css/navigation";
     components: {
       Swiper,
       SwiperSlide,
-      NavigationBar
+      NavigationBar,
     },
     data() {
       return {
@@ -231,7 +231,7 @@ import "swiper/css/navigation";
     },
     setup() {
       return {
-        modules: [Keyboard, Pagination, Navigation],
+        modules: [Keyboard, Pagination],
       };
     },
 };
