@@ -16,6 +16,7 @@
     </section>
       <br/>
       <h1 style="text-align: center;">Stribes' developers</h1>
+      <p>Swipe to see Stribe's developers</p>
   </div>
   
   <section class="container" id="about_container">
