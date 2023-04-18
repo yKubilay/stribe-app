@@ -5,13 +5,6 @@
       <div class="profile_card">
         <div class="card-header"><Icon id="user_icon" icon="mdi:user-box" width="50" height="50"></Icon>{{ storeUser.username + "'s profile" }}</div>
         <div class="card-body">
-          <div>
-            <label for="email">Email</label>
-            <div>
-              <InputText type="text" id="email" name="email" v-model="email" required autocomplete="email"  />
-            </div>
-            
-          </div>
 
           <div>
             <label for="username">Username</label>
@@ -43,11 +36,6 @@
               <div class="form-group">
                 <label for="username">Username</label>
                 <InputText type="text" class="form-control" id="username" name="profile_username" v-model="username" placeholder="Username" />
-              </div>
-              <div class="form-group">
-                <label for="email">Email address</label>
-                <InputText type="text" class="form-control" id="email" name="profile_email" v-model="email" placeholder="Email"/>
-
               </div>
             </form>
           </div>
