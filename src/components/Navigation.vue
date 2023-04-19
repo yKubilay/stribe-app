@@ -17,9 +17,11 @@
 
         <nav class="nav">
             <ul class="menu">
+              <li><router-link to="/">Velkommen {{ storeUser.username }}!</router-link></li>
               <li><router-link to="/groups" :class="{ active: isCurrentPage('/groups') }">Groups</router-link></li>
               <li><router-link to="/floorplan" :class="{ active: isCurrentPage('/floorplan') }">Floorplan</router-link></li>
               <li><router-link to="/about" :class="{ active: isCurrentPage('/about') }">About</router-link></li>
+              
               <li v-if="isLoggedIn"><button class="signoutButton" @click="handleSignOut">Sign out</button></li>
               <li v-else><router-link to="/login" :class="{ active: isCurrentPage('/login') }">Sign in</router-link></li>
             </ul>
@@ -121,6 +123,11 @@ ul{
     width: 100%;
     z-index: 99999;
 }
+#username {
+  font-size: 20px;
+  margin-top: 19px;
+}
+
 
 .logo{
     display: inline-block;
@@ -168,7 +175,6 @@ ul{
     color: white;
     width: 100%;
     margin-top: 10px;
-    padding: 10px;
     font-size: 14pt;
   }
 .nav{
@@ -270,6 +276,7 @@ nav a.active:after {
     .hamb{
         display: none;
     }
+    
   }
   @media (max-width: 1100px) {
     .nav {
@@ -298,6 +305,7 @@ nav a.active:after {
   transition: width 0.3s ease-in-out;
 }
   
+
 .menu a:hover:after {
   width: 15%;
   transition: width 0.25s ease-in-out;
