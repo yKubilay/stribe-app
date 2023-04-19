@@ -1,31 +1,26 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import Navigation from "./components/Navigation.vue"
-import Signup from "./components/auth/Signup.vue"
-
-
-
-</script>
-
-
-
 <template>
-  <Navigation />
-  <Signup />
+  <v-app>
+    <v-toolbar>
+      
+    </v-toolbar>
+    <main>
+
+    </main>
+  </v-app>
   <RouterView />
   
 </template>
 
 
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+import { createApp } from 'vue'
 
 
+</script>
 
 
-
-<style scoped>
-
-
+<style>
 
 </style>
-
 
