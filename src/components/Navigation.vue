@@ -24,12 +24,13 @@
 
 
               <li v-if="isLoggedIn"><button class="signoutButton" @click="handleSignOut">Sign out</button></li>
-              <li v-else><router-link to="/signUp" :class="{ active: isCurrentPage('/signUp') }">Sign up</router-link></li>
+              <li v-else><router-link to="/login" :class="{ active: isCurrentPage('/login') }">Sign up</router-link></li>
             </ul>
         </nav>
     </header>
 
 
+    
 <!--     @click="handleSignOut"
  --></template>
 
@@ -104,7 +105,6 @@ const handleSignOut = () => {
 
 
 <style>
-
  
 body{
     background-color: #FFF;
@@ -118,35 +118,35 @@ a{
 ul{
     list-style: none;
 }
-
 .header{
     background: whitesmoke;
     box-shadow: 0px 15px 10px -15px #111;
     position: sticky;
     top: 0;
     width: 100%;
-    z-index: 2;
-}
-/* Logo */
-.logo{
-    display: inline-block;
-    color: #42aaaa;
-    font-size: 50px;
-    font-weight: 400;
-    margin-left: 10%;
+    z-index: 99999;
 }
 
-/* Nav menu */
+.logo{
+    display: inline-block;
+    color: #008080;
+    font-size: 50px;
+    font-weight: 400;
+    margin-left: 6.5%;
+    
+}
+
+
+
 .nav{
     width: 100%;
     height: 100%;
     position: fixed;
     background: #2F728D;
     overflow: hidden;
-
 }
 .nav ul{
-  margin-right: 150px;
+  margin-right: 8rem;
 }
 .menu a{
     display: block;
@@ -157,13 +157,13 @@ ul{
     padding: 10px;
     font-size: 14pt;
   }
-
-
-
-
 .nav{
     max-height: 0;
     transition: max-height .5s ease-out;
+}
+
+.signoutButton {
+  margin-top: 1rem;
 }
 
 
@@ -192,19 +192,14 @@ nav a.active:after {
     cursor: pointer;
     float: right;
     padding: 40px 20px;
-
-}/* Style label tag */
-
+}
 .hamb-line {
     background: black;
     display: block;
     height: 3px;
     position: relative;
     width: 24px;
-
-
-} /* Style span tag */
-
+} 
 .hamb-line::before,
 .hamb-line::after{
     background: black;
@@ -222,11 +217,9 @@ nav a.active:after {
 .hamb-line::after{
     top: -5px;
 }
-
 .side-menu {
     display: none;
 } /* Hide checkbox */
-
 .side-menu:checked ~ nav{
     max-height: 100%;
 }
@@ -241,7 +234,6 @@ nav a.active:after {
     transform: rotate(45deg);
     top:0;
 }
-
 @media (min-width: 1100px) {
     .nav{
         max-height: none;
@@ -259,29 +251,22 @@ nav a.active:after {
     }
     .menu a:hover{
         background-color: transparent;
-
     }
     
     .hamb{
         display: none;
     }
   }
-
-
-
   @media (max-width: 1100px) {
     .nav {
       flex-direction: column;
       align-items: flex-start;
-
     }
-
     .menu {
       width: 100%;
       display: block;
       text-align: center;
     }
-
     
     .menu a{
     margin-top: 30px;
