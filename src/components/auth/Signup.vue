@@ -75,7 +75,7 @@
       createUserWithEmailAndPassword(auth, email.value, password.value)
         .then(async (data) => {
           console.log("User is registered");
-          // Add user to Firestore collection
+
           const userDocRef = doc(db, "users", data.user.uid);
           await setDoc(userDocRef, {
             username: username.value,

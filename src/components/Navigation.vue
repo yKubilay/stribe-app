@@ -133,10 +133,29 @@ ul{
     font-size: 50px;
     font-weight: 400;
     margin-left: 6.5%;
-    
+    position: relative; 
 }
 
+.logo:after {
+  content: '';
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 5px;
+  background: linear-gradient(15deg, #008080 0%, #13547a 70%, #80d0c7 100%);
+  transition: width 0.3s ease-in-out;
+}
 
+.logo:hover {
+  color: #008080;
+}
+
+.logo:hover:after {
+  width: 100%;
+  transition: width 0.25s ease-in-out;
+}
 
 .nav{
     width: 100%;

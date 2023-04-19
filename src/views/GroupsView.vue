@@ -10,14 +10,15 @@
 
       <div class="card create-group-card" :style="formStyle" @click="toggleForm" v-if="groupStore.groups.length > 0">
         <form :class="{form: showForm}"></form>
-        <h2 class="createGroup" v-if="!showForm">Create group</h2>
-        <div class="plusSymbol" v-if="!showForm">+</div>
-        <div class="formContainer" v-else>
+        <router-link to="/floorplan">
+        <h2 class="createGroup">Create group</h2>
+        <div class="plusSymbol">+</div>
+
+        </router-link>
+        <div class="formContainer">
           <div class="buttonGroup">
-            <button class="gridCancelButton">Create group</button>
-            <button class="gridCancelButton">Cancel</button>
-          </div>
-            
+          
+      </div>
         </div>
       </div>
 
@@ -807,6 +808,10 @@ watchEffect(() => {
     font-size: 30px;
 /*     font-weight: bold;
  */    cursor: pointer;
+  }
+  
+  .plusSymbol {
+    color: white;
   }
   
   .modal-header {

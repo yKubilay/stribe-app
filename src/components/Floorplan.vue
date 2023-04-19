@@ -1913,14 +1913,14 @@ import { ref, onMounted, computed } from 'vue';
 import GroupCard from './GroupCard.vue';
 import swiperGroupCard from './swiperGroupCard.vue';
 import { useGroupStore } from '@/stores/groups';
-import { defineComponent } from 'vue';
+import { defineComponent, watch } from 'vue';
 import { useUserStore } from '@/stores/user.js';
 import MultiSelect from 'primevue/multiselect';
 import InputText from 'primevue/inputtext';
 import svgPanZoom, { setMinZoom } from 'svg-pan-zoom';
-import { defineProps, watch } from 'vue';
+import { defineProps } from 'vue';
 import { useRoomsStore } from '@/stores/rooms.js';
-
+import { usePopStore } from '@/stores/pop.js';
 import GroupsHeader from './groupsHeader.vue';
 import { nextTick } from 'vue';
 
@@ -1936,7 +1936,7 @@ const groupDescription = ref('');
 const creatingGroup = ref(false);
 const roomsStore = useRoomsStore();
 
-
+const popStore = usePopStore();
 const groupStore = useGroupStore();
 const userStore = useUserStore();
 
@@ -1976,13 +1976,20 @@ onMounted(() => {
       element.classList.add('breathing-effect');
     }
     
-      element.addEventListener('click', () => {
+    element.addEventListener('click', () => {
+        if (!popStore.showPopup) {
+          return;
+        }
         showPopup(element.id);
         roomsStore.setRoomId(element.id);
-
-
       });
     });
+
+    watch(() => popStore.showPopup, (newValue, oldValue) => {
+    if (!newValue) {
+      hidePopup();
+    }
+   });
 
 
     const instance = svgPanZoom(svgElement.value, {
@@ -2030,13 +2037,23 @@ async function createGroup(popupId) {
   await groupStore.createGroup(newGroup);
   hidePopup();
 }
+
 function hidePopup() {
-   resetForm();
-   popupId.value = null;
+  resetForm();
+  popupId.value = null;
+  if (popStore.showPopup) {
+    popStore.setShowPopup(false);
+  }
 }
+
+
+
 function showPopup(id) {
+  
   popupId.value = id;
+  
 }
+
 function debounce(func, wait) {
   let timeout;
   return function(...args) {
@@ -2114,6 +2131,9 @@ defineComponent({
   margin-top: 5%;
 }
 
+.firstFloorSVG {
+   background-color: white;
+}
 .firstFloorContainer {
   width: 100%;
   position: relative;
