@@ -20,6 +20,8 @@
               <li><router-link to="/groups" :class="{ active: isCurrentPage('/groups') }">Groups</router-link></li>
               <li><router-link to="/floorplan" :class="{ active: isCurrentPage('/floorplan') }">Floorplan</router-link></li>
               <li><router-link to="/about" :class="{ active: isCurrentPage('/about') }">About</router-link></li>
+              <li><router-link to="" :class="{ active: isCurrentPage('/profile') }">{{ storeUser.username }}</router-link></li>
+
               <li v-if="isLoggedIn"><button class="signoutButton" @click="handleSignOut">Sign out</button></li>
               <li v-else><router-link to="/login" :class="{ active: isCurrentPage('/login') }">Sign in</router-link></li>
             </ul>
