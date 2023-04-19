@@ -10,7 +10,7 @@
     <h2 class="mb-3">Login to Stribe</h2>
       <div class="input">
         <label for="email">Email</label>
-          <input
+          <InputText
             class="form-control"
             type="text"
             v-model="email"
@@ -19,16 +19,16 @@
       </div>
         <div class="input">
           <label for="password">Password</label>
-            <input
+            <InputText
               class="form-control"
               type="password"
               v-model="password"
-              placeholder="password123"
+              placeholder="password1!"
             />
         </div>
 
       <div class="altOptionAuth">
-        Don't have an account? <span @click="moveToSignUp">Signup</span>
+        Don't have an account? <router-link to="/signup">Sign up</router-link>
       </div>
 
       
@@ -52,7 +52,7 @@
   import { useUserStore } from "../../stores/user";
   import { computed } from "vue";
   import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
-  
+  import InputText from 'primevue/inputtext';
   const email = ref("");
   const password = ref("");
   const errorMsg = ref();
@@ -109,9 +109,7 @@
       throw new Error("User data not found");
     }
   };
-  const moveToSignUp = () => {
-    router.push("/signup");
-  };
+  
   const isLoggedIn = computed(() => {
     return storeAuth.isLoggedIn;
   });
@@ -127,3 +125,14 @@
     });
   });
 </script>
+<style>
+  @media only screen and (max-width: 768px) {
+    .signUpform {
+    width: 100%;
+    padding: 30px;
+    border-radius: 0.5rem;
+
+}
+  }
+
+</style>

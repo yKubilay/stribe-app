@@ -49,34 +49,13 @@ const router = createRouter({
 
       component: () => import('../views/loginView.vue')
     },
-
-    {
-      path: '/profile',
-      name: 'profile',
-
-
-      component: () => import('../views/profileView.vue')
-    },
-
-
   ]
 });
 
 
 
 
-const getCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    const removeListener = onAuthStateChanged(
-      getAuth(),
-      (user) => {
-        removeListener(); 
-        resolve(user);
-      },
-      reject
-    );
-  });
-};
+
 
 
 

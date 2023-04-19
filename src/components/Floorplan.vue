@@ -1866,8 +1866,11 @@
     </header> -->
  <swiperGroupCard v-if="!isDesktop"/>
 
-
-    <div v-if="popupId" class="popup">
+   <div class="FpInfo">
+      <i class="pi pi-info-circle"></i>
+      <h3>Click areas in the floorplan to see any activity</h3>
+   </div>
+   <div v-if="popupId" class="popup">
   <div class="popup-header">
     <h2>{{ popupId }}</h2>
   </div>
@@ -1921,6 +1924,9 @@ import svgPanZoom, { setMinZoom } from 'svg-pan-zoom';
 import { defineProps } from 'vue';
 import { useRoomsStore } from '@/stores/rooms.js';
 import { usePopStore } from '@/stores/pop.js';
+
+import 'primeicons/primeicons.css';
+
 import GroupsHeader from './groupsHeader.vue';
 import { nextTick } from 'vue';
 
@@ -2203,6 +2209,24 @@ defineComponent({
   width: 350px; 
   height: 700px;
   color: white;
+}
+
+.FpInfo {
+  position: absolute;
+  top: 7%;
+  left: 72%;
+  background-color: #353E57;
+  border: 2px solid black;
+  opacity: 0.5;
+  border-radius: 40px;
+  padding: 1.5rem;
+  width: 300px;
+  color: white;
+}
+
+.FpInfo .pi{
+   font-size: 2rem;
+   margin-bottom: 15px;
 }
 
 
