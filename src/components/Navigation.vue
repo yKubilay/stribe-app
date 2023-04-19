@@ -17,7 +17,7 @@
 
         <nav class="nav">
             <ul class="menu">
-              <li><router-link to="/">Velkommen {{ storeUser.username }}!</router-link></li>
+              <li><router-link to="/">{{ storeUser.username }}</router-link></li>
               <li><router-link to="/groups" :class="{ active: isCurrentPage('/groups') }">Groups</router-link></li>
               <li><router-link to="/floorplan" :class="{ active: isCurrentPage('/floorplan') }">Floorplan</router-link></li>
               <li><router-link to="/about" :class="{ active: isCurrentPage('/about') }">About</router-link></li>
