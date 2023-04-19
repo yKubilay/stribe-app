@@ -24,7 +24,7 @@
 
 
               <li v-if="isLoggedIn"><button class="signoutButton" @click="handleSignOut">Sign out</button></li>
-              <li v-else><router-link to="/login" :class="{ active: isCurrentPage('/login') }">Sign up</router-link></li>
+              <li v-else><router-link to="/login" :class="{ active: isCurrentPage('/login') }">Sign in</router-link></li>
             </ul>
         </nav>
     </header>

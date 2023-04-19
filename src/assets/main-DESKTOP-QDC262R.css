@@ -1,0 +1,320 @@
+@import './base.css';
+
+
+#app {
+  background-color: #F5F0E7;
+}
+
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding-left: 0%;
+  padding-right: 0%;
+  box-sizing: border-box;
+  overflow: hidden;
+
+}
+
+/*-- Sign up page */
+
+.btn-pers {
+  position: relative;
+  left: 50%;  
+  transform: translateX(-50%);
+}
+
+.authRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 200px;
+}
+.signUpform {
+  background-color: White;
+  width: 50%;
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: 15px 15px 10px -15px #111;    
+
+}
+
+.altOptionAuth {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+.altOptionAuth > span {
+  color: teal;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.signoutButton {
+  margin-top: -1px;
+  height: 80%;
+  padding: 5px;  
+}
+
+/* -- Nav Menu bar -- */
+.navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 15px 10px -15px #111;    
+  position: fixed;
+  background-color: white;
+  left: 0;
+  z-index: 9999999999;
+}
+
+.navbar h1 {
+  margin-left: 100px;
+  background-color: white;
+}
+
+
+.menuIcon {
+  width: 30px;
+  cursor: pointer;
+  display: none;
+  margin-right:625px;
+  margin-top:6px;
+}
+
+
+
+nav {
+  margin-top:20px;
+}
+
+nav ul {
+  text-align: center;
+  margin-right: 100px;
+
+}
+
+nav ul li {
+  list-style: none;
+  display: inline-block;
+  margin-right: 30px;
+  text-decoration: none;
+  color:rgb(0, 0, 0);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.menuLogo {
+  width: 30px;
+  cursor: pointer;
+  display: none;
+  
+}
+
+a, .green {
+  color: #42aaaa;
+  transition: 0.5s;
+  border-bottom: 4px solid transparent;
+  transition: border-bottom 0.3s ease-in-out;
+  margin: 5px;
+  text-decoration: none;
+}
+
+.navButton {
+  width: 140px;
+  height: 40px;
+}
+
+/* -- Home View -- */
+
+.row {
+  display:flex;
+  margin: 300px 0;
+}
+
+.col-1 {
+  position: relative;
+  flex-basis: 40%;
+}
+
+.col-1 h2 {
+  font-size: 54px;
+
+}
+
+.col-1 h3 {
+  font-size: 30px;
+  color: #000000;
+  font-weight: 400;
+  margin: 20px 0 10px;
+}
+
+.col-1 p{
+  font-size: 54px;
+  color: #b7b7b7;
+  font-weight: 100;
+}
+
+.col-1 h4{
+  margin: 30px 0;
+  font-size: 20px;
+
+}
+
+.col-1 {
+  position: relative;
+  padding-left: 50px; /* This makes the pseudo-element positioned relative to the .col-1 element */
+}
+
+.col-1::after {
+  content: '';
+  display: block; /* This makes the pseudo-element a block-level element */
+  width: 10px;
+  height: 100%;
+  background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  position: absolute; /* This makes the pseudo-element positioned absolutely */
+  right: 520px; /* This moves the pseudo-element to the left of the .col-1 element */
+  top: 0;
+  bottom: 0;
+}
+
+
+.col-2 {
+  position: relative;
+  flex-basis: 60%;
+  display: flex;
+
+}
+
+.col-2 .homeImage {
+  width: 80%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  
+}
+
+
+button {
+  width: 140px;
+  border: 0px;
+  padding: 12px 10px;
+  outline: none;
+  color: white;
+  background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  cursor: pointer;
+  border-radius: 7px;
+  margin-top: 20px;
+  margin-right: 20px;
+  transition: 0.5s;
+  margin: 14px;
+}
+
+button:hover {
+  box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
+}
+
+.svg {
+  z-index: 0;
+  
+}
+
+.firstFloorSVG {
+  align-items: center;
+  width: 1000px;
+  height: 600px;
+  margin-top:8%;
+  margin-left: 12%;
+  margin-bottom: 10%;
+
+}
+
+.navLinks ul {
+  display: flex;
+}
+
+@media (hover: hover) {
+  li a:hover {
+    border-bottom: 4px solid #2b91b9;
+  }
+  h1 a:hover {
+    border-bottom: 4px solid #2b91b9;
+  }
+
+@media only screen and (max-width:700px) {
+ 
+   .nav {
+      flex-direction: row;
+      align-items: flex-start;
+  
+    }
+
+    .navbar h1 {
+      display: none;
+    }
+
+    .navbar:active {
+      display: block;
+      background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+    }
+
+    .navbar .menuLogo {
+      width: 30px;
+      cursor: pointer;
+      display: flex;
+      display: absolute;
+      left: 85%;
+    
+    }
+
+    .navLinks ul {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 50%;
+
+    }
+
+  
+    .navLinks ul li{
+      width: 130%;
+      padding: 2%;
+      color: white;
+      align-items: center;
+      font-size: 28px;
+    }
+
+    .row {
+      flex-direction: column;
+      margin-top: 200px;
+    }
+
+    .col-1 {
+      flex-basis: 100%;
+      padding-left: 20%;
+    }
+
+    .svg { 
+      display: none;
+    }
+    
+
+    .col-2 {
+      flex-basis: 100%;
+      justify-content: center;
+    } 
+}
+}
