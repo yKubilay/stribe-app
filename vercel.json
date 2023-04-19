@@ -6,6 +6,17 @@
         "dest": "/index.html",
         "status": 200
       }
+    ],
+    "headers": [
+      {
+        "src": "/src/(.*)",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/javascript"
+          }
+        ]
+      }
     ]
   }
   
