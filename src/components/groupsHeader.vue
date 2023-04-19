@@ -1,6 +1,8 @@
 <template>
     <header class="groupsHeader" :class="{sticky: stickyHeader}" v-if="groupStore.groups.length > 0">
-      <button class="createButton" v-if="props.showCreateGroupButton" @click="createGroup">{{ createGroupText }}</button>
+      <button class="createButton" v-if="props.showCreateGroupButton" 
+      @click="createGroup" :style="createButtonStyle">{{ createGroupText }}</button>
+
 
 
        <div class="header-buttons">
@@ -55,11 +57,22 @@ const createGroupText = computed(() => {
 });
 
 
+
  </script>
  
  <style scoped>
-
-
+ 
+ @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -73,10 +86,11 @@ button {
 }
   
 .createButton {
-  margin-bottom: 0.8rem;  
-  
-}
-
+    background: linear-gradient(15deg, #008080 25%, #13547a 50%, #80d0c7 75%);
+    background-size: 400% 400%;
+    animation: gradient 8s ease-in-out infinite;
+    margin-bottom: 0.8rem;
+  }
 .smallerText {
     font-size: 1.1rem;
   }

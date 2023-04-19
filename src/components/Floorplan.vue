@@ -1827,21 +1827,14 @@
 </g>
 
 <defs>
-  <linearGradient id="teal-gradient" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad" >
-    <stop offset="25%" stop-color="teal" stop-opacity="1"></stop>
-    <stop offset="50%" stop-color="#00c6ff" stop-opacity="1"></stop>
-    <stop offset="75%" stop-color="teal" stop-opacity="1"></stop>
-    <animate attributeName="x1" from="-100%" to="0%" dur="4s" repeatCount="indefinite" />
-    <animate attributeName="x2" from="100%" to="200%" dur="4s" repeatCount="indefinite" />
-  </linearGradient>
-
-  <linearGradient id="green-gradient" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
-  <stop offset="25%" stop-color="#00ff00" stop-opacity="1"></stop>
-  <stop offset="50%" stop-color="#00b400" stop-opacity="1"></stop>
-  <stop offset="75%" stop-color="#00ff00" stop-opacity="1"></stop>
-  <animate attributeName="x1" from="-100%" to="0%" dur="4s" repeatCount="indefinite" />
-  <animate attributeName="x2" from="100%" to="200%" dur="4s" repeatCount="indefinite" />
+   <linearGradient id="teal-gradient" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
+  <stop offset="25%" stop-color="#008080" stop-opacity="1"></stop>
+  <stop offset="50%" stop-color="#13547a" stop-opacity="1"></stop>
+  <stop offset="75%" stop-color="#80d0c7" stop-opacity="1"></stop>
+  <animate attributeName="x1" from="-100%" to="0%" dur="8s" repeatCount="indefinite" />
+  <animate attributeName="x2" from="100%" to="200%" dur="8s" repeatCount="indefinite" />
 </linearGradient>
+
 
 </defs>
 
@@ -1868,8 +1861,9 @@
 
    <div class="FpInfo">
       <i class="pi pi-info-circle"></i>
-      <h3>Click areas in the floorplan to see any activity</h3>
-   </div>
+         <div class="main-text">{{ helpText.main }}</div>
+         <div class="tip-text">{{ helpText.tip }}</div>
+</div>
    <div v-if="popupId" class="popup">
   <div class="popup-header">
     <h2>{{ popupId }}</h2>
@@ -1951,6 +1945,16 @@ const groups = groupStore.groups;
 const isDesktop = computed(() => {
   return window.innerWidth >= 768;
 });
+
+const helpText = computed(() => {
+  return popStore.showPopup
+    ? {
+        main: "Press an area on the map to create a group in that room.",
+        tip: "Tip: You can also zoom in and out on the map if needed",
+      }
+    : { main: "Press any area on the map to see the activity there.", tip: "Notice the groups on the left side updating" };
+});
+
 
 
 const props = defineProps({
@@ -2213,11 +2217,11 @@ defineComponent({
 
 .FpInfo {
   position: absolute;
-  top: 7%;
+  top: 4.5rem;
   left: 72%;
   background-color: #353E57;
   border: 2px solid black;
-  opacity: 0.5;
+  opacity: 0.6;
   border-radius: 40px;
   padding: 1.5rem;
   width: 300px;
@@ -2227,6 +2231,15 @@ defineComponent({
 .FpInfo .pi{
    font-size: 2rem;
    margin-bottom: 15px;
+}
+
+.main-text {
+   font-size: 1.2rem;
+}
+
+.tip-text {
+   margin-top: 1rem;
+   font-size: 1.2rem;
 }
 
 
