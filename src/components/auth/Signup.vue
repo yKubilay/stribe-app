@@ -47,7 +47,7 @@
         </div>
   
       <div class="altOptionAuth">
-        Already have an account? <span @click="moveToLogin"> Login</span>
+        Already have an account? <router-link to="/login">Login</router-link>
       </div>
       </div>
   
@@ -66,7 +66,7 @@
   <script setup>
     import Navigation from "@/components/Navigation.vue"
     import { useRouter } from 'vue-router';
-    import { onMounted, Ref, ref } from "vue";
+    import { onMounted, ref } from "vue";
     import { getAuth, onAuthStateChanged,  createUserWithEmailAndPassword} from "firebase/auth";
     import { getFirestore, doc, setDoc } from "firebase/firestore";
     import { useAuthStore } from '@/stores/auth.js';
@@ -137,9 +137,7 @@
           alert(error.code);
         });
     };
-    const moveToLogin = () => {
-        router.push('/login')
-    };
+    
     onMounted(() => {
       onAuthStateChanged(auth, (user) => {
         isLoggedIn.value = !!user;

@@ -28,7 +28,7 @@
         </div>
 
       <div class="altOptionAuth">
-        Don't have an account? <span @click="moveToSignUp">Signup</span>
+        Don't have an account? <router-link to="/signup">Sign up</router-link>
       </div>
 
       
@@ -109,9 +109,7 @@
       throw new Error("User data not found");
     }
   };
-  const moveToSignUp = () => {
-    router.push("/signup");
-  };
+  
   const isLoggedIn = computed(() => {
     return storeAuth.isLoggedIn;
   });
