@@ -1,20 +1,18 @@
 <template>
 
-    <header class="groupsHeader" v-if="props.isUsedInFloorPlan">
-      <h1 class="activeGroupsButton">
-        Currently {{ groupStore.groups.length }} Groups with {{ groupStore.totalParticipants }} participants
 
-      </h1>
-      <button class="floorplanButton" @click="$emit('highlight-all-rooms')">Show all rooms</button>
-      <button class="floorplanButton" @click="$emit('highlight-all-rooms')">Create group</button>
-
-      <InputText type="text" id="searchQuery" name="meeting-title" v-model="groupTitle" placeholder="Search for groups, themes or other users!" style=" border-radius: 0;" />
-    </header>
+      <GroupsHeader
+        v-if="props.isUsedInFloorPlan"
+        @create-group="toggleCreatingGroup('')"
+        :showCreateGroupButton="true"
+        :smaller-text="true"
+        @search-query-changed="searchQuery = $event"
+      />
 
 
 
+      <div v-for="(group, index) in filteredGroups" :key="group.uid" class="card" :style="getCardStyle(index)">
 
-    <div class="card" v-for="(group, index) in groupStore.groups" :key="group.uid" :style="getCardStyle(index)">
       <div class="cardDetailsContainer">
         <div class="cardContent">
           <div class="cardTitle">
@@ -105,12 +103,16 @@
   import { watchEffect } from "vue";
   import { useGroupStore } from '@/stores/groups';
   import { defineProps } from 'vue';
+  import { useRoomsStore } from '@/stores/rooms.js';
+
   import InputText from 'primevue/inputtext';
   import moment from 'moment';
+  import GroupsHeader from "./groupsHeader.vue";
 
 
 const userStore = useUserStore();
 const groupStore = useGroupStore();
+const roomsStore = useRoomsStore();
 
 
 onMounted(() => {
@@ -123,6 +125,7 @@ onMounted(() => {
 
   const groupTheme = ref('Coding');
   const showTooltip = ref(false);
+  const selectedThemes = ref([]);
 
 
   const isLoggedIn = ref(false);
@@ -144,7 +147,6 @@ const errorModalRef = ref(null);
 
 const showForm = ref(false);
 const groupTitle = ref('');
-const searchQuery = ref('');
 /* const participants = ref(["jack", "johnny", "joe", "jim", "jack", "johnny", "jim", "jack", "johnny", "jim", "jack", "johnny"])
  */const cardExpanded = ref(false);
 
@@ -166,21 +168,6 @@ function toggleCard() {
 
   const modalVisible = ref(false);
   const selectedCard = ref(null);
-
-/*   
-  function showModal(card) {
-    selectedCard.value = {
-      title: `Group ${card.id}`,
-      description: "certain conclusion in favor of their commercial interests. Reports written by big industry players can still be reliable secondary data, but should optimally be compared to similar reports to check for any bias or ulterior motives.",
-      participants: participants.value,
-      areas: card.areas,
-      themes: card.themes
-
-
-    };
-    modalVisible.value = true;
-  }
- */
 
 
 
@@ -217,6 +204,22 @@ function themeClass(theme) {
   }
 }
 
+const themes = [
+  { key: 'general', label: 'General' },
+  { key: 'coding', label: 'Coding' },
+  { key: 'lunch', label: 'Lunch' },
+  { key: 'exam-practice', label: 'Exam Practice' },
+  { key: 'sports', label: 'Sports' },
+  { key: 'reading', label: 'Reading' },
+];
+
+const nodes = themes.map((theme) => ({
+  key: theme.key,
+  label: theme.label,
+  children: null,
+}));
+
+
   function hideModal() {
     modalVisible.value = false;
     selectedCard.value = null;
@@ -224,12 +227,12 @@ function themeClass(theme) {
 
   const props = defineProps({
     isUsedInFloorPlan: { type: Boolean, default: false },
-  });
+    searchQuery: {
+    type: String,
+    default: '',
+  },
+});
 
-
-function viewOnFloorplan() {
-
-}
 
 function joinRoom(group) {
   const loggedInUserName = userStore.username;
@@ -237,14 +240,14 @@ function joinRoom(group) {
   const userInGroup = group.participants.includes(loggedInUserName);
   if (userInGroup) {
 
-    alert('You are already in this group!');
+    alert('You are already in a group!');
     return;
   }
 
   const inAnotherGroup = groupStore.groups.some(g => g.participants.includes(loggedInUserName));
   if (inAnotherGroup) {
 
-    alert('You are already in this group!');
+    alert('You are already in a group!');
     return;
   }
 
@@ -287,7 +290,28 @@ function isUserInGroup(group) {
 })
 
 
+const filteredGroups = computed(() => {
+  const query = props.searchQuery.trim().toLowerCase();
   
+  if (query === "" && selectedThemes.value.length === 0) {
+    return groupStore.groups;
+  }
+
+  return groupStore.groups.filter((group) =>
+  
+    (group.title && group.title.toLowerCase().includes(query)) ||
+    (group.description && group.description.toLowerCase().includes(query)) ||
+    (group.themes && group.themes.some(theme => theme.toLowerCase().includes(query))) ||
+    (group.participants && group.participants.some(participant => participant.toLowerCase().includes(query))) ||
+    (group.room && group.room.toLowerCase().includes(query)) ||
+    (selectedThemes.value.length > 0 && group.themes.some(theme => selectedThemes.value.includes(theme.toLowerCase())))
+  );
+});
+
+
+
+
+
 
 watchEffect(() => {
     const navigation = document.querySelector('.navigation');
@@ -318,9 +342,8 @@ watchEffect(() => {
   margin-right: 1rem;
 }
   
-  .grid-container::-webkit-scrollbar {
-/*   display: none; 
- */ 
+  .grid-container {
+    margin-left: 3rem;
   } 
 
   .closeButton {
