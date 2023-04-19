@@ -2,18 +2,10 @@
 <Navigation v-if="!hideNavigation" :class="{ 'hidden': hideNavigation, 'Navigation': true }" />
   
   <div class="container" >
-    <header class="groupsHeader" :class="{sticky: stickyHeader}" v-if="groupStore.groups.length > 0">
-      <div class="header-buttons">
-        <h1 class="activeGroupsButton" >
-          Currently {{ groupStore.groups.length }} Groups with {{ groupStore.totalParticipants }} participants
-        </h1>
-       <!--  <div class="activeFiltersButton">
-          <i class="pi-filter" style="color: green"></i>
-
-      </div> -->
-      </div>
-      <input type="text" v-model="searchQuery" placeholder="Search for groups, your interests or other users!" />
-    </header>
+    <GroupsHeader @search-query-changed="searchQuery = $event" />
+    
+    
+ 
     <section class="basic-grid">
 
       <div class="card create-group-card" :style="formStyle" @click="toggleForm" v-if="groupStore.groups.length > 0">
@@ -29,7 +21,11 @@
         </div>
       </div>
 
-      <GroupCard />
+      <GroupCard
+        :search-query="searchQuery"
+        :sort-criterias="sortCriterias"
+      />
+
 
     </section>
   </div>
@@ -44,20 +40,56 @@
   import { watchEffect } from "vue";
   import  { useGroupStore } from '@/stores/groups.js';
   import 'primeicons/primeicons.css';
-
-
+  import Dropdown from 'primevue/dropdown';
+  import MultiSelect from 'primevue/multiselect';
+import GroupsHeader from "../components/groupsHeader.vue";
 
   const storeUser = useUserStore();
   const groupTheme = ref('Coding');
   const showTooltip = ref(false);
   const groups = useGroupStore();
   const groupStore = useGroupStore();
+  const unsubscribe = ref(null);
 
 
   const groupsTitle = computed(() => {
   return groups.title
 })
 
+
+ 
+const sortedParticipants = computed(() => {
+  let sorted = participants.value.slice();
+
+  if (sortCriteria.value === 'participantsDescending') {
+    sorted.sort((a, b) => {
+      const aParticipants = groupStore.participants[a] ? groupStore.participants[a].length : 0;
+      const bParticipants = groupStore.participants[b] ? groupStore.participants[b].length : 0;
+      return bParticipants - aParticipants;
+    });
+  } else if (sortCriteria.value === 'participantsAscending') {
+    sorted.sort((a, b) => {
+      const aParticipants = groupStore.participants[a] ? groupStore.participants[a].length : 0;
+      const bParticipants = groupStore.participants[b] ? groupStore.participants[b].length : 0;
+      return aParticipants - bParticipants;
+    });
+  }
+
+  return sorted;
+});
+
+
+
+
+  const themes = [
+    { label: 'Coding', value: 'Coding' },
+    { label: 'Gaming', value: 'Gaming' },
+    { label: 'Lunch', value: 'Lunch' },
+    { label: 'General', value: 'General' },
+    { label: 'Reading', value: 'Reading' },
+    { label: 'Sports', value: 'Sports' },
+    { label: 'Exam Practice', value: 'Exam Practice' },
+  ];      
 
 
   const isLoggedIn = ref(false);
@@ -74,12 +106,19 @@ isLoggedIn.value = false;
 });
 });
 
-
+const selectedThemes = ref([]);
+const sortCriteria = ref('newestToOldest');
 const showForm = ref(false);
 const groupTitle = ref('');
 const searchQuery = ref('');
 const participants = ref(["jack", "johnny", "joe", "jim", "jack", "johnny", "jim", "jack", "johnny", "jim", "jack", "johnny"])
 const cardExpanded = ref(false);
+
+
+
+
+
+
 
 
 function themeClass(theme) {
@@ -110,6 +149,23 @@ function toggleForm() {
   showForm.value = !showForm.value;
 }
 
+const sortCriterias = [
+  { name: 'Newest to Oldest', value: 'newestToOldest' },
+  { name: 'Oldest to Newest', value: 'oldestToNewest' },
+  { name: 'Participants Descending', value: 'participantsDescending' },
+  { name: 'Participants Ascending', value: 'participantsAscending' },
+];
+
+
+
+
+
+
+
+
+function clearSelectedThemes() {
+  selectedThemes.value = [];
+}
 
 
 
@@ -144,7 +200,6 @@ function toggleCard() {
     modalVisible.value = false;
     selectedCard.value = null;
   }
-
 
 
 function viewOnFloorplan() {
@@ -815,19 +870,18 @@ watchEffect(() => {
       display: none;
   }
 
-  .activeGroupsButton {
+/*   .activeGroupsButton {
     border-radius: 0.3rem;
       padding: 0.1rem;
       padding-top: 0.4rem;
       padding-bottom: 0.4rem;
       padding-left: 1rem;
       padding-right: 1rem;
-/*       width: 49%;
- */      font-size: 1.15rem;
+     font-size: 1.15rem;
       background: #008080;
       color: white;
   }
-
+ */
   .groupsHeader {
     background-color: #F5F0E7;
     margin-top: 2%;
