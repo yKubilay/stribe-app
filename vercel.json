@@ -9,7 +9,7 @@
     ],
     "headers": [
       {
-        "src": "/src/(.*)",
+        "src": "/(.*)",
         "headers": [
           {
             "key": "Content-Type",
