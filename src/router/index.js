@@ -8,7 +8,7 @@ import { useAuthStore } from '@/stores/auth.js';
 
 
 const router = createRouter({
-  mode: 'history',
+  
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
