@@ -59,7 +59,7 @@
                     <br/>
                     Project leader and SCRUM Master
                   </p>
-                  <button class="about-button"  @click="isExpanded = !isExpanded1">{{ isExpanded ? 'Read less' : 'Read more' }}</button>
+                  <button class="about-button"  @click="isExpanded = !isExpanded">{{ isExpanded ? 'Read less' : 'Read more' }}</button>
               </div>
             </div>
           </div>
@@ -81,7 +81,7 @@
 
               <div class="card-content">
                   <h2 class="name" data-name="Kasper">Kasper Iversen</h2>
-                  <p class="description" v-if="isExpanded2">
+                  <p class="description" v-if="isExpanded">
                     23 years old.
                     <br/>
                     Interests: Football, training and programming. <br/>
