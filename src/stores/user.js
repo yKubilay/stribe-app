@@ -5,6 +5,7 @@ export const useUserStore = defineStore({
     state: () => ({
       username: '',
       email: '',
+      
   
     }),
     actions: { 
