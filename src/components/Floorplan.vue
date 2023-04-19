@@ -1,8 +1,9 @@
 <template>
      
    <div class="main-container">
-     <div class="grid-container" style="overflow-y: scroll; max-height: 650px; width: 350px;" v-if="isDesktop">
-       <GroupCard :is-used-in-floor-plan="true" />
+     <div class="grid-container" style="overflow-y: scroll; max-height: 650px; width: 350px;" v-if="isDesktop">       
+       <GroupCard :is-used-in-floor-plan="true" :smaller-text="true"  />
+
      </div>
      <div class="firstFloorContainer">
        <svg class="firstFloorSVG" 
@@ -669,7 +670,8 @@
    width="32.451462"
    height="44.350334"
    x="255.28485"
-   y="60.576065" />
+   y="60.576065"
+   class="exclude" />
 <text
    xml:space="preserve"
    style="font-size:42.669px;fill:#008000;fill-opacity:1;stroke-width:3.55574"
@@ -1823,13 +1825,34 @@
    id="Bookstore"
    inkscape:label="bokhandel" />
 </g>
+
+<defs>
+  <linearGradient id="teal-gradient" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad" >
+    <stop offset="25%" stop-color="teal" stop-opacity="1"></stop>
+    <stop offset="50%" stop-color="#00c6ff" stop-opacity="1"></stop>
+    <stop offset="75%" stop-color="teal" stop-opacity="1"></stop>
+    <animate attributeName="x1" from="-100%" to="0%" dur="4s" repeatCount="indefinite" />
+    <animate attributeName="x2" from="100%" to="200%" dur="4s" repeatCount="indefinite" />
+  </linearGradient>
+
+  <linearGradient id="green-gradient" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
+  <stop offset="25%" stop-color="#00ff00" stop-opacity="1"></stop>
+  <stop offset="50%" stop-color="#00b400" stop-opacity="1"></stop>
+  <stop offset="75%" stop-color="#00ff00" stop-opacity="1"></stop>
+  <animate attributeName="x1" from="-100%" to="0%" dur="4s" repeatCount="indefinite" />
+  <animate attributeName="x2" from="100%" to="200%" dur="4s" repeatCount="indefinite" />
+</linearGradient>
+
+</defs>
+
+
 </svg>
 </div>
  </div>
 
 
  
- <header class="groupsHeader" :class="{sticky: stickyHeader}">
+<!--  <header class="groupsHeader" :class="{sticky: stickyHeader}">
       <div class="header-buttons">
         <h1 class="activeGroupsButton">
          {{ groupStore.groups.length }} Groups and {{ groupStore.totalParticipants }} participants
@@ -1840,7 +1863,7 @@
 
       </div>
       </div>
-    </header>
+    </header> -->
  <swiperGroupCard v-if="!isDesktop"/>
 
 
@@ -1870,13 +1893,15 @@
 
          <div class="buttonGroup">
          <button class="floorplanButton" @click.prevent="createGroup(popupId)">Create group</button>
+      
+
+
+
          <button class="floorplanButton" @click="hidePopup">Cancel</button>
 
       </div>
       </form>
-         </div>
-
-         
+         </div>         
        </div>
 
   
@@ -1893,7 +1918,11 @@ import { useUserStore } from '@/stores/user.js';
 import MultiSelect from 'primevue/multiselect';
 import InputText from 'primevue/inputtext';
 import svgPanZoom, { setMinZoom } from 'svg-pan-zoom';
-import { defineProps } from 'vue';
+import { defineProps, watch } from 'vue';
+import { useRoomsStore } from '@/stores/rooms.js';
+
+import GroupsHeader from './groupsHeader.vue';
+import { nextTick } from 'vue';
 
 const cards = ref(Array(5).fill(null));
 
@@ -1904,6 +1933,8 @@ const svgElement = ref(null);
 const groupTitle = ref('');
 const groupTheme = ref('');
 const groupDescription = ref('');
+const creatingGroup = ref(false);
+const roomsStore = useRoomsStore();
 
 
 const groupStore = useGroupStore();
@@ -1927,23 +1958,32 @@ const props = defineProps({
   },
 });
 
+
+
 onMounted(() => {
   if (svgElement.value) {
     const elements = svgElement.value.querySelectorAll('rect, path');
     const roomToGroup = new Map(groups.map(group => [group.room, group]));
-
     elements.forEach((element) => {
       const group = roomToGroup.get(element.id);
-      if (group) {
-        element.style.fill = 'teal';
-        element.style.opacity = '0.6';
-        element.classList.add('breathing-effect');
+    if (group) {
+      if (isUserInGroup(group)) {
+        element.style.fill = 'url(#green-gradient)';
+      } else {
+        element.style.fill = 'url(#teal-gradient)';
       }
-
+      element.style.opacity = '0.6';
+      element.classList.add('breathing-effect');
+    }
+    
       element.addEventListener('click', () => {
         showPopup(element.id);
+        roomsStore.setRoomId(element.id);
+
+
       });
     });
+
 
     const instance = svgPanZoom(svgElement.value, {
       zoomEnabled: true,
@@ -1954,11 +1994,9 @@ onMounted(() => {
       minZoom: 1,
       zoomScaleSensitivity: 0.5,
     });
-
     let initialZoom = instance.getZoom();
     let initialPosition = instance.getPan();
     let currentPosition = initialPosition;
-
     instance.setOnZoom((newZoom) => {
       if (newZoom > initialZoom) {
         currentPosition = instance.getPan();
@@ -1968,11 +2006,13 @@ onMounted(() => {
         instance.pan(currentPosition);
       }
     });
-
    }
-
   
 });
+
+function isUserInGroup(group) {
+  return group.participants.includes(userStore.username);
+}
 
 
 async function createGroup(popupId) {
@@ -1980,9 +2020,6 @@ async function createGroup(popupId) {
     alert('Please fill in all required fields.');
     return;
   };
-
-
-
   const newGroup = {
     room: popupId,
     title: groupTitle.value,
@@ -1990,39 +2027,26 @@ async function createGroup(popupId) {
     description: groupDescription.value,
     participants: [userStore.username],
   };
-
   await groupStore.createGroup(newGroup);
-
   hidePopup();
 }
-
-
-
 function hidePopup() {
    resetForm();
    popupId.value = null;
 }
-
-
 function showPopup(id) {
   popupId.value = id;
 }
-
 function debounce(func, wait) {
   let timeout;
-
   return function(...args) {
     const context = this;
-
     clearTimeout(timeout);
-
     timeout = setTimeout(() => {
       func.apply(context, args);
     }, wait);
   };
 }
-
-
 const groupThemes = [
   'General',
   'Coding',
@@ -2043,22 +2067,21 @@ function resetForm() {
 }
 
 
-
 defineComponent({
   components: {
     GroupCard,
     swiperGroupCard,
     
   },
-
 });
+
 
 </script>
 
 <style scoped>
 
 
-
+/* 
 @keyframes ease-in-out {
     0% {
       opacity: 0.4;
@@ -2080,8 +2103,10 @@ defineComponent({
     .p-multiselect {
       width: 100%;
       
-      }
+      } */
 
+
+      
 .main-container {
   display: grid;
   grid-template-columns: 30% 40% 30%;
@@ -2110,6 +2135,10 @@ defineComponent({
    .activeGroupsButton, .activeFiltersButton {
       display: none;
    }
+   .exclude {
+  pointer-events: none;
+}
+
 
    path:not(.exclude){
    fill: transparent;
@@ -2199,6 +2228,9 @@ defineComponent({
 }
 
 
+.p-multiselect {
+  width: 100%;
+}
 
 .swiper-slide p {
   margin: 10px;
@@ -2248,6 +2280,7 @@ defineComponent({
   width: 350px;
   max-height: 650px;
   overflow-y: scroll;
+
 }
    .popup-header {
      display: flex;
@@ -2305,6 +2338,7 @@ defineComponent({
 
 
 .grid-container::-webkit-scrollbar {
+
 }
 
 /* .grid-container {
