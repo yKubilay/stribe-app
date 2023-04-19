@@ -670,7 +670,8 @@
    width="32.451462"
    height="44.350334"
    x="255.28485"
-   y="60.576065" />
+   y="60.576065"
+   class="exclude" />
 <text
    xml:space="preserve"
    style="font-size:42.669px;fill:#008000;fill-opacity:1;stroke-width:3.55574"
@@ -2134,7 +2135,10 @@ defineComponent({
    .activeGroupsButton, .activeFiltersButton {
       display: none;
    }
-   
+   .exclude {
+  pointer-events: none;
+}
+
 
    path:not(.exclude){
    fill: transparent;
