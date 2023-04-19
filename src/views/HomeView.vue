@@ -21,8 +21,12 @@
         <h3>Meet and collaborate with <br>likeminded students!</h3>  
 
         <div class="button-container">
-        <a href="/signup"><button class="homeButton" type="button">Get started</button></a>
-        <a href="/about"><button class="homeButton" type="button">About us</button></a>
+          <router-link to="/signup">
+    <button class="homeButton" type="button" slot-scope="{navigate}">Get started</button>
+  </router-link>
+  <router-link to="/about">
+    <button class="homeButton" type="button" slot-scope="{navigate}">About us</button>
+  </router-link>
         </div>
     </div>
   <div class="col-2">
