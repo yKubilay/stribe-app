@@ -15,7 +15,18 @@
             v-model="username"
             placeholder="Username"
           />  
-          
+          <div class="input">
+            <label for="faculty">Faculty</label>
+            <Dropdown 
+                class="form-control"
+                v-model="selectedFaculty" 
+                :options="facultyOptions" 
+                optionLabel="label" 
+                optionGroupLabel="label"
+                optionGroupChildren="items"
+                placeholder="Select your faculty" required
+            />
+          </div>
     <div class="input">
         <label for="email">Email</label>
           <InputText
@@ -55,12 +66,14 @@
   <script setup>
     import Navigation from "@/components/Navigation.vue"
     import { useRouter } from 'vue-router';
-    import { onMounted, ref } from "vue";
+    import { onMounted, Ref, ref } from "vue";
     import { getAuth, onAuthStateChanged,  createUserWithEmailAndPassword} from "firebase/auth";
     import { getFirestore, doc, setDoc } from "firebase/firestore";
     import { useAuthStore } from '@/stores/auth.js';
     import { useUserStore } from "../../stores/user";
     import InputText from 'primevue/inputtext';
+    import Dropdown from 'primevue/dropdown';
+
     const db = getFirestore();
     const email = ref("");
     const password = ref("");
@@ -71,21 +84,52 @@
     const storeAuth = useAuthStore();
     const storeUser = useUserStore();
     const auth = getAuth();
-    
+    const selectedFaculty = ref("");
+    const facultyOptions = ref([
+      
+    {
+      label: 'Fakultet for helse, velferd og organisasjon',
+      items: [
+        {label: 'Institutt for sykepleie, helse og bioingeniørfag'},
+        {label: 'Institutt for velferd, leiing og organisasjon'}
+      ]
+    },
+    {
+      label: 'Fakultet for lærerutdanningar og språk',
+      items: [
+        {label: 'Institutt for språk, litteratur og kultur'},
+        {label: 'Institutt for pedagogikk, IKT og læring'},
+        {label: 'Institutt for real-, praktisk-estetiske, samfunns- og religionsfag'},
+        {label: 'Nasjonalt senter for engelsk og fremmedspråk i opplæringa'},
+
+      ]
+    },
+    {
+      label: 'Fakultet for informasjonsteknologi, ingeniørfag og økonomi',
+      items: [
+        {label: 'Institutt for informasjonsteknologi og kommunikasjon'},
+        {label: 'Institutt for ingeniørfag'},
+        {label: 'Institutt for økonomi, innovasjon og samfunn'},
+
+      ]
+    },
+    ]);
     
     const signup = () => {
-      createUserWithEmailAndPassword(auth, email.value, password.value)
+      createUserWithEmailAndPassword(auth, email.value, password.value, selectedFaculty.value.label)
         .then(async (data) => {
           console.log("User is registered");
           // Add user to Firestore collection
           const userDocRef = doc(db, "users", data.user.uid);
           await setDoc(userDocRef, {
             username: username.value,
+            faculty: selectedFaculty.value.label,
             email: email.value,
             uid: data.user.uid,
           });
           storeAuth.isLoggedIn = true;
           storeUser.username = username.value;
+          storeUser.faculty = selectedFaculty.value.label;
           router.push('/');
         })
         .catch((error) => {
