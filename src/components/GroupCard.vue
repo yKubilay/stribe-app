@@ -241,14 +241,14 @@ function joinRoom(group) {
   const userInGroup = group.participants.includes(loggedInUserName);
   if (userInGroup) {
 
-    alert('You are already in a group!');
+    alert('You are already in a group! \n Please leave the group your in before joining another.');
     return;
   }
 
   const inAnotherGroup = groupStore.groups.some(g => g.participants.includes(loggedInUserName));
   if (inAnotherGroup) {
 
-    alert('You are already in a group!');
+    alert('You are already in a group! \n \n Please leave other group before joining another.');
     return;
   }
 
@@ -279,7 +279,7 @@ function joinRoom2(group) {
   const inAnotherGroup = groupStore.groups.some(g => g.participants.includes(loggedInUserName));
   if (inAnotherGroup) {
 
-    alert('You are already in a group!');
+    alert('You are already in a group! \n Please leave the group your in before joining another.');
     return;
   }
 
