@@ -6,6 +6,8 @@
         @create-group="toggleCreatingGroup('')"
         :showCreateGroupButton="true"
         :smaller-text="true"
+        :showCompactSearch="true"
+        :wideSearch="true"
         @search-query-changed="searchQuery = $event"
       />
 
