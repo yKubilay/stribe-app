@@ -5,6 +5,7 @@ export const useUserStore = defineStore({
     state: () => ({
       username: '',
       email: '',
+      faculty: '',
       
   
     }),
@@ -14,7 +15,10 @@ export const useUserStore = defineStore({
       },
       setEmail(value) {
         this.email = value
-      }
+      },
+      setFaculty(value) {
+        this.faculty = value
+      },
     }
     })
 

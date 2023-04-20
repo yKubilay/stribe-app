@@ -83,8 +83,8 @@
               <li class="modalGroupParticipants" v-for="participant in selectedCard.participants" :key="participant">{{ participant }}</li>
             </ul>
           </section>
+          <button class="floorplanButton" @click="joinRoom(selectedCard)">Join room</button>
 
-            <button class="floorplanButton" @click="joinRoom2(group)">Join room</button>
 
 
           </div>
