@@ -9,5 +9,6 @@ export const useRoomsStore = defineStore({
     setRoomId(roomId) {
       this.roomId = roomId;
     },
+    
   },
 });

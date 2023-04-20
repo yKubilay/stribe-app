@@ -2,7 +2,7 @@
      
    <div class="main-container">
      <div class="grid-container" style="overflow-y: scroll; max-height: 650px; width: 350px;" v-if="isDesktop">       
-       <GroupCard :is-used-in-floor-plan="true" :smaller-text="true"  />
+       <GroupCard :is-used-in-floor-plan="true" :smaller-text="true" :showCompactSearch = "true" @filtered-groups="updateFilteredGroups"  />
 
      </div>
      <div class="firstFloorContainer">
@@ -1835,33 +1835,28 @@
   <animate attributeName="x2" from="100%" to="200%" dur="8s" repeatCount="indefinite" />
 </linearGradient>
 
+<linearGradient id="green-gradient" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
+  <stop offset="25%" stop-color="#00ff00" stop-opacity="1"></stop>
+  <stop offset="50%" stop-color="#00cc00" stop-opacity="1"></stop>
+  <stop offset="75%" stop-color="#00aa00" stop-opacity="1"></stop>
+  <animate attributeName="x1" from="-100%" to="0%" dur="8s" repeatCount="indefinite" />
+  <animate attributeName="x2" from="100%" to="200%" dur="8s" repeatCount="indefinite" />
+</linearGradient>
+
+
 
 </defs>
-
-
 </svg>
 </div>
  </div>
 
 
- 
-<!--  <header class="groupsHeader" :class="{sticky: stickyHeader}">
-      <div class="header-buttons">
-        <h1 class="activeGroupsButton">
-         {{ groupStore.groups.length }} Groups and {{ groupStore.totalParticipants }} participants
-        </h1>
-        <h1></h1>
-        <div class="activeFiltersButton">
-          <i class="pi-filter" style="color: green"></i>
-
-      </div>
-      </div>
-    </header> -->
  <swiperGroupCard v-if="!isDesktop"/>
 
    <div class="FpInfo">
       <i class="pi pi-info-circle"></i>
          <div class="main-text">{{ helpText.main }}</div>
+         <div class="tip-text">{{ helpText.tipH }}</div>
          <div class="tip-text">{{ helpText.tip }}</div>
 </div>
    <div v-if="popupId" class="popup">
@@ -1890,10 +1885,6 @@
 
          <div class="buttonGroup">
          <button class="floorplanButton" @click.prevent="createGroup(popupId)">Create group</button>
-      
-
-
-
          <button class="floorplanButton" @click="hidePopup">Cancel</button>
 
       </div>
@@ -1910,7 +1901,7 @@ import { ref, onMounted, computed } from 'vue';
 import GroupCard from './GroupCard.vue';
 import swiperGroupCard from './swiperGroupCard.vue';
 import { useGroupStore } from '@/stores/groups';
-import { defineComponent, watch } from 'vue';
+import { defineComponent, watch, nextTick } from 'vue';
 import { useUserStore } from '@/stores/user.js';
 import MultiSelect from 'primevue/multiselect';
 import InputText from 'primevue/inputtext';
@@ -1921,8 +1912,6 @@ import { usePopStore } from '@/stores/pop.js';
 
 import 'primeicons/primeicons.css';
 
-import GroupsHeader from './groupsHeader.vue';
-import { nextTick } from 'vue';
 
 const cards = ref(Array(5).fill(null));
 
@@ -1941,6 +1930,11 @@ const groupStore = useGroupStore();
 const userStore = useUserStore();
 
 const groups = groupStore.groups;
+const filteredGroups = ref([]);
+
+function updateFilteredGroups(newFilteredGroups) {
+  filteredGroups.value = newFilteredGroups;
+}
 
 const isDesktop = computed(() => {
   return window.innerWidth >= 768;
@@ -1950,9 +1944,12 @@ const helpText = computed(() => {
   return popStore.showPopup
     ? {
         main: "Press an area on the map to create a group in that room.",
-        tip: "Tip: You can also zoom in and out on the map if needed",
+        tipH: "Tips:",
+        tip: "You can also zoom in and out on the map if needed",
       }
-    : { main: "Press any area on the map to see the activity there.", tip: "Notice the groups on the left side updating" };
+    : { main: "Press any area on the map to see the activity there.",
+        tipH: "Tips:", 
+        tip: "Notice the groups on the left side updating accordingly" };
 });
 
 
@@ -1970,38 +1967,56 @@ const props = defineProps({
 
 
 
-onMounted(() => {
+
+const roomId = roomsStore.roomId;
+
+onMounted(()  => {
+
+   groupStore.listenToGroups();
+
+   watch(
+    () => groupStore.groups,
+    () => {
+      updateSvgElements();
+    },
+    { deep: true }
+  );
+});
+
+
+function updateSvgElements() {
+  const mappedGroups = new Map();
   if (svgElement.value) {
     const elements = svgElement.value.querySelectorAll('rect, path');
-    const roomToGroup = new Map(groups.map(group => [group.room, group]));
+    const roomToGroup = new Map(groupStore.groups.map(group => [group.room, group]));
     elements.forEach((element) => {
       const group = roomToGroup.get(element.id);
-    if (group) {
-      if (isUserInGroup(group)) {
-        element.style.fill = 'url(#green-gradient)';
-      } else {
-        element.style.fill = 'url(#teal-gradient)';
+      if (group) {
+        mappedGroups.set(group, element);
+        if (isUserInGroup(group)) {
+          element.style.fill = 'url(#green-gradient)';
+        } else {
+          element.style.fill = 'url(#teal-gradient)';
+        }
+        element.style.opacity = '0.6';
+        element.classList.add('breathing-effect');
       }
-      element.style.opacity = '0.6';
-      element.classList.add('breathing-effect');
-    }
-    
-    element.addEventListener('click', () => {
+
+      element.addEventListener('click', () => {
         if (!popStore.showPopup) {
+          roomsStore.setRoomId(element.id);
           return;
         }
         showPopup(element.id);
         roomsStore.setRoomId(element.id);
       });
     });
-
-    watch(() => popStore.showPopup, (newValue, oldValue) => {
-    if (!newValue) {
-      hidePopup();
-    }
-   });
+  }
+}
 
 
+
+nextTick(() => {
     const instance = svgPanZoom(svgElement.value, {
       zoomEnabled: true,
       controlIconsEnabled: true,
@@ -2011,9 +2026,11 @@ onMounted(() => {
       minZoom: 1,
       zoomScaleSensitivity: 0.5,
     });
+
     let initialZoom = instance.getZoom();
     let initialPosition = instance.getPan();
     let currentPosition = initialPosition;
+
     instance.setOnZoom((newZoom) => {
       if (newZoom > initialZoom) {
         currentPosition = instance.getPan();
@@ -2023,9 +2040,17 @@ onMounted(() => {
         instance.pan(currentPosition);
       }
     });
-   }
-  
-});
+  });
+
+
+  watch(() => popStore.showPopup, (newValue, oldValue) => {
+if (!newValue) {
+hidePopup();
+}});
+
+
+
+
 
 function isUserInGroup(group) {
   return group.participants.includes(userStore.username);
@@ -2107,33 +2132,6 @@ defineComponent({
 
 <style scoped>
 
-
-/* 
-@keyframes ease-in-out {
-    0% {
-      opacity: 0.4;
-    }
-    50% {
-      opacity: 0.8;
-    }
-    100% {
-      opacity: 0.4;
-    }
-  }
-
-  .breathing-effect {
-    animation: ease-in-out 4s infinite;
-  }
-   input {
-      width: 100%;
-   }
-    .p-multiselect {
-      width: 100%;
-      
-      } */
-
-
-      
 .main-container {
   display: grid;
   grid-template-columns: 30% 40% 30%;

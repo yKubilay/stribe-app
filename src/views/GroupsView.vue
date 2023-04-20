@@ -2,7 +2,7 @@
 <Navigation v-if="!hideNavigation" :class="{ 'hidden': hideNavigation, 'Navigation': true }" />
   
   <div class="container" >
-    <GroupsHeader @search-query-changed="searchQuery = $event" />
+    <GroupsHeader @search-query-changed="searchQuery = $event"/>
     
     
  

@@ -44,6 +44,8 @@ export const useGroupStore = defineStore({
             this.deleteEmptyGroup(group);
           }
         });
+
+    
       });
     },
 
