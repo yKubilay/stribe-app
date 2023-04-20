@@ -23,11 +23,12 @@
     <!-- your swiper content here -->
   
   <swiper
-    :slidesPerView="1"
+    :slidesPerView="isMobile ? 1 : 2"
     :pagination="{
       clickable: true,
       dynamicBullets: true,
     }"
+    :navigation="true"
     :keyboard="true"
     :modules="modules"
     class="my_swiper"
@@ -181,7 +182,7 @@ import NavigationBar from '../components/Navigation.vue';
 import "swiper/css/pagination";
 import "swiper/css/navigation";
   // import required modules
-  import { Keyboard, Pagination} from 'swiper';
+  import { Keyboard, Pagination, Navigation} from 'swiper';
 
   
 
@@ -220,6 +221,7 @@ import "swiper/css/navigation";
             isOpen: false,
           },
         ],
+        isMobile: window.innerWidth <= 768
       };
     },
     methods: {
@@ -229,12 +231,19 @@ import "swiper/css/navigation";
         faq.isOpen = !faq.isOpen;
         faq.icon = faq.isOpen ? "ic:baseline-minus" : "ic:baseline-plus";
       },
+      checkIsMobile() {
+        this.isMobile = window.innerWidth <= 768;
+      }
     },
     setup() {
       return {
-        modules: [Keyboard, Pagination],
+        modules: [Keyboard, Pagination, Navigation],
       };
     },
+
+    mounted() {
+      window.addEventListener('resize', this.checkIsMobile);
+    }
 };
   
 </script>
@@ -250,7 +259,8 @@ import "swiper/css/navigation";
       color: white;
     }
 #about_container {
-  min-height: 60vh;
+  min-height: 70vh;
+  justify-content: space-between;
 }
 
 .my_swiper {
@@ -317,6 +327,12 @@ import "swiper/css/navigation";
     text-align: center;
     margin-top: 20px;
   }
+
+    .swiper{
+      display: flex;
+    }
+
+
   .swiper-slide {
     display: flex !important;
     align-items: center;
