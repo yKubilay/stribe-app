@@ -49,7 +49,7 @@
 
             <div class="buttonGroup">
               <button class="floorplanButton" @click="showModal(group)">Show more</button>
-              <button class="floorplanButton" @click="joinRoom(group)">Join room</button>
+              <button class="floorplanButton" @click="joinRoom(group)">Join group</button>
             </div>
 
             <div class="cardParticipants" v-if="cardExpanded">
