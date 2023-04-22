@@ -115,8 +115,8 @@ handleSearchInput({ target: { value: newRoomId } });
 .clear-search-btn {
     position: absolute;
     width: 4rem;
-    height: 2.9rem;
-    top: 35%;
+    height: 2.8rem;
+    top: 33%;
     border-radius: 0.4rem;
     left:16.5rem;
     transform: translateY(-50%);
@@ -145,9 +145,8 @@ width: 100%;
   margin-bottom: 0.8rem;
 }
 .smallerText {
-  font-size: 1.1rem;
+  font-size: 1.07rem;
 }
-
 .groupsHeader {
   margin-right: 0.2rem;
 }
