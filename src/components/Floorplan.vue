@@ -2,7 +2,11 @@
      
    <div class="main-container">
      <div class="grid-container" style="overflow-y: scroll; max-height: 650px; width: 350px;" v-if="isDesktop">       
-       <GroupCard :is-used-in-floor-plan="true" :smaller-text="true" :showCompactSearch = "true" @filtered-groups="updateFilteredGroups"  />
+      <GroupCard :is-used-in-floor-plan="true" :smaller-text="true" 
+      :showCompactSearch="true" 
+      :filtered-groups="filteredGroups"
+       v-on:filtered-room-ids="updateFilteredRoomIds" />
+
 
      </div>
      <div class="firstFloorContainer">
@@ -1897,7 +1901,7 @@
 
     
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watchEffect} from 'vue';
 import GroupCard from './GroupCard.vue';
 import swiperGroupCard from './swiperGroupCard.vue';
 import { useGroupStore } from '@/stores/groups';
@@ -1909,6 +1913,7 @@ import svgPanZoom, { setMinZoom } from 'svg-pan-zoom';
 import { defineProps } from 'vue';
 import { useRoomsStore } from '@/stores/rooms.js';
 import { usePopStore } from '@/stores/pop.js';
+import { useFilteredGroupsStore } from '@/stores/filteredGroups';
 
 import 'primeicons/primeicons.css';
 
@@ -1916,6 +1921,7 @@ import 'primeicons/primeicons.css';
 const cards = ref(Array(5).fill(null));
 
 
+const filteredGroupsStore = useFilteredGroupsStore();
 
 const popupId = ref(null);
 const svgElement = ref(null);
@@ -1934,6 +1940,11 @@ const filteredGroups = ref([]);
 
 function updateFilteredGroups(newFilteredGroups) {
   filteredGroups.value = newFilteredGroups;
+}
+
+function updateFilteredRoomIds(newFilteredRoomIds) {
+  props.filteredRoomIds = newFilteredRoomIds;
+  updateSvgElements(); 
 }
 
 const isDesktop = computed(() => {
@@ -1963,6 +1974,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  filteredRoomIds: {
+    type: Array,
+    default: () => [],
+  },
 });
 
 
@@ -1970,12 +1985,20 @@ const props = defineProps({
 
 const roomId = roomsStore.roomId;
 
+
 onMounted(()  => {
+  groupStore.listenToGroups();
 
-   groupStore.listenToGroups();
+  watch(
+    () => filteredGroups.value,
+    () => {
+      updateSvgElements();
+    },
+    { deep: true }
+  );
 
-   watch(
-    () => groupStore.groups,
+  watch(
+    () => filteredGroupsStore.filteredRoomIds,
     () => {
       updateSvgElements();
     },
@@ -1984,19 +2007,25 @@ onMounted(()  => {
 });
 
 
+
 function updateSvgElements() {
   const mappedGroups = new Map();
   if (svgElement.value) {
     const elements = svgElement.value.querySelectorAll('rect, path');
     const roomToGroup = new Map(groupStore.groups.map(group => [group.room, group]));
+
     elements.forEach((element) => {
       const group = roomToGroup.get(element.id);
+      const roomIsFiltered = filteredGroupsStore.filteredRoomIds.includes(element.id);
+
       if (group) {
         mappedGroups.set(group, element);
         if (isUserInGroup(group)) {
           element.style.fill = 'url(#green-gradient)';
-        } else {
+         } else if (filteredGroupsStore.filteredRoomIds.length === 0 || roomIsFiltered) {
           element.style.fill = 'url(#teal-gradient)';
+        } else {
+          element.style.fill = ''; 
         }
         element.style.opacity = '0.6';
         element.classList.add('breathing-effect');
@@ -2016,38 +2045,16 @@ function updateSvgElements() {
 
 
 
-nextTick(() => {
-    const instance = svgPanZoom(svgElement.value, {
-      zoomEnabled: true,
-      controlIconsEnabled: true,
-      fit: false,
-      center: false,
-      panEnabled: false,
-      minZoom: 1,
-      zoomScaleSensitivity: 0.5,
-    });
-
-    let initialZoom = instance.getZoom();
-    let initialPosition = instance.getPan();
-    let currentPosition = initialPosition;
-
-    instance.setOnZoom((newZoom) => {
-      if (newZoom > initialZoom) {
-        currentPosition = instance.getPan();
-        initialZoom = newZoom;
-      } else if (newZoom < initialZoom) {
-        instance.zoom(initialZoom);
-        instance.pan(currentPosition);
-      }
-    });
-  });
-
 
   watch(() => popStore.showPopup, (newValue, oldValue) => {
 if (!newValue) {
 hidePopup();
 }});
 
+
+watchEffect(() => {
+  const roomIds = filteredGroups.value.map(group => group.room);
+});
 
 
 

@@ -108,6 +108,9 @@
   import { useGroupStore } from '@/stores/groups';
   import { defineProps } from 'vue';
   import { useRoomsStore } from '@/stores/rooms.js';
+  import { defineEmits } from 'vue';
+  import { useFilteredGroupsStore } from '@/stores/filteredGroups.js';
+
 
   import InputText from 'primevue/inputtext';
   import moment from 'moment';
@@ -117,6 +120,7 @@
 const userStore = useUserStore();
 const groupStore = useGroupStore();
 const roomsStore = useRoomsStore();
+const filteredGroupsStore = useFilteredGroupsStore();
 
 
 onMounted(() => {
@@ -175,6 +179,7 @@ function toggleCard() {
 
 
 
+
 function showModal(card) {
   selectedCard.value = {
     title: card.title,
@@ -229,9 +234,11 @@ const nodes = themes.map((theme) => ({
     selectedCard.value = null;
   }
 
+ 
   const props = defineProps({
-    isUsedInFloorPlan: { type: Boolean, default: false },
-    searchQuery: {
+  isUsedInFloorPlan: { type: Boolean, default: false },
+  filteredRoomIds: { type: Array, default: () => [] }, 
+  searchQuery: {
     type: String,
     default: '',
   },
@@ -323,29 +330,40 @@ function isUserInGroup(group) {
   return storeUser.username
 })
 
-
 const filteredGroups = computed(() => {
   const query = props.searchQuery.trim().toLowerCase();
-  
-  if (query === "" && selectedThemes.value.length === 0) {
+  const selectedThemesSet = new Set(selectedThemes.value.map(theme => theme.toLowerCase()));
+
+  if (query === "" && selectedThemesSet.size === 0) {
     return groupStore.groups;
   }
 
-  return groupStore.groups.filter((group) =>
-  
-    (group.title && group.title.toLowerCase().includes(query)) ||
-    (group.description && group.description.toLowerCase().includes(query)) ||
-    (group.themes && group.themes.some(theme => theme.toLowerCase().includes(query))) ||
-    (group.participants && group.participants.some(participant => participant.toLowerCase().includes(query))) ||
-    (group.room && group.room.toLowerCase().includes(query)) ||
-    (selectedThemes.value.length > 0 && group.themes.some(theme => selectedThemes.value.includes(theme.toLowerCase())))
-  );
+  const filtered = groupStore.groups.filter((group) => {
+    const lowerCaseTitle = group.title ? group.title.toLowerCase() : '';
+    const lowerCaseDescription = group.description ? group.description.toLowerCase() : '';
+    const lowerCaseRoom = group.room ? group.room.toLowerCase() : '';
+
+    const hasQueryMatch = (lowerCaseTitle.includes(query) ||
+      lowerCaseDescription.includes(query) ||
+      lowerCaseRoom.includes(query) ||
+      (group.participants && group.participants.some(participant => participant.toLowerCase().includes(query))) ||
+      (group.themes && group.themes.some(theme => theme.toLowerCase().includes(query))));
+
+    const hasSelectedThemesMatch = (selectedThemesSet.size === 0 ||
+      (group.themes && group.themes.some(theme => selectedThemesSet.has(theme.toLowerCase()))));
+
+    return hasQueryMatch && hasSelectedThemesMatch;
+  });
+
+
+  return filtered;
 });
 
 
-
-
-
+watchEffect(() => {
+  const roomIds = filteredGroups.value.map(group => group.room);
+  filteredGroupsStore.updateFilteredRoomIds(roomIds);
+});
 
 watchEffect(() => {
     const navigation = document.querySelector('.navigation');
@@ -362,6 +380,8 @@ watchEffect(() => {
  
 
 </script>
+
+
 
 <style scoped>
 

@@ -91,7 +91,7 @@
       label: 'Fakultet for helse, velferd og organisasjon',
       items: [
         {label: 'Institutt for sykepleie, helse og bioingeniørfag'},
-        {label: 'Institutt for velferd, leiing og organisasjon'}
+        {label: 'Institutt for velferd, ledelse og organisasjon'}
       ]
     },
     {
