@@ -5,13 +5,16 @@ export const useFilteredGroupsStore = defineStore({
   state: () => ({
     groups: [],
     filteredRoomIds: [],
+    participants: [],
   }),
 
-actions: {
-  
+  actions: {
     updateFilteredRoomIds(roomIds) {
       this.filteredRoomIds = roomIds;
     },
+
+    updateParticipants(participants) {
+      this.participants = participants;
+    },
   },
-  
 });
