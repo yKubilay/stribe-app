@@ -2343,15 +2343,16 @@ defineComponent({
   animation: glowing-border 4s ease-in-out infinite;
 }
 
+
+
 .main-container {
   display: grid;
   grid-template-columns: 30% 40% 30%;
   width: 100%;
+  min-height: 90%; 
   margin-top: 5%;
+  margin-bottom: 5%;
 }
-
-
-
 
 .firstFloorSVG {
    background-color: white;

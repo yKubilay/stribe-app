@@ -45,21 +45,21 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-
-
-      component: () => import('../views/loginView.vue')
+      component: () => import('../views/loginView.vue'),
     },
-  ]
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      redirect: '/',
+    },
+  ],
 });
 
 
 
 
 
-
-
-
-/*  router.beforeEach(async (to, from, next) => {
+/*   router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if ( authStore.isLoggedIn) {
@@ -73,8 +73,8 @@ const router = createRouter({
   } else {
     next();
   }
-}); */
- 
+}); 
+  */
 
 export default router
 
