@@ -9,6 +9,7 @@
         :showCompactSearch="true"
         :wideSearch="true"
         @search-query-changed="searchQuery = $event"
+
       />
 
 
@@ -85,8 +86,8 @@
               <li class="modalGroupParticipants" v-for="participant in selectedCard.participants" :key="participant">{{ participant }}</li>
             </ul>
           </section>
-          <button class="floorplanButton" @click="joinRoom(selectedCard)">Join room</button>
-
+<!--           <button class="floorplanButton" @click="joinRoom(selectedCard)">Join room</button>
+ -->
 
 
           </div>
@@ -138,6 +139,11 @@ onMounted(() => {
 
   const isLoggedIn = ref(false);
   let auth;
+
+
+
+
+
 
 onMounted(() => {
 auth = getAuth();
@@ -363,7 +369,10 @@ const filteredGroups = computed(() => {
 watchEffect(() => {
   const roomIds = filteredGroups.value.map(group => group.room);
   filteredGroupsStore.updateFilteredRoomIds(roomIds);
+  const filteredParticipants = filteredGroups.value.flatMap(group => group.participants);
+  filteredGroupsStore.updateParticipants(filteredParticipants);
 });
+
 
 watchEffect(() => {
     const navigation = document.querySelector('.navigation');

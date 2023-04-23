@@ -5,7 +5,9 @@
       <GroupCard :is-used-in-floor-plan="true" :smaller-text="true" 
       :showCompactSearch="true" 
       :filtered-groups="filteredGroups"
-       v-on:filtered-room-ids="updateFilteredRoomIds" />
+       v-on:filtered-room-ids="updateFilteredRoomIds"
+       @create-group="toggleCreatingGroup('')"
+       />
 
 
      </div>
@@ -1857,7 +1859,7 @@
 
  <swiperGroupCard v-if="!isDesktop"/>
 
-   <div class="FpInfo">
+ <div class="FpInfo" :class="fpInfoStyle" ref="fpInfo">
       <i class="pi pi-info-circle"></i>
          <div class="main-text">{{ helpText.main }}</div>
          <div class="tip-text">{{ helpText.tipH }}</div>
@@ -1918,6 +1920,7 @@ import { useFilteredGroupsStore } from '@/stores/filteredGroups';
 import 'primeicons/primeicons.css';
 
 
+
 const cards = ref(Array(5).fill(null));
 
 
@@ -1930,6 +1933,7 @@ const groupTheme = ref('');
 const groupDescription = ref('');
 const creatingGroup = ref(false);
 const roomsStore = useRoomsStore();
+const fpInfo = ref(null);
 
 const popStore = usePopStore();
 const groupStore = useGroupStore();
@@ -1937,6 +1941,18 @@ const userStore = useUserStore();
 
 const groups = groupStore.groups;
 const filteredGroups = ref([]);
+
+const createGroupIsActive = ref(false);
+
+const fpInfoStyle = computed(() => {
+  if (popStore.showPopup && helpText.value.main === "Press an area on the map to create a group in that room.") {
+    return 'FpInfo-animated';
+  } else {
+    return '';
+  }
+});
+
+
 
 function updateFilteredGroups(newFilteredGroups) {
   filteredGroups.value = newFilteredGroups;
@@ -2139,12 +2155,34 @@ defineComponent({
 
 <style scoped>
 
+
+
+@keyframes glowing-border {
+  0%, 100% {
+    border: 5px solid #176285;
+    box-shadow: 0 0 50px #176285;
+    outline: none;
+  }
+  50% {
+    border: 5px solid #137a2b;
+    box-shadow: 0 0 50px #137a2b;
+    outline: none;
+  }
+}
+
+.FpInfo-animated {
+  animation: glowing-border 4s ease-in-out infinite;
+}
+
 .main-container {
   display: grid;
   grid-template-columns: 30% 40% 30%;
   width: 100%;
   margin-top: 5%;
 }
+
+
+
 
 .firstFloorSVG {
    background-color: white;

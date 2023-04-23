@@ -5,12 +5,21 @@
 
 
      <div class="header-buttons">
-       
-      <h1 class="activeGroupsButton" :class="{ smallerText: props.smallerText }">
-          Currently {{ groupStore.groups.length }} Groups with {{ groupStore.totalParticipants }} participants
+
+
+      <h1 class="activeGroupsButton" :class="{ smallerText: props.smallerText }" v-if="filteredGroupsSmaller" >
+        Currently 
+        <strong>{{ filteredGroups.filteredRoomIds.length }}</strong> groups in 
+        <strong>{{ roomIds }}</strong> with 
+        <strong> {{ filteredGroups.participants.length }} </strong> participants
+    </h1>
+
+
+      <h1 class="activeGroupsButton" :class="{ smallerText: props.smallerText }" v-else>
+        Currently {{ groupStore.groups.length }} Groups with {{ groupStore.totalParticipants }} participants
       </h1>
 
-
+      
         <div>
            <Dropdown v-model="sortCriterias" :options="sortCriterias" optionLabel="name" placeholder="Sort groups" class="w-full md:w-14rem" />
      </div> 
@@ -36,20 +45,35 @@
  import { usePopStore } from '@/stores/pop.js';
  import { useRoomsStore } from '@/stores/rooms.js'
  import { computed } from 'vue';
+ import { useFilteredGroupsStore } from '@/stores/filteredGroups.js';
  import InputText from 'primevue/inputtext';
 
  const popStore = usePopStore();
  const groupStore = useGroupStore();
  const searchQuery = ref('');
  const roomsStore = useRoomsStore();
+ const filteredGroups = useFilteredGroupsStore();
 
 const props = defineProps({ showCreateGroupButton: Boolean, smallerText: Boolean, fullWidthBadge: Boolean, showCompactSearch: Boolean,   
   wideSearch: { type: Boolean, default: false },
 }
 );
 
+const filteredGroupsSmaller = computed(() => {
+  if (!filteredGroups || !filteredGroups.filteredRoomIds) {
+    return false;
+  }
 
- const emit = defineEmits(["search-query-changed"]);
+  return filteredGroups.filteredRoomIds.length < groupStore.groups.length;
+});
+
+
+const roomIds = computed(() => {
+  return Array.from(new Set(filteredGroups.filteredRoomIds)).map(roomId => roomId).join(', ');
+});
+
+
+const emit = defineEmits(["search-query-changed"]);
 
  function handleSearchInput(event) {
    emit('search-query-changed', event.target.value);
@@ -107,6 +131,8 @@ handleSearchInput({ target: { value: newRoomId } });
     background-position: 0% 50%;
   }
 }
+
+
 .search-container {
   position: relative;
   display: inline-block;
