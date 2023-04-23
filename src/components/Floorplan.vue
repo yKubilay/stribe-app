@@ -1891,91 +1891,25 @@
    x="350.61096"
    y="528.3418" />
 </g>
-  <defs
-     id="defs435">
-    <linearGradient
-       id="teal-gradient"
-       x1="-100%"
-       y1="0%"
-       x2="100%"
-       y2="0%"
-       spreadMethod="pad">
-      <stop
-         offset="0%"
-         stop-color="#008080"
-         stop-opacity="1"
-         id="stop417" />
-      <stop
-         offset="25%"
-         stop-color="#13547a"
-         stop-opacity="1"
-         id="stop419" />
-      <stop
-         offset="50%"
-         stop-color="#80d0c7"
-         stop-opacity="1"
-         id="stop421" />
-      <stop
-         offset="75%"
-         stop-color="#008080"
-         stop-opacity="1"
-         id="stop423" />
-      <animate
-         attributeName="x1"
-         from="-100%"
-         to="100%"
-         dur="8s"
-         repeatCount="indefinite" />
-      <animate
-         attributeName="x2"
-         from="100%"
-         to="300%"
-         dur="8s"
-         repeatCount="indefinite" />
-    </linearGradient>
-    <linearGradient
-       id="green-gradient"
-       x1="-100%"
-       y1="0%"
-       x2="100%"
-       y2="0%"
-       spreadMethod="pad">
-      <stop
-         offset="0%"
-         stop-color="#00ff00"
-         stop-opacity="1"
-         id="stop426" />
-      <stop
-         offset="25%"
-         stop-color="#00cc00"
-         stop-opacity="1"
-         id="stop428" />
-      <stop
-         offset="50%"
-         stop-color="#00aa00"
-         stop-opacity="1"
-         id="stop430" />
-      <stop
-         offset="75%"
-         stop-color="#00ff00"
-         stop-opacity="1"
-         id="stop432" />
-      <animate
-         attributeName="x1"
-         from="100%"
-         to="-100%"
-         dur="15s"
-         repeatCount="indefinite" />
-      <animate
-         attributeName="x2"
-         from="0%"
-         to="100%"
-         dur="15s"
-         repeatCount="indefinite" />
-    </linearGradient>
+<defs id="defs435">
+  <linearGradient id="teal-gradient" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
+    <stop offset="0%" stop-color="#008080" stop-opacity="1" id="stop417" />
+    <stop offset="25%" stop-color="#13547a" stop-opacity="1" id="stop419" />
+    <stop offset="50%" stop-color="#80d0c7" stop-opacity="1" id="stop421" />
+    <stop offset="75%" stop-color="#008080" stop-opacity="1" id="stop423" />
+    <animate attributeName="x1" from="-100%" to="100%" dur="8s" repeatCount="indefinite" />
+    <animate attributeName="x2" from="100%" to="300%" dur="8s" repeatCount="indefinite" />
+  </linearGradient>
+  <linearGradient id="green-gradient" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
+    <stop offset="0%" stop-color="#00ff00" stop-opacity="1" id="stop426" />
+    <stop offset="25%" stop-color="#00cc00" stop-opacity="1" id="stop428" />
+    <stop offset="50%" stop-color="#00aa00" stop-opacity="1" id="stop430" />
+    <stop offset="75%" stop-color="#00ff00" stop-opacity="1" id="stop432" />
+    <animate attributeName="x1" from="-100%" to="100%" dur="8s" repeatCount="indefinite" />
+    <animate attributeName="x2" from="100%" to="300%" dur="8s" repeatCount="indefinite" />
+  </linearGradient>
+</defs>
 
-    
-  </defs>
 </svg>
 <button @click="highlightGroups" class="highlightButton">Higlight all areas</button>
 
