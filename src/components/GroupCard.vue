@@ -43,8 +43,8 @@
      </div>
      <div class="buttonGroup">
         <button class="floorplanButton" @click="showModal(group)">Show more</button>
-        <button v-if="isUserInGroup(group)" class="leaveRoomButton" @click="leaveRoom(group)">Leave Room</button>
-        <button v-else class="floorplanButton" @click="joinRoom(group)">Join Room</button>
+        <button v-if="isUserInGroup(group)" class="leaveRoomButton" @click="leaveRoom(group)">Leave group</button>
+        <button v-else class="floorplanButton" @click="joinRoom(group)">Join group</button>
       </div>
     
       <div class="cardParticipants" v-if="cardExpanded">
@@ -86,8 +86,7 @@
               <li class="modalGroupParticipants" v-for="participant in selectedCard.participants" :key="participant">{{ participant }}</li>
             </ul>
           </section>
-<!--           <button class="floorplanButton" @click="joinRoom(selectedCard)">Join room</button>
- -->
+
 
 
           </div>
@@ -257,14 +256,14 @@ function joinRoom(group) {
   const userInGroup = group.participants.includes(loggedInUserName);
   if (userInGroup) {
 
-    alert('You are already in a group!');
+    alert('You are already in a group! \n Please leave the group your in before joining another.');
     return;
   }
 
   const inAnotherGroup = groupStore.groups.some(g => g.participants.includes(loggedInUserName));
   if (inAnotherGroup) {
 
-    alert('You are already in a group!');
+    alert('You are already in a group! \n \n Please leave other group before joining another.');
     return;
   }
 
@@ -281,41 +280,6 @@ function leaveRoom(group) {
   
   groupStore.updateGroupParticipants(group.id, updatedParticipants);
 }
-
-function joinRoom2(group) {
-  const loggedInUserName = userStore.username;
-
-  const userInGroup = group.participants.includes(loggedInUserName);
-  if (userInGroup) {
-
-    alert('You are already in a group!');
-    return;
-  }
-
-  const inAnotherGroup = groupStore.groups.some(g => g.participants.includes(loggedInUserName));
-  if (inAnotherGroup) {
-
-    alert('You are already in a group!');
-    return;
-  }
-
-  const updatedParticipants = [...group.participants, loggedInUserName];
-  groupStore.updateGroupParticipants(group.id, updatedParticipants);
-}
-
-
-function leaveRoom2(group) {
-  const loggedInUserName = userStore.username;
-  const updatedParticipants = group.participants.filter(
-    participant => participant !== loggedInUserName
-  );
-  
-  groupStore.updateGroupParticipants(group.id, updatedParticipants);
-}
-
- 
- const activeParticipants = computed(() => (participants.value ? participants.value.length : 0));
-
 
 function isUserInGroup(group) {
   const loggedInUserName = userStore.username;
