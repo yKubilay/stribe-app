@@ -2324,7 +2324,7 @@ defineComponent({
     margin-top: 0.3rem;
     left: 82%;
     width: 5rem;
-    font-size: 0.8rem;
+    font-size: 1.1rem;
     margin-top: 0%;
     margin-right: 20%;
 
