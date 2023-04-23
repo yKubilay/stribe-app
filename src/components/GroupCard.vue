@@ -270,6 +270,8 @@ function joinRoom(group) {
 
   const updatedParticipants = [...group.participants, loggedInUserName];
   groupStore.updateGroupParticipants(group.id, updatedParticipants);
+
+  
 }
 
 
