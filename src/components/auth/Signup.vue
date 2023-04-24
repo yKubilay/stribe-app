@@ -33,7 +33,7 @@
             class="form-control"
             type="text"
             v-model="email"
-            placeholder="Email@adress.com"
+            placeholder="Email@address.com"
           />
       </div>
         <div class="input">
@@ -42,7 +42,7 @@
               class="form-control"
               type="password"
               v-model="password"
-              placeholder="Password1!"
+              placeholder="Password"
             />
         </div>
   
