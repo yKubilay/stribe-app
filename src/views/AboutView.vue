@@ -183,7 +183,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
   // import required modules
   import { Keyboard, Pagination, Navigation} from 'swiper';
-
+  import { Icon } from '@iconify/vue';
   
 
   export default {
@@ -191,6 +191,7 @@ import "swiper/css/navigation";
       Swiper,
       SwiperSlide,
       NavigationBar,
+      Icon,
     },
     data() {
       return {
