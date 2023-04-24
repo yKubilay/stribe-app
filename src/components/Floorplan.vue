@@ -1,7 +1,7 @@
 <template>
      
    <div class="main-container">
-     <div class="grid-container" style="overflow-y: scroll; max-height: 650px; width: 350px;" v-if="isDesktop">       
+     <div class="grid-container" style="overflow-y: scroll; max-height: 670px; width: 350px;" v-if="isDesktop">       
       <GroupCard :is-used-in-floor-plan="true" :smaller-text="true" 
       :showCompactSearch="true" 
       :filtered-groups="filteredGroups"
@@ -2371,13 +2371,13 @@ defineComponent({
  
  .popup {
   position: absolute;
-  top: 40px;
+  top: 4rem;
   left: 72%;
   background-color: #353E57;
   border: 2px solid black;
   padding: 10px;
   width: 350px; 
-  height: 700px;
+  height: 675px;
   color: white;
 }
 
