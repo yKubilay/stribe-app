@@ -6,7 +6,10 @@
         @create-group="toggleCreatingGroup('')"
         :showCreateGroupButton="true"
         :smaller-text="true"
+        :showCompactSearch="true"
+        :wideSearch="true"
         @search-query-changed="searchQuery = $event"
+
       />
 
 
@@ -105,6 +108,9 @@
   import { useGroupStore } from '@/stores/groups';
   import { defineProps } from 'vue';
   import { useRoomsStore } from '@/stores/rooms.js';
+  import { defineEmits } from 'vue';
+  import { useFilteredGroupsStore } from '@/stores/filteredGroups.js';
+
 
   import InputText from 'primevue/inputtext';
   import moment from 'moment';
@@ -114,6 +120,7 @@
 const userStore = useUserStore();
 const groupStore = useGroupStore();
 const roomsStore = useRoomsStore();
+const filteredGroupsStore = useFilteredGroupsStore();
 
 
 onMounted(() => {
@@ -131,6 +138,11 @@ onMounted(() => {
 
   const isLoggedIn = ref(false);
   let auth;
+
+
+
+
+
 
 onMounted(() => {
 auth = getAuth();
@@ -169,6 +181,7 @@ function toggleCard() {
 
   const modalVisible = ref(false);
   const selectedCard = ref(null);
+
 
 
 
@@ -226,9 +239,11 @@ const nodes = themes.map((theme) => ({
     selectedCard.value = null;
   }
 
+ 
   const props = defineProps({
-    isUsedInFloorPlan: { type: Boolean, default: false },
-    searchQuery: {
+  isUsedInFloorPlan: { type: Boolean, default: false },
+  filteredRoomIds: { type: Array, default: () => [] }, 
+  searchQuery: {
     type: String,
     default: '',
   },
@@ -241,19 +256,21 @@ function joinRoom(group) {
   const userInGroup = group.participants.includes(loggedInUserName);
   if (userInGroup) {
 
-    alert('You are already in a group!');
+    alert('You are already in a group! \n Please leave the group your in before joining another.');
     return;
   }
 
   const inAnotherGroup = groupStore.groups.some(g => g.participants.includes(loggedInUserName));
   if (inAnotherGroup) {
 
-    alert('You are already in a group!');
+    alert('You are already in a group! \n \n Please leave other group before joining another.');
     return;
   }
 
   const updatedParticipants = [...group.participants, loggedInUserName];
   groupStore.updateGroupParticipants(group.id, updatedParticipants);
+
+  
 }
 
 
@@ -265,8 +282,6 @@ function leaveRoom(group) {
   
   groupStore.updateGroupParticipants(group.id, updatedParticipants);
 }
-
-
 
 function isUserInGroup(group) {
   const loggedInUserName = userStore.username;
@@ -287,28 +302,42 @@ function isUserInGroup(group) {
   return storeUser.username
 })
 
-
 const filteredGroups = computed(() => {
   const query = props.searchQuery.trim().toLowerCase();
-  
-  if (query === "" && selectedThemes.value.length === 0) {
+  const selectedThemesSet = new Set(selectedThemes.value.map(theme => theme.toLowerCase()));
+
+  if (query === "" && selectedThemesSet.size === 0) {
     return groupStore.groups;
   }
 
-  return groupStore.groups.filter((group) =>
-  
-    (group.title && group.title.toLowerCase().includes(query)) ||
-    (group.description && group.description.toLowerCase().includes(query)) ||
-    (group.themes && group.themes.some(theme => theme.toLowerCase().includes(query))) ||
-    (group.participants && group.participants.some(participant => participant.toLowerCase().includes(query))) ||
-    (group.room && group.room.toLowerCase().includes(query)) ||
-    (selectedThemes.value.length > 0 && group.themes.some(theme => selectedThemes.value.includes(theme.toLowerCase())))
-  );
+  const filtered = groupStore.groups.filter((group) => {
+    const lowerCaseTitle = group.title ? group.title.toLowerCase() : '';
+    const lowerCaseDescription = group.description ? group.description.toLowerCase() : '';
+    const lowerCaseRoom = group.room ? group.room.toLowerCase() : '';
+
+    const hasQueryMatch = (lowerCaseTitle.includes(query) ||
+      lowerCaseDescription.includes(query) ||
+      lowerCaseRoom.includes(query) ||
+      (group.participants && group.participants.some(participant => participant.toLowerCase().includes(query))) ||
+      (group.themes && group.themes.some(theme => theme.toLowerCase().includes(query))));
+
+    const hasSelectedThemesMatch = (selectedThemesSet.size === 0 ||
+      (group.themes && group.themes.some(theme => selectedThemesSet.has(theme.toLowerCase()))));
+
+    return hasQueryMatch && hasSelectedThemesMatch;
+  });
+
+
+  return filtered;
 });
 
 
-
-
+watchEffect(() => {
+  const roomIds = filteredGroups.value.map(group => group.room);
+  filteredGroupsStore.updateFilteredRoomIds(roomIds);
+  const filteredParticipants = filteredGroups.value.flatMap(group => group.participants);
+  filteredGroupsStore.updateParticipants(filteredParticipants);
+});
 
 
 watchEffect(() => {
@@ -326,6 +355,8 @@ watchEffect(() => {
  
 
 </script>
+
+
 
 <style scoped>
 

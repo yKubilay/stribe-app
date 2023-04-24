@@ -51,14 +51,14 @@
                   <p class="description" v-if="isExpanded">
                     24 years old.
                     <br/>
-                    Interests: Yoyo-ing, programming <br/>
+                    Interests: Programming, yoyoing, tech <br/>
                     In my leisure time, I enjoy traveling, playing
-                    video games, being with friends and keeping up with software-related content online
+                    video games, being with friends and keeping up with software-related content
                   </p>
                   <p class="description" v-else>
                     24 years old.
                     <br/>
-                    Project leader and SCRUM Master
+                    Project leader and Scrum Master
                   </p>
                   <button class="about-button"  @click="isExpanded = !isExpanded">{{ isExpanded ? 'Read less' : 'Read more' }}</button>
               </div>
