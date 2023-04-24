@@ -16,7 +16,7 @@
             placeholder="Username"
           />  
           <div class="input">
-            <label for="faculty">Faculty</label>
+            <label for="faculty">Faculty and Institute</label>
             <Dropdown 
                 class="form-control"
                 v-model="selectedFaculty" 
@@ -116,6 +116,11 @@
     ]);
     
     const signup = () => {
+      const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/; // Regex pattern for password
+        if (!passwordRegex.test(password.value)) {
+        alert("Password must be at least 6 characters long and contain at least 1 number and 1 special character.");
+        return;
+      } 
       createUserWithEmailAndPassword(auth, email.value, password.value, selectedFaculty.value.label)
         .then(async (data) => {
           console.log("User is registered");
