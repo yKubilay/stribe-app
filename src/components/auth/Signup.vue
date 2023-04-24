@@ -10,7 +10,7 @@
     <div class="input">
         <label for="name">Username</label>
           <InputText
-            class="form-control"
+            class="form-controlUsername"
             type="text"
             v-model="username"
             placeholder="Username"
@@ -149,3 +149,12 @@
       });
     });
   </script>
+<style scoped>
+.form-controlUsername {
+  width: 99%;
+}
+
+/* .form-control {
+  width: 100%;
+} */
+</style>
