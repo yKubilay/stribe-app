@@ -263,7 +263,7 @@ function joinRoom(group) {
   const inAnotherGroup = groupStore.groups.some(g => g.participants.includes(loggedInUserName));
   if (inAnotherGroup) {
 
-    alert('You are already in a group! \n \n Please leave other group before joining another.');
+    alert('You are already in a group! \n \n Please leave your current group before joining a new one.');
     return;
   }
 
