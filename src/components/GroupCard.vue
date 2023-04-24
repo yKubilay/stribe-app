@@ -256,7 +256,7 @@ function joinRoom(group) {
   const userInGroup = group.participants.includes(loggedInUserName);
   if (userInGroup) {
 
-    alert('You are already in a group! \n Please leave the group your in before joining another.');
+    alert('You are already in a group! \n Please leave your group before joining a new one.');
     return;
   }
 
