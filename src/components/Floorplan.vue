@@ -7,6 +7,7 @@
       :filtered-groups="filteredGroups"
        v-on:filtered-room-ids="updateFilteredRoomIds"
        @create-group="toggleCreatingGroup('')"
+       @hoverRoom="handleHoverRoom"
        />
 
 
@@ -1892,14 +1893,31 @@
    y="528.3418" />
 </g>
 <defs id="defs435">
-  <linearGradient id="teal-gradient" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
+   <linearGradient id="teal-gradient" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
     <stop offset="0%" stop-color="#008080" stop-opacity="1" id="stop417" />
     <stop offset="25%" stop-color="#13547a" stop-opacity="1" id="stop419" />
     <stop offset="50%" stop-color="#80d0c7" stop-opacity="1" id="stop421" />
     <stop offset="75%" stop-color="#008080" stop-opacity="1" id="stop423" />
     <animate attributeName="x1" from="-100%" to="100%" dur="8s" repeatCount="indefinite" />
     <animate attributeName="x2" from="100%" to="300%" dur="8s" repeatCount="indefinite" />
-  </linearGradient>
+  </linearGradient> 
+
+<linearGradient id="teal-gradient-blinking" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
+  <stop offset="0%" stop-color="#008080" stop-opacity="1" id="stop417">
+    <animate attributeName="stop-opacity" values="1; 0.2; 1" dur="1.5s" repeatCount ="100" />
+  </stop>
+  <stop offset="25%" stop-color="#13547a" stop-opacity="1" id="stop419">
+    <animate attributeName="stop-opacity" values="1; 0.2; 1" dur="1.5s"  repeatCount ="100" />
+  </stop>
+  <stop offset="50%" stop-color="#80d0c7" stop-opacity="1" id="stop421">
+    <animate attributeName="stop-opacity" values="1; 0.2; 1" dur="1.5s" repeatCount ="100" />
+  </stop>
+  <stop offset="75%" stop-color="#008080" stop-opacity="1" id="stop423" >
+    <animate attributeName="stop-opacity" values="1; 0.2; 1" dur="1.5s" repeatCount ="100" />
+  </stop>
+</linearGradient>
+
+
   <linearGradient id="green-gradient" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
     <stop offset="0%" stop-color="#00ff00" stop-opacity="1" id="stop426" />
     <stop offset="25%" stop-color="#00cc00" stop-opacity="1" id="stop428" />
@@ -2003,9 +2021,12 @@ const fpInfo = ref(null);
 const popStore = usePopStore();
 const groupStore = useGroupStore();
 const userStore = useUserStore();
+const hoverTimeout = ref(null);
 
 const groups = groupStore.groups;
 const filteredGroups = ref([]);
+const hoveredRoomId = ref(null);
+
 
 const createGroupIsActive = ref(false);
 
@@ -2017,6 +2038,15 @@ const fpInfoStyle = computed(() => {
   }
 });
 
+function handleHoverRoom(roomId) {
+  hoveredRoomId.value = roomId;
+  updateSvgElements();
+}
+
+function stopBlinking(element) {
+  element.style.fill = 'url(#teal-gradient)';
+  hoveredRoomId.value = null;
+}
 
 
 function updateFilteredGroups(newFilteredGroups) {
@@ -2099,7 +2129,10 @@ function updateSvgElements() {
       const group = roomToGroup.get(element.id);
       const roomIsFiltered = filteredGroupsStore.filteredRoomIds.includes(element.id);
 
-      if (group) {
+
+      if (hoveredRoomId.value === element.id) {
+      element.style.fill = 'url(#teal-gradient-blinking)';
+    } else if (group) {
         mappedGroups.set(group, element);
         if (isUserInGroup(group)) {
           element.style.fill = 'url(#green-gradient)';
@@ -2110,6 +2143,31 @@ function updateSvgElements() {
         }
         element.style.opacity = '0.6';
         element.classList.add('breathing-effect');
+
+        element.addEventListener('mouseover', () => {
+         if (element.id === hoveredRoomId.value) {
+            element.style.fill = 'url(#teal-gradient-blinking)';
+            hoverTimeout.value = setTimeout(() => {
+               element.style.fill = 'url(#teal-gradient)';
+            });
+         }
+         });
+
+         element.addEventListener('mouseout', () => {
+  if (element.id === hoveredRoomId.value) {
+    if (isUserInGroup(group)) {
+      element.style.fill = 'url(#green-gradient)';
+    } else if (filteredGroupsStore.filteredRoomIds.length === 0 || roomIsFiltered) {
+      element.style.fill = 'url(#teal-gradient)';
+    } else {
+      element.style.fill = '';
+    }
+    clearTimeout(hoverTimeout.value);
+    hoverTimeout.value = null;
+    hoveredRoomId.value = null;
+  }   
+});
+
       }
 
       element.addEventListener('click', () => {
