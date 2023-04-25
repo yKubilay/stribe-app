@@ -787,7 +787,7 @@
      style="stroke-width:2.80022">E</tspan></text>
 <rect
    style="stroke-width:1.20585"
-   id="Aud_6"
+   id="Aud 6"
    width="60.399845"
    height="27.306091"
    x="193.69838"
@@ -1854,7 +1854,7 @@
    inkscape:label="bokhandel" />
 <rect
    style="stroke-width:0.347763"
-   id="Atrie_Seating_Area_A"
+   id="Atrie Seating Area A"
    width="9.2756548"
    height="20.179161"
    x="293.25232"
@@ -1862,7 +1862,7 @@
    inkscape:label="auditorium" />
 <rect
    style="stroke-width:0.347763"
-   id="Atrie_Seating_Area_B"
+   id="Atrie Seating Area B"
    width="9.2756548"
    height="20.179161"
    x="293.25232"
@@ -1870,7 +1870,7 @@
    inkscape:label="auditorium" />
 <rect
    style="stroke-width:0.347763"
-   id="Atrie_Seating_Area_C"
+   id="Atrie Seating Area C"
    width="9.2756548"
    height="20.179161"
    x="411.65341"
@@ -1878,7 +1878,7 @@
    inkscape:label="auditorium" />
 <rect
    style="stroke-width:0.347763"
-   id="Atrie_Seating_Area_D"
+   id="Atrie Seating Area D"
    width="9.2756548"
    height="20.179161"
    x="412.00064"
@@ -1886,7 +1886,7 @@
    inkscape:label="auditorium" />
 <rect
    style="stroke-width:0.509116"
-   id="New_lounge_area_B"
+   id="New lounge area B"
    width="21.668673"
    height="13.567698"
    x="350.61096"
