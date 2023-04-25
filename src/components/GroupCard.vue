@@ -9,12 +9,16 @@
         :showCompactSearch="true"
         :wideSearch="true"
         @search-query-changed="searchQuery = $event"
+        @mouseover="startHover(group.room)"
+        @mouseleave="emitHoverRoom(group.room)"
 
       />
 
 
 
-      <div v-for="(group, index) in filteredGroups" :key="group.uid" class="card" :style="getCardStyle(index)">
+      <div v-for="(group, index) in filteredGroups" :key="group.uid" class="card" :style="getCardStyle(index)"
+      @mouseover="emitHoverRoom(group.room)"
+>
 
       <div class="cardDetailsContainer">
         <div class="cardContent">
@@ -351,8 +355,19 @@ watchEffect(() => {
     }
   });
 
+  const hoverStartTime = ref(null);
 
- 
+  const emits = defineEmits(['hoverRoom']);
+
+  function emitHoverRoom(roomId) {
+  emits('hoverRoom', roomId);
+}
+
+
+function startHover(roomId) {
+  hoverStartTime.value = new Date().getTime();
+}
+
 
 </script>
 
