@@ -1,5 +1,5 @@
 <template>
-  <header class="groupsHeader" :class="{sticky: stickyHeader}" v-if="groupStore.groups.length > 0">
+  <header class="groupsHeader" :class="{ sticky: stickyHeader }" v-if="groupStore.groups.length > 0">
     <button class="createButton" v-if="props.showCreateGroupButton" 
     @click="createGroup" :style="createButtonStyle">{{ createGroupText }}</button>
 
@@ -54,7 +54,7 @@
  const roomsStore = useRoomsStore();
  const filteredGroups = useFilteredGroupsStore();
 
-const props = defineProps({ showCreateGroupButton: Boolean, smallerText: Boolean, fullWidthBadge: Boolean, showCompactSearch: Boolean,   
+const props = defineProps({ stickyHeader: Boolean, showCreateGroupButton: Boolean, smallerText: Boolean, fullWidthBadge: Boolean, showCompactSearch: Boolean,   
   wideSearch: { type: Boolean, default: false },
 }
 );
@@ -73,7 +73,7 @@ const roomIds = computed(() => {
 });
 
 
-const emit = defineEmits(["search-query-changed"]);
+const emit = defineEmits(["search-query-changed",]);
 
  function handleSearchInput(event) {
    emit('search-query-changed', event.target.value);
@@ -92,7 +92,7 @@ function clearSearch() {
 
 
 const createGroupText = computed(() => {
-return popStore.showPopup ? "Creating group..." : "Create Group";
+return popStore.showPopup ? "Press any room to create a group" : "Create Group";
 });
 
 const createButtonStyle = computed(() => {
@@ -181,11 +181,18 @@ width: 100%;
   width: 100%;
   border: 2px solid black;
 }
+.groupsHeader {
+  margin-right: 0.2rem;
+}
 
+.stickyHeader .groupsHeader {
+  position: fixed;
+  z-index: 10;
+}
 
 .createButton {
   font-size: 1.5rem;
-  height: 5rem;
+  height: 6rem;
 }
 .search-bar {
   width: 16rem;
