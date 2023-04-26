@@ -12,6 +12,7 @@
         @mouseover="startHover(group.room)"
         @mouseleave="emitHoverRoom(group.room)"
 
+
       />
 
 
@@ -28,14 +29,14 @@
                     
             <div class="outerBadgesContainer">
             <div class="createdAtContainer">
-              <span :class="themeClass(group.themes[0])" class="themeBadge">{{ moment(group.createdAt).fromNow() }}</span>
+              <span  class="standardBadge">{{ moment(group.createdAt).fromNow() }}</span>
             </div>
 
             <div class="badgesContainer">
               <span v-if="group.themes.length > 0" class="themeBadge" @click="showModal(group)" :class="themeClass(group.themes[0])">
                 {{ group.themes[0] }} <span v-if="group.themes.length > 1">+{{ group.themes.length - 1 }}</span>
               </span>
-              <span :class="themeClass(group.themes[0])" class="themeBadge">{{ group.participants.length }} people</span>
+              <span  class="standardBadge">{{ group.participants.length }} people</span>
             </div>
           </div>
           
@@ -376,6 +377,19 @@ function startHover(roomId) {
 <style scoped>
 
 
+.standardBadge {
+      background-color: #bab7b5;
+      color: #453F3B; 
+      font-weight: 550;
+      font-size: 1rem;
+      border-radius: 0.3rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      cursor:pointer;
+}
   .themeClass {
     margin: 5%;
   }
@@ -458,7 +472,7 @@ function startHover(roomId) {
       cursor:pointer;
 
     } .theme-general {
-      background-color: #D6D2D0;
+      background-color: #bab7b5;
       color: #453F3B; 
       font-weight: 550;
       font-size: 1rem;
