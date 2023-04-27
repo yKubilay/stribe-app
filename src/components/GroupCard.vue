@@ -365,10 +365,10 @@ watchEffect(() => {
 }
 
 
-function startHover(roomId) {
+/* function startHover(roomId) {
   hoverStartTime.value = new Date().getTime();
 }
-
+ */
 
 </script>
 

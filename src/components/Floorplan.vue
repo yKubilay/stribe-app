@@ -15,9 +15,8 @@
      </div>
      <div class="firstFloorContainer">
 
-<svg
+<svg ref="svgElement" @mouseenter="onSvgMouseEnter" @mouseleave="onSvgMouseLeave"
    class="firstFloorSVG"
-   ref="svgElement"
    version="1.1"
    viewBox="0 0 645 822"
    sodipodi:docname="floorplanoverlayColored2.svg"
@@ -1927,6 +1926,7 @@
 </div>
 
 </svg>
+<div class="hover-tooltip" ref="hoverTooltip">{{ hoveredRoomId }}</div>
 
 </div>
  </div>
@@ -2038,6 +2038,15 @@ const fpInfoStyle = computed(() => {
   }
 });
 
+function onSvgMouseEnter(event) {
+  if (event.target.tagName === 'rect' || event.target.tagName === 'path') {
+    hoveredRoomId.value = event.target.id; 
+    updateSvgElements();
+    positionHoverBox(event);
+  }
+}
+
+
 function handleHoverRoom(roomId) {
   hoveredRoomId.value = roomId;
   updateSvgElements();
@@ -2117,58 +2126,59 @@ onMounted(()  => {
   );
 });
 
-
-
 function updateSvgElements() {
   const mappedGroups = new Map();
   if (svgElement.value) {
-    const elements = svgElement.value.querySelectorAll('rect, path');
+    const elements = svgElement.value.querySelectorAll('rect:not(.exclude), path:not(.exclude)');
     const roomToGroup = new Map(groupStore.groups.map(group => [group.room, group]));
 
     elements.forEach((element) => {
       const group = roomToGroup.get(element.id);
       const roomIsFiltered = filteredGroupsStore.filteredRoomIds.includes(element.id);
 
-
       if (hoveredRoomId.value === element.id) {
-      element.style.fill = 'url(#teal-gradient-blinking)';
-    } else if (group) {
+        element.style.fill = 'url(#teal-gradient-blinking)';
+      } else if (group) {
         mappedGroups.set(group, element);
         if (isUserInGroup(group)) {
           element.style.fill = 'url(#green-gradient)';
-         } else if (filteredGroupsStore.filteredRoomIds.length === 0 || roomIsFiltered) {
+        } else if (filteredGroupsStore.filteredRoomIds.length === 0 || roomIsFiltered) {
           element.style.fill = 'url(#teal-gradient)';
         } else {
-          element.style.fill = ''; 
+          element.style.fill = '';
         }
         element.style.opacity = '0.6';
         element.classList.add('breathing-effect');
-
-        element.addEventListener('mouseover', () => {
-         if (element.id === hoveredRoomId.value) {
-            element.style.fill = 'url(#teal-gradient-blinking)';
-            hoverTimeout.value = setTimeout(() => {
-               element.style.fill = 'url(#teal-gradient)';
-            });
-         }
-         });
-
-         element.addEventListener('mouseout', () => {
-  if (element.id === hoveredRoomId.value) {
-    if (isUserInGroup(group)) {
-      element.style.fill = 'url(#green-gradient)';
-    } else if (filteredGroupsStore.filteredRoomIds.length === 0 || roomIsFiltered) {
-      element.style.fill = 'url(#teal-gradient)';
-    } else {
-      element.style.fill = '';
-    }
-    clearTimeout(hoverTimeout.value);
-    hoverTimeout.value = null;
-    hoveredRoomId.value = null;
-  }   
-});
-
       }
+
+      element.addEventListener('mouseover', () => {
+        if (element.id === hoveredRoomId.value) {
+          element.style.fill = 'url(#teal-gradient-blinking)';
+          hoverTimeout.value = setTimeout(() => {
+            element.style.fill = 'url(#teal-gradient)';
+          });
+
+          positionHoverBox(event);
+          hoveredRoomId.value = element.id;
+        }
+      });
+
+      element.addEventListener('mouseout', () => {
+        if (element.id === hoveredRoomId.value) {
+          if (isUserInGroup(group)) {
+            element.style.fill = 'url(#green-gradient)';
+          } else if (filteredGroupsStore.filteredRoomIds.length === 0 || roomIsFiltered) {
+            element.style.fill = 'url(#teal-gradient)';
+          } else {
+            element.style.fill = '';
+          }
+          positionHoverBox(event);
+
+          clearTimeout(hoverTimeout.value);
+          hoverTimeout.value = null;
+          hoveredRoomId.value = null;
+        }
+      });
 
       element.addEventListener('click', () => {
         if (!popStore.showPopup) {
@@ -2179,26 +2189,9 @@ function updateSvgElements() {
         roomsStore.setRoomId(element.id);
       });
     });
-    
   }
-
 }
 
-
-function highlightGroups(roomIds, duration = 3500) {
-  const elements = svgElement.value.querySelectorAll('rect:not(.exclude), path:not(.exclude)');
-  elements.forEach((element) => {
-    if (element.id) {
-      const originalFill = element.style.fill;
-      element.style.fill = 'rgba(255, 165, 0, 0.6)';
-      setTimeout(() => {
-        element.style.fill = originalFill;
-      }, duration);
-    } else {
-      element.style.fill = '';
-    }
-  });
-}
 
 
 onMounted(() => {
@@ -2265,6 +2258,18 @@ function hidePopup() {
   }
 }
 
+
+function onSvgMouseLeave(event) {
+  hoveredRoomId.value = null;
+  updateSvgElements();
+}
+
+function positionHoverBox(event) {
+  hoverBoxPosition.value = {
+    top: event.clientY + 10,
+    left: event.clientX + 10,
+  };
+}
 
 
 function showPopup(id) {
@@ -2516,7 +2521,22 @@ defineComponent({
 .swiper-slide h3 {
   margin: 10px;
 }
-
+.hover-tooltip {
+       font-size: 1rem;
+     padding:5px;
+     background: #008080;
+     color: white;
+     margin-top: 0.3rem;
+     left: 73%;
+     width: 9rem;
+     font-size: 1.1rem;
+     margin-top: 0%;
+     margin-right: 20%;
+     z-index: 10;
+     min-height: 40px;
+     text-align: center;
+ }
+ 
 
 .p-multiselect {
   width: 100%;
