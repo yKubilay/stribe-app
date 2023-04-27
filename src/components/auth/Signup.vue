@@ -116,9 +116,9 @@
     ]);
     
     const signup = () => {
-      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!"#¤%&/()=?`´*¨^~\\\-_;.,:§]{8,}$/;// Regex pattern for password
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!"#¤%&/()=?`´*¨^~\\\-_;.,:§]{6,}$/;// Regex pattern for password
         if (!passwordRegex.test(password.value)) {
-        alert("Password must be at least 6 characters long and contain at least 1 number and 1 special character.");
+        alert("Password must be at least 6 characters long with at least 1 number and 1 special character.");
         return;
       } 
       createUserWithEmailAndPassword(auth, email.value, password.value, selectedFaculty.value.label)
