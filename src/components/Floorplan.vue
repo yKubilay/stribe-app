@@ -3,6 +3,7 @@
    <div class="main-container">
      <div class="grid-container" style="overflow-y: scroll; max-height: 670px; width: 350px;" v-if="isDesktop">       
       <GroupCard :is-used-in-floor-plan="true" :smaller-text="true" 
+      :stickyHeader="true" 
       :showCompactSearch="true" 
       :filtered-groups="filteredGroups"
        v-on:filtered-room-ids="updateFilteredRoomIds"
@@ -1893,29 +1894,23 @@
    y="528.3418" />
 </g>
 <defs id="defs435">
-   <linearGradient id="teal-gradient" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
-    <stop offset="0%" stop-color="#008080" stop-opacity="1" id="stop417" />
-    <stop offset="25%" stop-color="#13547a" stop-opacity="1" id="stop419" />
-    <stop offset="50%" stop-color="#80d0c7" stop-opacity="1" id="stop421" />
-    <stop offset="75%" stop-color="#008080" stop-opacity="1" id="stop423" />
-    <animate attributeName="x1" from="-100%" to="100%" dur="8s" repeatCount="indefinite" />
-    <animate attributeName="x2" from="100%" to="300%" dur="8s" repeatCount="indefinite" />
-  </linearGradient> 
+   <linearGradient id="teal-gradient" x1="0%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
+  <stop offset="0%" stop-color="#008080" stop-opacity="1" id="stop417" />
+  <stop offset="25%" stop-color="#13547a" stop-opacity="1" id="stop419" />
+  <stop offset="50%" stop-color="#80d0c7" stop-opacity="1" id="stop421" />
+  <stop offset="75%" stop-color="#008080" stop-opacity="1" id="stop423" />
+</linearGradient>
 
 <linearGradient id="teal-gradient-blinking" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
-  <stop offset="0%" stop-color="#008080" stop-opacity="1" id="stop417">
-    <animate attributeName="stop-opacity" values="1; 0.2; 1" dur="1.5s" repeatCount ="100" />
+  <stop offset="0%" stop-color="orange" stop-opacity="1" id="stop417">
+    <animate attributeName="stop-opacity" values="1; 0; 1" dur="1s" repeatCount="indefinite" />
   </stop>
-  <stop offset="25%" stop-color="#13547a" stop-opacity="1" id="stop419">
-    <animate attributeName="stop-opacity" values="1; 0.2; 1" dur="1.5s"  repeatCount ="100" />
-  </stop>
-  <stop offset="50%" stop-color="#80d0c7" stop-opacity="1" id="stop421">
-    <animate attributeName="stop-opacity" values="1; 0.2; 1" dur="1.5s" repeatCount ="100" />
-  </stop>
-  <stop offset="75%" stop-color="#008080" stop-opacity="1" id="stop423" >
-    <animate attributeName="stop-opacity" values="1; 0.2; 1" dur="1.5s" repeatCount ="100" />
+
+  <stop offset="100%" stop-color="#008080" stop-opacity="1" id="stop423">
+    <animate attributeName="stop-opacity" values="1; 0; 1" dur="1s" repeatCount="indefinite" />
   </stop>
 </linearGradient>
+
 
 
   <linearGradient id="green-gradient" x1="-100%" y1="0%" x2="100%" y2="0%" spreadMethod="pad">
@@ -1927,9 +1922,11 @@
     <animate attributeName="x2" from="100%" to="300%" dur="8s" repeatCount="indefinite" />
   </linearGradient>
 </defs>
+<div class="hover-box" :style="{ top: hoverBoxPosition.top + 'px', left: hoverBoxPosition.left + 'px' }" v-show="hoveredRoomId">
+  {{ hoveredRoomId }}
+</div>
 
 </svg>
-<button @click="highlightGroups" class="highlightButton">Higlight all areas</button>
 
 </div>
  </div>
@@ -1938,7 +1935,7 @@
  <swiperGroupCard v-if="!isDesktop"/>
 
  
- <div class="FpInfo" :class="fpInfoStyle" ref="fpInfo">
+ <div class="FpInfo"  ref="fpInfo">
       <i class="pi pi-info-circle"></i>
          <div class="main-text">{{ helpText.main }}</div>
          <div class="tip-text">{{ helpText.tipH }}</div>
@@ -2008,6 +2005,9 @@ const cards = ref(Array(5).fill(null));
 
 
 const filteredGroupsStore = useFilteredGroupsStore();
+
+const hoverBoxPosition = ref({ top: 0, left: 0 });
+
 
 const popupId = ref(null);
 const svgElement = ref(null);
@@ -2165,6 +2165,7 @@ function updateSvgElements() {
     clearTimeout(hoverTimeout.value);
     hoverTimeout.value = null;
     hoveredRoomId.value = null;
+    resetBlinking();
   }   
 });
 
@@ -2197,6 +2198,13 @@ function highlightGroups(roomIds, duration = 3500) {
     } else {
       element.style.fill = '';
     }
+  });
+}
+
+function resetBlinking() {
+  const elements = svgElement.value.querySelectorAll('rect, path');
+  elements.forEach((element) => {
+    stopBlinking(element);
   });
 }
 
@@ -2425,6 +2433,15 @@ defineComponent({
       border: 1px solid #ccc;
       }
 
+      .hover-box {
+  position: absolute;
+  background-color: #353E57;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  pointer-events: none;
+}
 
  
  .popup {

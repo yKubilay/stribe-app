@@ -600,11 +600,9 @@ watchEffect(() => {
   max-width: 100%;
 }
 
-/* .badgesContainer {
-  display: flex;
-  gap: 5px;
-
-} */
+ .badgesContainer {
+  width: 300px;
+} 
 
 .cardContent {
     text-align: left;
@@ -686,19 +684,9 @@ watchEffect(() => {
   bottom: 125%;
   left: 50%;
   margin-left: -60px;
-  opacity: 0; /* Added */
-  transition: opacity 0.3s; /* Added */
+  opacity: 0; 
+  transition: opacity 0.3s;
 }
-.badgeCount:hover + .badgeTooltip { /* Added */
-  opacity: 1;
-}
-
-
-.badgesContainer:hover .badgeTooltip {
-  visibility: visible;
-  opacity: 1;
-}
-
 
 
   .cardDescription:hover {
