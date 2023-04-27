@@ -1926,7 +1926,7 @@
 </div>
 
 </svg>
-<button class="hover-tooltip" ref="hoverTooltip">{{ hoveredRoomId }}</button>
+<div class="hover-tooltip" ref="hoverTooltip">{{ hoveredRoomId }}</div>
 
 </div>
  </div>
@@ -2525,14 +2525,16 @@ defineComponent({
        font-size: 1rem;
      padding:5px;
      background: #008080;
+     color: white;
      margin-top: 0.3rem;
-     left: 70%;
+     left: 73%;
      width: 9rem;
      font-size: 1.1rem;
      margin-top: 0%;
      margin-right: 20%;
      z-index: 10;
      min-height: 40px;
+     text-align: center;
  }
  
 
