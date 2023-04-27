@@ -2165,6 +2165,7 @@ function updateSvgElements() {
     clearTimeout(hoverTimeout.value);
     hoverTimeout.value = null;
     hoveredRoomId.value = null;
+    resetBlinking();
   }   
 });
 
@@ -2197,6 +2198,13 @@ function highlightGroups(roomIds, duration = 3500) {
     } else {
       element.style.fill = '';
     }
+  });
+}
+
+function resetBlinking() {
+  const elements = svgElement.value.querySelectorAll('rect, path');
+  elements.forEach((element) => {
+    stopBlinking(element);
   });
 }
 
