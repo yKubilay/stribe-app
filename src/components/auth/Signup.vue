@@ -74,7 +74,7 @@
     
     
     const signup = () => {
-      const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/; // Regex pattern for password
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!"#¤%&/()=?`´*¨^~\\\-_;.,:§]{8,}$/; // Regex pattern for password
         if (!passwordRegex.test(password.value)) {
         alert("Password must be at least 6 characters long and contain at least 1 number and 1 special character.");
         return;
