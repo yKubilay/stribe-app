@@ -158,7 +158,7 @@
                     In my sparetime I like to work out, spend time with my girlfriend and play volleyball and video games.
                   </p>
                   <p class="description" v-else>
-                    23 years old.
+                    26 years old.
                     <br/>
                     Secretary and Product Owner
                   </p>
