@@ -27,6 +27,8 @@
             />
         </div>
 
+       
+
       <div class="altOptionAuth">
         Don't have an account? <span @click="moveToSignUp">Signup</span>
       </div>
@@ -44,7 +46,7 @@
 <script setup>
   import Navigation from "@/components/Navigation.vue"
   import { ref } from 'vue';
-  import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence} from "firebase/auth";
+  import { getAuth, signInWithEmailAndPassword} from "firebase/auth";
   import { useRouter } from 'vue-router';
   import { onMounted } from "vue";
   import { onAuthStateChanged, signOut} from "firebase/auth";
@@ -61,9 +63,6 @@
   const storeUser = useUserStore();
   const login = () => {
     const auth = getAuth();
-    setPersistence(auth, browserSessionPersistence);
-
-
     signInWithEmailAndPassword(auth, email.value, password.value)
       .then((data) => {
         console.log("Successfully signed in");
@@ -83,16 +82,16 @@
         console.log(error.code);
         switch (error.code) {
           case "auth/invalid-email":
-            errorMsg.value = "Invalid email";
+            alert("Invalid email");
             break;
           case "auth/user-not-found":
-            errorMsg.value = "No account with this email";
+            alert("No account with this email");
             break;
           case "auth/wrong-password":
-            errorMsg.value = "Incorrect password";
+            alert("Incorrect password");
             break;
           default:
-            errorMsg.value = "Email or password was incorrect";
+            alert("Email or password was incorrect");
             break;
         }
       });
