@@ -477,7 +477,11 @@ watchEffect(() => {
     margin-top: 2%;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
-/*     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+
+
+
+  /*     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
  */
   
 
@@ -760,13 +764,11 @@ watchEffect(() => {
   max-width: 50%;
   max-height: 90%;
   overflow: auto;
-  
-
 }
 
   .closeButton {
       font-size: 18px;
-      padding:0%;
+      padding: 0%;
       position: absolute;
       top: -20%;
       right: -5%;
@@ -840,15 +842,14 @@ watchEffect(() => {
 
   @media(max-width: 768px) {
     .modal-content {
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
-  background-color: #353E57;
-  color: white;
-  
-  max-width: 90%;
-  max-height: 100%;
-  overflow: auto;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
+      background-color: #353E57;
+      color: white;
+      max-width: 90%;
+      max-height: 100%;
+      overflow: auto;
   }
 
   .activeFiltersButton {
@@ -888,7 +889,6 @@ watchEffect(() => {
 
   .basic-grid {
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-
   }
 
  
