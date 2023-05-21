@@ -31,7 +31,7 @@ Lastly, run the following command and wait for your browser window to appear:
 npm run dev -- --open
 ```
 
-Now the application runs in your browser window on locally, with Hot Module Replacement(HMR) active from Vite.
+Now the application runs in your browser window locally, with Hot Module Replacement(HMR) active from Vite.
 
 
 ## Customize configuration
