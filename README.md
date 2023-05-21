@@ -11,7 +11,7 @@
 
 Prior to running Stribe on your local machine, NodeJS needs to be installed (https://nodejs.org/en/download)
 
-Then the git project can be cloned either into the terminal or preferably into VScode.
+Then the git project can be cloned either into the terminal or preferrably into VScode.
 
 After cloning the Git repository, open your terminal in VScode and run the following command:
 
