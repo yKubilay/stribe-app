@@ -41,9 +41,9 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 ## GALLERY
 
 The app consists of:
-- Home page
-- Groups page where all groups can be seen in a grid
-- Floorplan where all the groups are visualized in realtime onto the map of the campus buildling at HIOF(Østfold University College)
+- Home page.
+- Groups page where all groups can be seen in a grid.
+- Floorplan where all the groups are visualized in realtime onto a map of the campus buildling of HIOF(Østfold University College).
 
 ![stribe1](https://github.com/user-attachments/assets/2ce8e35b-b679-4a03-9a39-eb7ac671c39a)
 ![stribe5](https://github.com/user-attachments/assets/c24a3bbe-361f-4a26-b901-bb1b66a69209)
