@@ -41,5 +41,6 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 ## GALLERY
 
 ![stribe1](https://github.com/user-attachments/assets/2ce8e35b-b679-4a03-9a39-eb7ac671c39a)
+![stribe5](https://github.com/user-attachments/assets/c24a3bbe-361f-4a26-b901-bb1b66a69209)
 ![Stribe2](https://github.com/user-attachments/assets/596cf9c6-ff49-41aa-aebd-cc79e891bd38)
 ![stribe3](https://github.com/user-attachments/assets/1c199ff3-1e8b-416e-98e6-5a947c2c579f)
